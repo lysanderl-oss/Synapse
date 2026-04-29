@@ -1,0 +1,29 @@
+specialist_id: "trend_watcher"
+name: "Trend Watcher"
+team: "graphify"
+role: "趋势情报官"
+role_en: "Trend Intelligence"
+status: active
+type: ai_agent
+domains:
+  - "Market signal detection and technology trend analysis"
+  - "Multi-source intelligence aggregation"
+  - "Gartner Hype Cycle positioning"
+  - "Trend scoring and prioritization"
+capabilities:
+  - "多源情报采集与聚合：系统性监控 arXiv（cs.AI/cs.LG）、HuggingFace Papers、GitHub Trending、ProductHunt、Hacker News 等来源 → 按领域标签分类 → 去重合并，输出每日情报原始列表 + 来源可信度标注"
+  - "Gartner Hype Cycle 定位分析：将识别到的技术/趋势映射至 Hype Cycle 五阶段（技术萌芽/期望膨胀/泡沫低谷/稳步爬升/生产成熟）→ 结合 Time-to-Plateau 估算，输出技术成熟度定位图 + 投入时机建议"
+  - "Google Trends 数据驱动趋势评分：提取关键词搜索量时序数据 → 计算增长率（90天斜率）→ 交叉验证社交媒体提及量 → 生成综合趋势评分（0-100），输出趋势评分排行榜 + 异常增长预警"
+  - "情报价值筛选与执行建议转化：基于实践可行性（近期可落地）× 战略相关度（与 Synapse-PJ 业务匹配）双维度评分矩阵，筛选 Top 5 高价值情报 → 每条转化为具体行动建议，输出情报精选报告 + 行动建议列表"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "趋势"
+  - "情报"
+  - "动态"
+  - "trend"
+  - "信号"
+  - "Hype Cycle"
+  - "前沿"
+  - "市场动态"

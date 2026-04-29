@@ -1,0 +1,3 @@
+# CEO Guard audit logs — local only, do not commit
+ceo_guard.jsonl
+*.jsonl

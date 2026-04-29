@@ -1,0 +1,28 @@
+specialist_id: "obs_knowledge_engineer"
+name: "OBS Knowledge Engineer"
+team: "obs"
+role: "知识萃取工程师"
+role_en: "Knowledge Engineer"
+status: active
+type: ai_agent
+domains:
+  - "Structured knowledge capture and documentation"
+  - "MOC construction and cross-linking"
+  - "Atomic notes methodology"
+  - "Knowledge quality review"
+capabilities:
+  - "结构化知识沉淀（问题-方案-经验三段式）：识别团队日常工作中值得记录的隐性知识 → 按「问题背景（What/Why）+ 解决方案（How）+ 实践经验（Lessons Learned）」三段结构文档化 → 确保内容自包含、无上下文依赖，输出知识笔记 + 关联标签 + 引用来源"
+  - "MOC（Map of Content）构建与维护：识别需要 MOC 的知识领域（>5条相关笔记时触发）→ 设计 MOC 层级（领域 MOC → 子主题 MOC → 原子笔记）→ 维护 MOC 目录索引 → 定期更新（新笔记加入后触发 MOC 刷新），输出 MOC 文档 + 刷新日志 + 导航体验评估"
+  - "双向链接质量审核（有效性+关联强度评级）：扫描所有 [[wikilink]] 链接 → 验证目标文档存在且标题匹配 → 评估链接关联强度（强：核心概念引用 / 中：辅助参考 / 弱：偶发提及）→ 识别单向链接（应添加反向链接的情况），输出链接质量报告 + 断链修复清单 + 强化建议"
+  - "知识原子化拆分（Atomic Notes 原则）：识别长文档中可拆分的独立概念 → 按 Atomic Notes 原则拆分（每篇笔记只表达一个完整概念，500字以内）→ 维护拆分后的引用关系（原文档链接到子笔记）→ 建立概念间关联网络，输出原子笔记集合 + 拆分记录 + 概念图"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "知识沉淀"
+  - "MOC"
+  - "链接"
+  - "知识萃取"
+  - "Atomic Notes"
+  - "知识工程"
+  - "笔记"

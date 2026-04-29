@@ -1,0 +1,1155 @@
+harness_registry:
+  version: 1.1.0
+  constraints:
+    p0_rules:
+    - id: CEO-GUARD-001
+      name: 主对话禁止执行工具
+      description: Lysander 主对话禁止直接调用 Bash/Edit/Write/WebSearch/WebFetch 工具
+      source: CLAUDE.md#CEO执行禁区
+      tool_blacklist:
+      - Bash
+      - Edit
+      - Write
+      - WebSearch
+      - WebFetch
+      tool_whitelist:
+      - Read
+      - Skill
+      - Agent
+      - Glob
+      - Grep
+      exception_notes: Read 工具例外：仅限读取 active_tasks.yaml / CLAUDE.md 等纯状态配置文件
+      severity: P0
+      added: '2026-04-12'
+    - id: CEO-GUARD-002
+      name: 禁止绕过派单
+      description: 禁止以任何包装形式绕过派单：贴标签冒充、先斩后奏、伪派单、S级效率借口
+      source: CLAUDE.md#CEO执行禁区
+      severity: P0
+      added: '2026-04-12'
+    - id: CEO-GUARD-003
+      name: 唯一合法执行路径
+      description: Lysander 主对话执行任何工作的唯一合法路径：①分析任务→②输出团队派单表→③调用Agent工具→④子Agent执行→⑤Lysander审查交付
+      source: CLAUDE.md#CEO执行禁区
+      severity: P0
+      added: '2026-04-12'
+    - id: CEO-GUARD-004
+      name: CEO Guard 审计系统
+      description: PreToolUse hook 自动记录所有工具调用到 logs/ceo-guard-audit.log
+      source: CLAUDE.md#CEO执行禁区
+      severity: P0
+      added: '2026-04-12'
+    - id: EXEC-CHAIN-001
+      name: 强制团队派单制度
+      description: Lysander 在调用任何 Edit/Write/Bash 工具执行实际工作之前，必须先输出团队派单表。S/M/L 所有级别无豁免
+      source: CLAUDE.md#强制团队派单制度
+      severity: P0
+      added: '2026-04-12'
+    - id: EXEC-CHAIN-002
+      name: Lysander 身份确认开场
+      description: 每次与总裁沟通必须先说：'总裁您好，我是 Lysander，Multi-Agents 团队为您服务！' — 身份确认，不可跳过
+      source: CLAUDE.md#执行链流程
+      severity: P0
+      added: '2026-04-12'
+    - id: EXEC-CHAIN-003
+      name: QA 审查不可跳过
+      description: 执行完成后必须经过【③】QA + 智囊团审查，不可跳过
+      source: CLAUDE.md#执行规则
+      severity: P0
+      added: '2026-04-12'
+    - id: EXEC-CHAIN-004
+      name: Visual QA 强制步骤
+      description: UI/前端变更必须执行截图验证：变更效果在截图中可见、相关页面无明显布局破坏、截图未通过不得标记完成
+      source: CLAUDE.md#QA流程
+      severity: P0
+      added: '2026-04-12'
+    - id: EXEC-CHAIN-005
+      name: LysanderInterceptor 强制调用
+      description: 每次用户新诉求必须调用 LysanderInterceptor.intercept()，触发时机：每次用户新诉求（不是续接上一个任务时）。违规检测：intercept_log.yaml 中无对应时间戳内的记录
+      source: CLAUDE.md#【0.5】步骤⑥
+      severity: P0
+      added: '2026-04-22'
+    - id: CEO-GUARD-TEST-001
+      name: CEO Guard 绕过验证测试
+      description: 每次 P0 规则变更后，必须在 .claude/harness/ceo-guard-tests.md 的 5 个场景中全部通过验证
+      source: .claude/harness/ceo-guard-tests.md
+      test_count: 5
+      severity: P0
+      added: '2026-04-12'
+    p1_rules:
+    - id: WORK-PRINCIPLE-001
+      name: 禁止以时间切割任务
+      description: 只说'A完成后做B'，不按时间切分任务
+      source: CLAUDE.md#工作原则
+      severity: P1
+      added: '2026-04-12'
+    - id: WORK-PRINCIPLE-002
+      name: 禁止时间估算
+      description: 工作计划分阶段但不标注时间（不说'1-2周'、'3-4周'），AI团队具备极高执行效率，时间估算无意义且会误导预期
+      source: CLAUDE.md#工作原则
+      severity: P1
+      added: '2026-04-12'
+    - id: WORK-PRINCIPLE-003
+      name: 持续执行原则
+      description: 任务未达成目标前不停止，不因换日、换会话而中断
+      source: CLAUDE.md#工作原则
+      severity: P1
+      added: '2026-04-12'
+    - id: WORK-PRINCIPLE-004
+      name: 工作跟进原则
+      description: 每次审查必须检查遗留未完成项
+      source: CLAUDE.md#工作原则
+      severity: P1
+      added: '2026-04-12'
+    - id: WORK-PRINCIPLE-005
+      name: 专业问题交给专家
+      description: 专业问题交给专家评审，不上报让总裁猜
+      source: CLAUDE.md#工作原则
+      severity: P1
+      added: '2026-04-12'
+    - id: SESSION-MGMT-001
+      name: 跨会话状态写入
+      description: 每次会话结束前，必须将进行中任务写入 agent-CEO/config/active_tasks.yaml，记录当前执行链环节、阻塞项、下一步
+      source: CLAUDE.md#跨会话状态管理
+      severity: P1
+      added: '2026-04-12'
+    - id: SESSION-MGMT-002
+      name: 跨会话状态恢复
+      description: 每次新会话开始时，读取 active_tasks.yaml，如有进行中任务，向总裁简要汇报并继续执行
+      source: CLAUDE.md#跨会话状态管理
+      severity: P1
+      added: '2026-04-12'
+    - id: EXEC-CHAIN-005
+      name: 执行链断裂违规处理
+      description: 若 Lysander 在没有输出团队派单表的情况下直接执行，视为执行链【②】断裂，执行审计师在【③】审查时必须检查派单记录
+      source: CLAUDE.md#强制团队派单制度
+      severity: P1
+      added: '2026-04-12'
+    - id: EXEC-CHAIN-006
+      name: 强制执行者身份声明
+      description: 每次实质性操作输出必须包含：【执行者】和【Lysander角色】声明（非执行方）
+      source: CLAUDE.md#强制执行者身份声明
+      severity: P1
+      added: '2026-04-12'
+    - id: QA-STANDARD-001
+      name: QA 自动评分通过线
+      description: integration_qa 调用 qa_auto_review() 自动评分，>=85分通过，70-84条件通过，<70退回，<50严重不合格上报
+        Lysander
+      source: hr_base.py#qa_auto_review
+      threshold: 85
+      scale: 0-100
+      severity: P1
+      added: '2026-04-12'
+    - id: GOAL-ALIGN-001
+      name: 目标不清晰主动追问
+      description: 目标不清晰时主动追问一次；仍不清晰则基于最佳理解执行，交付时说明假设
+      source: CLAUDE.md#执行链流程#0目标接收
+      severity: P1
+      added: '2026-04-12'
+    - id: GOAL-ALIGN-002
+      name: L4决策上报原则
+      description: 仅 L4（法律约束/重大财务/>100万/公司存续）决策上报总裁；其他所有决策无论多复杂，均由 Lysander + 智囊团
+        + 专家评审解决
+      source: CLAUDE.md#决策体系
+      severity: P1
+      added: '2026-04-12'
+    - id: HR-MGMT-001
+      name: Agent 入职审批
+      description: 任何新增 Agent 必须提交给 hr_director 入职审批，卡片必须符合强制 Schema，能力描述必须达到 B 级（具体到方法论/框架）
+      source: .claude/harness/hr-management.md
+      severity: P1
+      added: '2026-04-12'
+    - id: HR-MGMT-002
+      name: Agent 能力重叠限制
+      description: 与现有角色能力重叠 >30% 的新增 Agent 不予批准
+      source: .claude/harness/hr-management.md
+      severity: P1
+      added: '2026-04-12'
+    - id: HR-MGMT-003
+      name: 能力描述质量标准
+      description: A级（优秀）：含工具/框架名+具体产出物；B级（合格）：方法论/框架应用；C级（不合格）：仅活动名如'项目管理'、'知识沉淀'
+      source: .claude/harness/hr-management.md
+      grades:
+        A: 含工具/框架名+具体产出物（目标水平）
+        B: 方法论/框架应用（合格线）
+        C: 仅活动名（不合格，禁止出现）
+      severity: P1
+      added: '2026-04-12'
+    - id: HR-MGMT-004
+      name: Agent 审计评分标准
+      description: 审计评分合格线 90/100；>=90合格；80-89需优化；60-79不合格立即修订；<60降级inactive或退役；每周一自动运行
+      source: .claude/harness/hr-management.md
+      threshold: 90
+      scale: 0-100
+      severity: P1
+      added: '2026-04-12'
+    - id: CRED-MGMT-001
+      name: 凭证管理流程
+      description: 敏感凭证存储在 obs/credentials.md（加密）；使用时先 list 确认 Key 名，再向用户请求密码；密码仅当次使用，不存储不记录
+      source: .claude/harness/credentials-usage.md
+      severity: P1
+      added: '2026-04-12'
+    - id: AUTO-TRIGGER-001
+      name: 自动化事件触发
+      description: 定时触发（3个远程Agent按时间编排）、事件触发（代码变更→自动QA）、状态触发（任务阻塞解除→自动恢复执行）
+      source: CLAUDE.md#自动化编排
+      severity: P1
+      added: '2026-04-12'
+    p2_rules:
+    - id: GOVERNANCE-001
+      name: 熵增预算
+      description: CLAUDE.md 当前阶段上限 350 行（Phase 2 完成后收紧至 300 行），超出须先删减再添加
+      source: CLAUDE.md#Harness治理规则
+      limit:
+        phase1: 350
+        phase2: 300
+      severity: P2
+      added: '2026-04-12'
+    - id: GOVERNANCE-002
+      name: 规则时间戳制度
+      description: '每个新增规则块须标注 #[ADDED: YYYY-MM-DD]；超过 180 天未被重申或测试的规则，自动进入废弃候选'
+      source: CLAUDE.md#Harness治理规则
+      max_age_days: 180
+      severity: P2
+      added: '2026-04-12'
+    - id: GOVERNANCE-003
+      name: 3天定期审查
+      description: 每3天由 harness_engineer 执行 audit_harness()，检查行数超限、重复语义、超龄未验证规则
+      source: CLAUDE.md#Harness治理规则
+      interval_days: 3
+      executor: harness_engineer
+      severity: P2
+      added: '2026-04-12'
+    - id: GOVERNANCE-004
+      name: 规则变更流程
+      description: P1/P2规则变更：harness_engineer提案→Lysander批准→执行；P0规则变更：须总裁会话中确认后执行，保留变更记录
+      source: CLAUDE.md#Harness治理规则
+      severity: P2
+      added: '2026-04-12'
+    - id: UPGRADE-001
+      name: 升级协议
+      description: 触发词：'升级Synapse'/'更新体系'/'同步最新版本'/'/upgrade'；流程：读取VERSION→获取远程version.json→对比→展示Changelog→总裁确认→执行升级→QA验证
+      source: .claude/harness/upgrade-protocol.md
+      trigger_keywords:
+      - 升级 Synapse
+      - 更新体系
+      - 同步最新版本
+      - /upgrade
+      executor: harness_engineer
+      severity: P2
+      added: '2026-04-12'
+  decisions:
+    levels:
+    - level: L1
+      name: 自动执行
+      decision_maker: 系统自动
+      scope:
+      - 例行操作
+      - 标准流程
+      - 信息查询
+      escalation: null
+    - level: L2
+      name: 专家评审
+      decision_maker: 智囊团 + 领域专家
+      scope:
+      - 专业问题
+      - 需要专家分析
+      - 新领域探索
+      escalation: L3
+      process:
+      - 执行审计师识别需要哪些领域的专家
+      - Lysander召集相关专家（可跨团队）
+      - 专家们各自从专业角度分析
+      - 决策顾问综合各方意见，形成建议
+      - Lysander审核建议，做出最终决策
+    - level: L3
+      name: Lysander 决策
+      decision_maker: Lysander CEO
+      scope:
+      - 基于专家建议做管理决策
+      - 跨团队协调
+      - 资源分配
+      - 方案取舍
+      escalation: L4
+      constraint: 不上报总裁，Lysander有充分专家支撑
+    - level: L4
+      name: 总裁决策
+      decision_maker: 总裁 刘子杨
+      scope:
+      - 外部合同签署/法律协议
+      - 预算投入 > 100万
+      - 公司存续级不可逆决策
+      - 总裁明确要求汇报的特定事项
+      constraint: 仅以上4种情况打扰总裁；其他所有决策由 Lysander + 智囊团 + 专家评审解决
+    task_grading:
+    - grade: S
+      name: 简单
+      criteria:
+      - 风险可忽略
+      - 5分钟内可完成
+      - 不影响架构
+      execution_depth: Lysander派单→团队执行→汇报
+      ceo_participation: 仅看结果
+      process: 快速派单，无需等待方案审批
+    - grade: M
+      name: 常规
+      criteria:
+      - 风险可控
+      - 有成熟方案
+      - 不涉及战略
+      execution_depth: 方案→派单→执行→QA
+      ceo_participation: 仅看结果
+    - grade: L
+      name: 重大
+      criteria:
+      - 高风险
+      - 不可逆
+      - 战略级
+      - 跨多团队
+      execution_depth: 深度分析→专家评审→派单→执行→QA
+      ceo_participation: 最终验收
+  tools:
+    allowed_in_main:
+    - Read
+    - Skill
+    - Agent
+    - Glob
+    - Grep
+    read_exceptions:
+    - active_tasks.yaml
+    - CLAUDE.md
+    - VERSION
+    allowed_in_subagent:
+    - '*'
+    disallowed_in_main:
+    - Bash
+    - Edit
+    - Write
+    - WebSearch
+    - WebFetch
+  workflows:
+    execution_chain:
+    - stage: 开场
+      name: Lysander 身份确认
+      guide: 角色锚定
+      description: 每次与总裁沟通，必须先说：'总裁您好，我是 Lysander，Multi-Agents 团队为您服务！'
+      mandatory: true
+    - stage: '0'
+      name: 目标接收与确认
+      guide: 目标对齐
+      description: 接收总裁的目标/需求，复述确认对齐。目标不清晰时主动追问一次；仍不清晰则基于最佳理解执行，交付时说明假设
+      mandatory: true
+    - stage: '1'
+      name: 智囊团分级与方案
+      guide: 任务分类
+      executor: execution_auditor
+      description: 执行审计师自动分级：S级→快速派单；M级→智囊团快速方案→Lysander审批→派单→QA；L级→深度分析→专家评审→Lysander审批→派单→QA
+    - stage: '2'
+      name: 执行团队共识与执行
+      guide: 角色路由
+      description: Lysander 向执行团队下达：目标、需求、验收标准
+      routing:
+        Harness/配置/执行链/代码: harness_ops 团队
+        交付/IoT/PMO: butler 团队
+        研发/系统: rd 团队
+        知识库/OBS: obs 团队
+        其他: 按关键词路由
+    - stage: '3'
+      name: QA + 智囊团审查
+      guide: 质量门禁
+      sensor: true
+      description: integration_qa 调用 qa_auto_review() 自动评分（>=85通过）；代码语法检查+YAML验证；UI变更执行Visual
+        QA截图验证
+      visual_qa_required: true
+      tools:
+      - mcp__Claude_in_Chrome
+      - mcp__Claude_Preview
+    - stage: '4'
+      name: 结果交付
+      description: S/M级：直接向总裁交付最终结果；L级：提交总裁验收，附智囊团评估摘要+QA评分
+    dispatch_table_format:
+      description: 团队派单表（强制前置，所有S/M/L级别必须输出）
+      columns:
+      - 工作项
+      - 执行者
+      - 交付物
+      executor_tag: 【执行者】：[团队名] - [specialist_id]
+      lysander_tag: 【Lysander角色】：派单方 / 审查方（非执行方）
+      mandatory: true
+    automation_chain:
+    - time: 6:00am Dubai
+      agent: 任务自动恢复Agent
+      actions:
+      - 检查 active_tasks.yaml
+      - 恢复阻塞已解除的任务
+      - 续接未完成工作
+    - time: 8:00am Dubai
+      agent: 情报日报Agent
+      actions:
+      - 搜索AI前沿动态
+      - 筛选实践价值内容
+      - 生成情报日报 → HTML → git push
+    - time: 10:00am Dubai
+      agent: 情报行动Agent
+      actions:
+      - 提取日报建议 → 4专家评估 → 评审决策
+      - Harness Ops团队执行批准项
+      - 生成行动成果报告 → HTML → git push
+    - time: 完成
+      action: Slack通知总裁
+  roles:
+    role_definitions:
+    - role_id: ceo
+      name: Lysander CEO
+      description: AI管理者，总裁刘子杨的AI分身/CEO，负责团队管理和决策
+      level: L3
+      tools_allowed:
+      - Read
+      - Skill
+      - Agent
+      - Glob
+      - Grep
+    - role_id: strategy_think_tank
+      name: 智囊团
+      description: 决策支持，Lysander的AI顾问团队
+      members:
+      - graphify_strategist
+      - relation_discovery
+      - trend_watcher
+      - decision_advisor
+      - execution_auditor
+      - ai_tech_researcher
+      - evolution_engine
+    - role_id: president
+      name: 总裁 刘子杨
+      description: 最高决策者，公司实际拥有者，Lysander的老板
+      level: L4
+      participation:
+      - 提出目标和需求
+      - 最终验收成果
+    - role_id: execution_team
+      name: 执行团队
+      description: 任务执行
+      teams:
+      - harness_ops
+      - butler
+      - rd
+      - obs
+      - content_ops
+      - growth
+      - janus
+      - stock
+    teams:
+      graphify:
+        name: Graphify 智囊团
+        lead: graphify_strategist
+        type: intelligence
+        members:
+        - graphify_strategist
+        - relation_discovery
+        - trend_watcher
+        - decision_advisor
+        - execution_auditor
+        - ai_tech_researcher
+        - evolution_engine
+      harness_ops:
+        name: 驾驭运维部
+        lead: harness_engineer
+        type: infrastructure
+        members:
+        - harness_engineer
+        - ai_systems_dev
+        - knowledge_engineer
+        - integration_qa
+        - harness_entropy_auditor
+        routing_keywords:
+        - Harness
+        - 配置
+        - CLAUDE.md
+        - 执行链
+        - 约束
+        - harness
+        - hook
+        - 熵值
+        - 行数
+        - 膨胀
+        - token预算
+        - CLAUDE.md行数
+        - 代码
+        - 脚本
+        - 自动化
+        - hr_base
+        - CEO Guard
+        - QA
+        - 质量
+        - 验证
+        - 85分
+        - 测试
+        - 集成测试
+        - 知识
+        - 文档
+        - 方法论
+        - 沉淀
+        - 流程
+      butler:
+        name: Butler 交付运营团队
+        lead: butler_pmo
+        type: operations
+        members:
+        - butler_delivery
+        - butler_training
+        - butler_pmo
+        - butler_iot
+        - butler_iot_data
+        - butler_uat
+        routing_keywords:
+        - 交付
+        - 里程碑
+        - 项目
+        - 协调
+        - 培训
+        - 入职
+        - 课程
+        - 学习
+        - PMO
+        - WBS
+        - 项目管理
+        - Asana
+        - active_tasks
+        - IoT
+        - 传感器
+        - MQTT
+        - 设备
+        - IoT数据
+        - 异常检测
+        - 时序
+        - UAT
+        - 验收
+        - 测试
+        - 缺陷
+      rd:
+        name: 研发团队
+        lead: rd_tech_lead
+        type: engineering
+        members:
+        - rd_tech_lead
+        - rd_backend
+        - rd_fronten
+    routing_keywords:
+      harness_engineer:
+      - Harness
+      - 配置
+      - CLAUDE.md
+      - 执行链
+      - 约束
+      - harness
+      - hook
+      harness_entropy_auditor:
+      - 熵值
+      - 行数
+      - 膨胀
+      - token预算
+      - CLAUDE.md行数
+      ai_systems_dev:
+      - 代码
+      - 脚本
+      - 自动化
+      - hr_base
+      - CEO Guard
+      integration_qa:
+      - QA
+      - 质量
+      - 验证
+      - 85分
+      - 测试
+      - 集成测试
+      knowledge_engineer:
+      - 知识
+      - 文档
+      - 方法论
+      - 沉淀
+      - 流程
+      graphify_strategist:
+      - 战略
+      - 分析
+      - OKR
+      - 竞争
+      - 市场
+      decision_advisor:
+      - 决策
+      - 建议
+      - 风险
+      - 评估
+      ai_tech_researcher:
+      - AI研究
+      - 前沿
+      - 技术评估
+      - 情报日报
+      trend_watcher:
+      - 趋势
+      - 情报
+      - 动态
+      - signal
+      relation_discovery:
+      - 关联
+      - 知识图谱
+      - 连接
+      - relation
+      evolution_engine:
+      - 升级
+      - 进化
+      - Gap分析
+      - 版本
+      execution_auditor:
+      - 审计
+      - 执行链
+      - 合规
+      - 分级
+      - 派单检查
+      hr_director:
+      - HR
+      - 入职
+      - 审批
+      - 人员
+      - 试用期
+      capability_architect:
+      - 能力审计
+      - A级
+      - 能力描述
+      - 质量标准
+      obs_architect:
+      - OBS
+      - 知识库
+      - 架构
+      - vault
+      - 标签体系
+      obs_knowledge_engineer:
+      - 知识沉淀
+      - MOC
+      - 链接
+      - 知识萃取
+      obs_search:
+      - 检索
+      - 搜索
+      - Dataview
+      - 查询
+      obs_quality:
+      - 质量
+      - 审核
+      - 准确性
+      - 去重
+      - 健康度
+      content_strategist:
+      - 内容策略
+      - 内容日历
+      - 选题
+      - SEO
+      content_creator:
+      - 写作
+      - 文章
+      - 博客
+      - 长文
+      content_visual:
+      - 视觉
+      - 设计
+      - 图形
+      - Figma
+      - 品牌
+      content_publishing:
+      - 发布
+      - CMS
+      - 自动化发布
+      - Vercel
+      content_training:
+      - 培训设计
+      - 课程
+      - ADDIE
+      - Kirkpatrick
+      content_ai_visual:
+      - AI绘图
+      - Midjourney
+      - Prompt
+      - 插画
+      content_video_script:
+      - 视频脚本
+      - 故事板
+      - YouTube
+      - 剧本
+      content_video_prod:
+      - 视频制作
+      - 剪辑
+      - CapCut
+      - 配音
+      - OBS
+      executive_briefer:
+      - 简报
+      - 汇报
+      - BLUF
+      - 总裁
+      style_calibrator:
+      - 风格
+      - 语气
+      - 校准
+      - Style Guide
+      growth_insights:
+      - 用户研究
+      - PMF
+      - NPS
+      - 洞察
+      - JTBD
+      gtm_strategist:
+      - GTM
+      - 市场
+      - 竞品
+      - 发布策略
+      sales_enablement:
+      - 销售
+      - 赋能
+      - MEDDIC
+      - Battle Card
+      community_manager:
+      - 社区
+      - GitHub
+      - DevRel
+      - 开源
+      - 运营
+      ai_ml_engineer:
+      - AI
+      - ML
+      - Claude API
+      - RAG
+      - Prompt Caching
+      - LLM
+      legal_counsel:
+      - 法律
+      - 合同
+      - 合规
+      - IP
+      - 知识产权
+      financial_analyst:
+      - 财务
+      - 预算
+      - P&L
+      - 建模
+      - DCF
+      butler_pmo:
+      - PMO
+      - WBS
+      - 项目管理
+      - Asana
+      - active_tasks
+      butler_iot:
+      - IoT
+      - 传感器
+      - MQTT
+      - 设备
+      butler_iot_data:
+      - IoT数据
+      - 异常检测
+      - 时序
+      butler_uat:
+      - UAT
+      - 验收
+      - 测试
+      - 缺陷
+      rd_tech_lead:
+      - 架构
+      - 技术方案
+      - 技术选型
+      - ADR
+      rd_backend:
+      - 后端
+      - API
+      - SQL
+      - Python
+      - FastAPI
+      rd_frontend:
+      - 前端
+      - React
+      - Vue
+      - UI
+      - 组件
+      rd_devops:
+      - DevOps
+      - CI/CD
+      - Docker
+      - 部署
+      rd_qa:
+      - 测试
+      - pytest
+      - Playwright
+      - STRIDE
+      - 覆盖率
+  qa:
+    auto_review:
+      function: qa_auto_review
+      source: hr_base.py
+      scale: 0-100
+      threshold: 85
+      dimensions:
+      - name: integrity
+        weight: 20
+        description: 完整性 — 所有约定交付物是否齐全
+      - name: accuracy
+        weight: 20
+        description: 准确性 — 内容/代码/配置是否无错误
+      - name: consistency
+        weight: 20
+        description: 一致性 — 与现有系统/规范无冲突
+      - name: maintainability
+        weight: 20
+        description: 可维护性 — 有注释、结构清晰、可升级
+      - name: compliance
+        weight: 20
+        description: 合规性 — 符合执行链规则和HR规范（重点检查派单记录）
+      gates:
+        pass: score >= 85
+        conditional_pass: 70 <= score < 85（记录缺口，2个会话内修复）
+        fail: 50 <= score < 70（退回修订）
+        critical_fail: score < 50（阻止交付，上报Lysander）
+    agent_audit:
+      function: audit_agent_card / audit_all_agents
+      source: hr_base.py
+      scale: 0-100
+      threshold: 90
+      schedule: 每周一自动运行
+      gates:
+        excellent: score >= 90 — 优秀，保持 active
+        pass: 85 <= score < 90 — 合格，通过门禁
+        improve: 80 <= score < 85 — 需优化，限期提升能力描述至A级
+        fail: 60 <= score < 80 — 不合格，立即修订
+        critical: score < 60 — 严重不合格，降级 inactive 或退役
+      capability_grades:
+        A: 含工具/框架名+具体产出物（目标水平）
+        B: 方法论/框架应用（合格线）
+        C: 仅活动名如'项目管理'（不合格，禁止出现）
+    execution_chain_audit:
+      checks:
+      - 是否有团队派单记录
+      - 执行链各环节是否完整
+      - 执行者身份声明是否存在
+      - QA审查是否执行
+      executor: execution_auditor
+  fsm:
+    version: 1.0.0
+    file: agent-CEO/harness_fsm.py
+    states_file: agent-CEO/config/fsm_states.yaml
+    states_count: 11
+    transition_rules_count: 19
+    terminal_states:
+    - completed
+    - partially_completed
+    - cancelled
+    blocked_states:
+    - blocked
+    - escalated
+    audit:
+      p0_rules:
+      - id: FSM-P0-001
+        name: COMPLETED 必须从 QA_REVIEW
+        check: to_state=='completed' implies from_state=='qa_review'
+        violation_action: 阻止转换，记录到 ceo-guard-audit.log
+      - id: FSM-P0-002
+        name: DISPATCHED 前必须是 IDLE
+        check: to_state=='dispatched' implies from_state in ('idle', '')
+        violation_action: 阻止转换
+      - id: FSM-P0-003
+        name: Visual QA 截图验证
+        check: UI变更 implies visual_qa_screenshot_attached==true
+        violation_action: 阻止 COMPLETED，要求补充截图
+      p1_rules:
+      - id: FSM-P1-001
+        name: BLOCKED 超过 24h 必须 ESCALATED
+        check: blocked_hours>=24 implies to_state=='escalated'
+        violation_action: 自动升级，通知 Lysander
+        auto_trigger: true
+      - id: FSM-P1-002
+        name: 终态不可逆向流转
+        check: from_state in terminal_states implies to_state in terminal_states
+        violation_action: 警告，需要 Lysander 明确决策
+      p2_rules:
+      - id: FSM-P2-001
+        name: ESCALATED 后 Lysander 必须介入
+        check: from_state=='escalated' implies Lysander_decision_recorded==true
+        violation_action: 记录到决策日志
+    integration:
+      handoff_protocol:
+        status_field: result_receipt.status
+        history_field: result_receipt.outcome.state_history
+      active_tasks:
+        file: agent-CEO/config/active_tasks.yaml
+        fsm_field: execution_state
+        persist_on_session_end: true
+        restore_on_session_start: true
+      task_tracker_file: agent-CEO/config/active_tasks_fsm.yaml
+    valid_transitions:
+      idle:
+      - dispatched
+      dispatched:
+      - acknowledged
+      - blocked
+      - cancelled
+      acknowledged:
+      - in_progress
+      - blocked
+      - cancelled
+      in_progress:
+      - qa_review
+      - blocked
+      - escalated
+      - cancelled
+      qa_review:
+      - completed
+      - partially_completed
+      - rejected
+      rejected:
+      - in_progress
+      - cancelled
+      blocked:
+      - in_progress
+      - escalated
+      - cancelled
+      escalated:
+      - in_progress
+      - cancelled
+      completed: []
+      partially_completed: []
+      cancelled: []
+  phase3:
+    version: 1.0.0
+    started: '2026-04-22'
+    modules:
+    - id: T6-4
+      name: Decision Engine
+      file: agent-CEO/decision_engine.py
+      class: DecisionEngine
+      description: L1-L4四级决策引擎：L1自动/L2专家/L3 Lysander/L4总裁
+      status: active
+      demo_status: pass
+    - id: T2-3
+      name: Capability Tracker
+      file: agent-CEO/capability_tracker.py
+      class: CapabilityTracker
+      description: Agent能力持续评估，跟踪成长曲线，记录任务执行结果
+      status: active
+      demo_status: pass
+      data_file: agent-CEO/data/capability/task_outcomes.json
+    - id: T1-4
+      name: Intelligence Forecaster
+      file: agent-CEO/intelligence_forecaster.py
+      class: IntelligenceForecaster
+      description: 情报趋势预测：周期性热点检测、关键词外推、主题动量分析
+      status: active
+      demo_status: pass
+    - id: T3-2
+      name: OPC COO Agent
+      file: agent-CEO/opc_coo.py
+      class: COOAgent
+      personnel_yaml: obs/01-team-knowledge/HR/personnel/opc/coo_agent.yaml
+      description: 首席运营官：任务调度、资源协调、跨团队沟通
+      status: active
+      demo_status: pass
+    - id: T5-2
+      name: Evolution Dashboard
+      file: agent-CEO/evolution_dashboard.py
+      class: EvolutionDashboard
+      config_file: agent-CEO/config/evolution_metrics.yaml
+      description: Synapse进化度量仪表盘：效率/质量/成长三大维度
+      status: active
+      demo_status: pass
+    decision_engine:
+      levels:
+      - level: L1
+        trigger: task_type in (query, status, check, list)
+        action: auto_execute
+      - level: L2
+        trigger: complexity in (M, L) and not routine
+        action: expert_review
+      - level: L3
+        trigger: scope=cross_team or priority in (P0,P1) or risk_level in (high, critical)
+        action: escalate_to_ceo
+      - level: L4
+        trigger: legal=True or financial=True or company_critical=True
+        action: escalate_to_president
+      log_file: agent-CEO/logs/decision_log.jsonl
+    capability_tracker:
+      storage_dir: agent-CEO/data/capability
+      records_file: agent-CEO/data/capability/task_outcomes.json
+      trend_window_days: 30
+      min_records_for_trend: 3
+      skill_gap_thresholds:
+        meets: 0
+        close: 1
+        gap: 2
+    intelligence_forecaster:
+      intel_dir: obs/06-daily-reports
+      prediction_horizon_days: 7
+      lookback_days: 30
+      periodic_topics:
+        monthly_planning: day 1-5
+        monthly_review: day 25-31
+        deep_dive: Tue/Wed
+      confidence_thresholds:
+        high: 0.7
+        medium: 0.4
+        low: 0.1
+    opc_coo:
+      personnel_yaml: obs/01-team-knowledge/HR/personnel/opc/coo_agent.yaml
+      max_concurrent_per_member: 3
+      load_status_thresholds:
+        healthy: 0.7
+        busy: 1.0
+        overloaded: '>1.0'
+      conflict_types:
+      - team_overload
+      - dependency_cycle
+      - resource_contention
+    evolution_dashboard:
+      metrics_config: agent-CEO/config/evolution_metrics.yaml
+      dimensions:
+        efficiency:
+        - task_completion_rate
+        - avg_task_duration
+        - p0_escalation_rate
+        quality:
+        - qa_pass_rate
+        - avg_quality_score
+        - blocker_resolution_time
+        growth:
+        - agent_capability_trend
+        - self_improvement_impact
+      reporting:
+        frequency: daily
+        time: 10:30am Dubai
+        output_dir: obs/06-daily-reports
+      score_thresholds:
+        green: 1.0
+        yellow: 0.8
+        red: 0.0
+  phase3_agents:
+  - specialist_id: opc_coo
+    name: OPC COO Agent
+    team: opc
+    personnel_file: obs/01-team-knowledge/HR/personnel/opc/coo_agent.yaml
+    file: agent-CEO/opc_coo.py
+    class: COOAgent
+    skills:
+    - task_scheduling
+    - resource_coordination
+    - conflict_resolution
+    - cross_team_communication
+    - operational_reporting
+    - priority_management
+    routing_keywords:
+    - 调度
+    - 协调
+    - 跨团队
+    - 资源
+    - 冲突
+    - 运营
+    - COO
+    - handoff
+    - 仪表盘
+  phase3_added: '2026-04-22'
+metadata:
+  created: '2026-04-22'
+  created_by: harness_engineer
+  task_id: T6-1
+  phase: Phase 1 - 基础能力
+  source_files:
+  - CLAUDE.md
+  - agent-CEO/config/organization.yaml
+  - agent-CEO/hr_base.py
+  - .claude/harness/ceo-guard-tests.md
+  - .claude/harness/hr-management.md
+  - .claude/harness/credentials-usage.md
+  - .claude/harness/upgrade-protocol.md
+  - agent-CEO/harness_fsm.py
+  - agent-CEO/config/fsm_states.yaml
+  extracted_rules_count:
+    p0: 9
+    p1: 18
+    p2: 5
+    total: 32
+  fsm_rules_count:
+    p0: 3
+    p1: 2
+    p2: 1
+    total: 6
+  next: T2-1（T2-1 依赖 T6-1 的注册表结构）
+  schema_version: 1.0.0
+  fsm_added: 2026-04-22（T6-3 Phase 2 FSM Engine）
+  self_improvement:
+    engine: agent-CEO/self_improvement.py
+    class: SelfImprovementLoop
+    records_file: agent-CEO/data/execution_records.json
+    suggestions_file: agent-CEO/data/improvement_suggestions.json
+    loop_architecture: "执行结果 → 数据采集 → 模式识别 → 改进建议 → 审批 → 验证 → 融入Harness\n        \
+      \      ↑                                              ↓\n              ← 持续迭代\
+      \ ←←←←←←←←←←←←←←←←←←←←\n"
+    data_collection:
+      executor: 任何执行 Agent
+      trigger: 每次任务完成时记录 ExecutionRecord
+      fields:
+        task_id: 任务标识
+        agent_id: 执行 Agent ID
+        quality_score: 质量评分 0-5
+        completion_time_minutes: 完成耗时（分钟）
+        blockers: 阻塞原因列表
+        timestamp: ISO 8601 时间戳
+        task_type: 任务类型（T1/T2/T6 等）
+        complexity: 预估复杂度 S/M/L
+    pattern_analysis:
+      min_records: 5
+      analysis_dimensions:
+      - name: agent_blocker_rate
+        description: 各 Agent 阻塞率排名
+      - name: task_quality_avg
+        description: 各任务类型平均质量
+      - name: blocker_rate_7d
+        description: 7天窗口阻塞率
+      - name: agent_quality_avg
+        description: 各 Agent 平均质量
+    suggestion_generation:
+      triggers:
+      - condition: Agent 阻塞率 >= 20%
+        category: team
+        priority: P1
+      - condition: 任务类型均分 < 3.5/5
+        category: process
+        priority: P0
+      - condition: 7天内阻塞任务 >= 3
+        category: process
+        priority: P0
+      - condition: Agent 均分 < 3.5/5
+        category: team
+        priority: P1
+      dedup_window_days: 30
+    approval_workflow:
+      p0_approver: Lysander CEO
+      p1_approver: harness_engineer
+      p2_approver: execution_auditor
+      change_log: agent-CEO/data/implemented_changes.json
+    implementation:
+      process_category:
+        action: 更新 harness_registry.yaml 或 CLAUDE.md 执行链节点
+        executor: harness_engineer
+      team_category:
+        action: 更新 organization.yaml Agent 配置
+        executor: harness_engineer + execution_auditor
+      knowledge_category:
+        action: 生成新的知识文档
+        executor: knowledge_engineer
+      tool_category:
+        action: 更新工具层配置
+        executor: ai_systems_dev
+    quality_thresholds:
+      score_min: 3.5
+      blocker_rate_max: 0.2
+      min_records_for_analysis: 5
+    automation:
+      daily_cycle: 10:30am Dubai（紧接情报行动Agent）
+      trigger_keywords:
+      - Self-Improvement
+      - 改进闭环
+      - analyze_patterns

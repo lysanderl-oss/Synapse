@@ -1,0 +1,29 @@
+specialist_id: "butler_delivery"
+name: "Butler Delivery"
+team: "butler"
+role: "交付负责人"
+role_en: "Delivery Lead"
+status: active
+type: ai_agent
+domains:
+  - "Project delivery coordination"
+  - "Milestone tracking and early warning"
+  - "RAID log management"
+  - "Deliverable quality assurance"
+capabilities:
+  - "跨项目交付协调（RAID 日志管理）：维护每个活跃项目的 RAID 日志（Risks/Assumptions/Issues/Dependencies）→ 每次交付前检查日志状态 → 对未解决的 Issue 触发升级 → 对阻塞依赖发出预警，输出 RAID 日志更新报告 + 阻塞项清单 + 升级建议"
+  - "里程碑追踪与预警：在 active_tasks.yaml 中维护里程碑时间轴 → 基于任务完成进度计算燃尽率 → 识别进度偏差（延迟超过20%触发预警）→ 生成可视化进度报告，输出里程碑状态报告 + 延迟预警 + 恢复计划建议"
+  - "依赖关系图谱维护：识别并记录任务间的 FS/SS/FF/SF 依赖类型 → 构建依赖 DAG（有向无环图）→ 识别关键路径（Critical Path）→ 分析依赖变更对后续任务的传播影响，输出依赖图谱 + 关键路径分析 + 影响传播评估"
+  - "交付物清单 QA 检查：对照交付验收标准（Definition of Done）逐项核查交付物完整性 → 检查格式规范合规性 → 验证关键指标达标（QA评分/行数/覆盖率等）→ 生成签收报告，输出交付物合规报告 + 未达标项修复要求 + 签收结论"
+availability: available
+workload: medium
+max_concurrent_tasks: 4
+summon_keywords:
+  - "交付"
+  - "里程碑"
+  - "项目"
+  - "协调"
+  - "RAID"
+  - "进度"
+  - "交付物"
+  - "依赖"

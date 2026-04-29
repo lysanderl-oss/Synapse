@@ -1,0 +1,201 @@
+name: Blog Pipeline (cloud-native)
+
+# OBJ-BLOG-PIPELINE-CLOUD Stage 2 — Cloud-native blog publishing
+# Replaces local Windows Task Scheduler entry. Runs daily at 22:00 Dubai
+# (UTC 18:00) — chosen to avoid colliding with the intelligence pipeline
+# (06:00 / 08:00 / 10:00 Dubai).
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_date:
+        description: "Target date YYYY-MM-DD (empty = today, Dubai)"
+        required: false
+        default: ""
+  schedule:
+    # UTC 18:00 = Dubai 22:00 daily
+    - cron: '0 18 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: blog-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout synapse-ops (main code)
+        uses: actions/checkout@v4
+        with:
+          path: synapse-ops
+
+      - name: Checkout synapse-sessions (session backup)
+        uses: actions/checkout@v4
+        with:
+          repository: lysanderl-glitch/synapse-sessions
+          token: ${{ secrets.SESSIONS_REPO_TOKEN }}
+          path: synapse-sessions
+
+      - name: Checkout lysander-bond (blog site)
+        uses: actions/checkout@v4
+        with:
+          repository: lysanderl-glitch/lysander-bond
+          token: ${{ secrets.SESSIONS_REPO_TOKEN }}
+          path: lysander-bond
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        working-directory: synapse-ops
+        run: |
+          pip install "anthropic>=0.40" requests pyyaml jinja2
+
+      - name: Run session-to-worklog (with retry)
+        working-directory: synapse-ops
+        env:
+          SESSIONS_DIR: ${{ github.workspace }}/synapse-sessions/projects
+          BOND_REPO_DIR: ${{ github.workspace }}/lysander-bond
+          BLOG_SKIP_GIT: "1"
+          PYTHONIOENCODING: utf-8
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          MAX_ATTEMPTS=3
+          ATTEMPT=1
+          DATE_ARG=""
+          if [ -n "${{ inputs.target_date }}" ]; then
+            DATE_ARG="--date ${{ inputs.target_date }}"
+          fi
+          # session-to-worklog.py auto-invokes auto-publish-blog.py at the end,
+          # so this single call drives the whole pipeline (worklog + publish).
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            echo "[Pipeline] Attempt $ATTEMPT/$MAX_ATTEMPTS"
+            if python scripts/session-to-worklog.py $DATE_ARG; then
+              echo "[Pipeline] Success on attempt $ATTEMPT"
+              exit 0
+            fi
+            ATTEMPT=$((ATTEMPT + 1))
+            if [ $ATTEMPT -le $MAX_ATTEMPTS ]; then
+              echo "[Pipeline] Wait 30s before next attempt"
+              sleep 30
+            fi
+          done
+          echo "[Pipeline] All $MAX_ATTEMPTS attempts failed"
+          exit 1
+
+      - name: Commit synapse-ops changes
+        if: always()
+        working-directory: synapse-ops
+        run: |
+          git config user.name "synapse-blog-bot"
+          git config user.email "blog-bot@synapse-pj.local"
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "[Synapse-ops] No changes to commit"
+            exit 0
+          fi
+          git add obs/00-daily-work/ obs/04-content-pipeline/ \
+                  scripts/.blog-published.json scripts/.worklog-processed.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "[Synapse-ops] Nothing staged (only ignored files changed)"
+            exit 0
+          fi
+          git commit -m "chore(blog): daily run ${{ github.run_id }}"
+          for i in 1 2 3; do
+            if git push origin HEAD:${{ github.ref_name }}; then
+              echo "[Synapse-ops] Push success on attempt $i"
+              exit 0
+            fi
+            echo "[Synapse-ops] Push attempt $i failed, rebasing..."
+            git pull --rebase origin ${{ github.ref_name }} || { echo "Rebase failed"; exit 1; }
+          done
+          echo "[Synapse-ops] Push failed after 3 attempts"
+          exit 1
+
+      - name: Commit lysander-bond changes
+        id: commit-bond
+        if: always()
+        working-directory: lysander-bond
+        run: |
+          git config user.name "synapse-blog-bot"
+          git config user.email "blog-bot@synapse-pj.local"
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "[Lysander-bond] No changes to commit"
+            exit 0
+          fi
+          git add -A
+          git commit -m "feat: blog publish from cloud pipeline ${{ github.run_id }}"
+          for i in 1 2 3; do
+            if git push origin main; then
+              echo "[Lysander-bond] Push success on attempt $i"
+              exit 0
+            fi
+            echo "[Lysander-bond] Push attempt $i failed, rebasing..."
+            git pull --rebase origin main || { echo "Rebase failed"; exit 1; }
+          done
+          echo "[Lysander-bond] Push failed after 3 attempts"
+          exit 1
+
+      - name: Verify lysander.bond deployment
+        if: steps.commit-bond.outcome == 'success'
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          # 等 Astro / 部署平台构建（90s 经验值）
+          sleep 90
+          STATUS=$(curl -sS -o /dev/null -w "%{http_code}" -L "https://lysander.bond/blog/" || echo "000")
+          echo "[Deploy] https://lysander.bond/blog/ -> HTTP $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+              echo "[Deploy] SLACK_WEBHOOK_N8N not set, skip alert"
+            else
+              curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+                -H "Content-Type: application/json" \
+                -d "{
+                  \"recipient\": \"president\",
+                  \"title\": \"🚨 lysander.bond 部署可能失败\",
+                  \"body\": \"blog-publish 推送 lysander-bond 后 90s 验证 https://lysander.bond/blog/ 返回 HTTP $STATUS（非 200）— 可能 Astro build 失败或部署平台异常。run=${{ github.run_id }}\",
+                  \"source\": \"blog-publish-deploy-check\",
+                  \"priority\": \"warning\"
+                }" || echo "[Deploy] Slack notify failed (non-blocking)"
+            fi
+            # 部署验证失败不阻塞主流程，仅告警
+          else
+            echo "[Deploy] HTTP 200 OK, deployment verified"
+          fi
+
+      - name: Notify via WF-09 (Slack)
+        if: always()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            TITLE="📚 博客管线完成 ${{ github.run_id }}"
+            BODY="GitHub Actions 云端发布成功（Dubai 22:00 cron）"
+            PRIORITY="info"
+          else
+            TITLE="🚨 博客管线失败 ${{ github.run_id }}"
+            BODY="GitHub Actions 云端发布异常 — 见 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            PRIORITY="critical"
+          fi
+
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping notify"
+            exit 0
+          fi
+
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"recipient\": \"president\",
+              \"title\": \"$TITLE\",
+              \"body\": \"$BODY\",
+              \"source\": \"blog-publish\",
+              \"priority\": \"$PRIORITY\"
+            }" || echo "[Slack] notify failed (non-blocking)"

@@ -1,0 +1,216 @@
+{
+  "html_diff": {
+    "golden_features": [
+      {
+        "file": "2026-04-19-intelligence-daily.html",
+        "title_exists": true,
+        "has_kpi": true,
+        "items_count": 9,
+        "urgent_items": 1,
+        "tags_used": [
+          "red",
+          "tag"
+        ],
+        "css_class_set": [
+          "item",
+          "meta",
+          "red",
+          "score",
+          "summary-box",
+          "tag",
+          "urgent"
+        ],
+        "total_length": 5772,
+        "has_style_block": true,
+        "h1_count": 1,
+        "h2_count": 3,
+        "h3_count": 0
+      },
+      {
+        "file": "2026-04-20-intelligence-daily.html",
+        "title_exists": true,
+        "has_kpi": true,
+        "items_count": 8,
+        "urgent_items": 0,
+        "tags_used": [
+          "green",
+          "label",
+          "orange",
+          "purple",
+          "red",
+          "tag"
+        ],
+        "css_class_set": [
+          "green",
+          "item",
+          "item-meta",
+          "item-summary",
+          "kpi",
+          "kpi-row",
+          "label",
+          "meta",
+          "num",
+          "orange",
+          "purple",
+          "red",
+          "score",
+          "summary-box",
+          "tag"
+        ],
+        "total_length": 7487,
+        "has_style_block": true,
+        "h1_count": 1,
+        "h2_count": 2,
+        "h3_count": 0
+      },
+      {
+        "file": "2026-04-21-intelligence-daily.html",
+        "title_exists": true,
+        "has_kpi": true,
+        "items_count": 7,
+        "urgent_items": 0,
+        "tags_used": [
+          "tag"
+        ],
+        "css_class_set": [
+          "footer",
+          "item",
+          "meta",
+          "score",
+          "summary-box",
+          "tag"
+        ],
+        "total_length": 6271,
+        "has_style_block": true,
+        "h1_count": 1,
+        "h2_count": 2,
+        "h3_count": 7
+      }
+    ],
+    "new_features": {
+      "file": "2026-04-24-intelligence-daily.html",
+      "title_exists": true,
+      "has_kpi": true,
+      "items_count": 10,
+      "urgent_items": 2,
+      "tags_used": [
+        "label",
+        "red",
+        "tag"
+      ],
+      "css_class_set": [
+        "footer-meta",
+        "item",
+        "item-meta",
+        "kpi",
+        "kpi-row",
+        "label",
+        "meta",
+        "num",
+        "red",
+        "score",
+        "summary-box",
+        "tag",
+        "urgent"
+      ],
+      "total_length": 10933,
+      "has_style_block": true,
+      "h1_count": 1,
+      "h2_count": 3,
+      "h3_count": 0
+    },
+    "score": {
+      "field_match": "4/4",
+      "field_match_pct": 1.0,
+      "items_in_range": true,
+      "avg_golden_items": 8.0,
+      "new_items": 10,
+      "css_overlap_rate_pct": 70.6,
+      "golden_class_union_size": 17,
+      "new_class_set_size": 13,
+      "shared_classes": [
+        "item",
+        "item-meta",
+        "kpi",
+        "kpi-row",
+        "label",
+        "meta",
+        "num",
+        "red",
+        "score",
+        "summary-box",
+        "tag",
+        "urgent"
+      ],
+      "avg_golden_length": 6510,
+      "new_length": 10933,
+      "length_ratio": 1.68
+    }
+  },
+  "md_diff": {
+    "golden_features": [
+      {
+        "file": "2026-04-17-action-report.md",
+        "missing": false,
+        "h1_count": 1,
+        "h2_count": 3,
+        "h3_count": 7,
+        "table_rows": 20,
+        "has_strategy_expert": true,
+        "has_product_expert": true,
+        "has_tech_expert": true,
+        "has_financial_expert": true,
+        "has_execute_decision": true,
+        "has_inbox_decision": false,
+        "has_deferred_decision": false,
+        "has_summary_section": false,
+        "total_length": 2953,
+        "line_count": 105
+      },
+      {
+        "file": "2026-04-19-action-report.md",
+        "missing": false,
+        "h1_count": 1,
+        "h2_count": 4,
+        "h3_count": 7,
+        "table_rows": 14,
+        "has_strategy_expert": true,
+        "has_product_expert": true,
+        "has_tech_expert": true,
+        "has_financial_expert": true,
+        "has_execute_decision": true,
+        "has_inbox_decision": false,
+        "has_deferred_decision": false,
+        "has_summary_section": false,
+        "total_length": 3977,
+        "line_count": 118
+      },
+      {
+        "file": "2026-04-20-action-report.md",
+        "missing": false,
+        "h1_count": 1,
+        "h2_count": 5,
+        "h3_count": 3,
+        "table_rows": 23,
+        "has_strategy_expert": true,
+        "has_product_expert": true,
+        "has_tech_expert": true,
+        "has_financial_expert": true,
+        "has_execute_decision": true,
+        "has_inbox_decision": false,
+        "has_deferred_decision": false,
+        "has_summary_section": true,
+        "total_length": 2623,
+        "line_count": 91
+      }
+    ],
+    "new_features": {
+      "file": "2026-04-25-action-report.md",
+      "missing": true
+    },
+    "score": {
+      "error": "NEW markdown file missing",
+      "new_file": "2026-04-25-action-report.md"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+specialist_id: "product_manager"
+name: "Product Manager"
+team: "product_ops"
+role: "产品经理"
+role_en: "Product Manager"
+status: active
+type: ai_agent
+domains:
+  - "Product strategy and roadmap planning"
+  - "Requirements management and prioritization"
+  - "User research and PMF analysis"
+  - "PRD writing and stakeholder alignment"
+capabilities:
+  - "需求池管理与 RICE 优先级评分（Reach/Impact/Confidence/Effort 四维打分）：收集来自市场/用户/内部的需求 → 标准化为用户故事格式 → RICE 评分排序 → 输出优先级矩阵 + 路线图建议，输出 requirements_pool.yaml 更新 + 季度路线图"
+  - "PRD 撰写（问题定义/用户旅程/功能规格/验收标准）：明确问题陈述和目标用户 → 用户旅程地图 → 功能规格（含边界条件）→ 定义可测量的验收标准，输出标准 PRD 文档"
+  - "PMF 评估与产品假设验证：定义 PMF 指标（NPS/留存率/功能使用深度）→ 设计最小测试实验 → 收集信号 → 输出 PMF 评估报告 + 下一步建议"
+  - "产品委员会会议主持（跨团队需求评审 + 优先级对齐）：组织 graphify_strategist + growth_insights + 业务方参与评审 → 达成优先级共识 → 输出会议决策记录"
+availability: available
+workload: low
+max_concurrent_tasks: 3
+summon_keywords:
+  - "产品"
+  - "需求"
+  - "PRD"
+  - "用户故事"
+  - "产品路线图"
+  - "RICE"
+  - "需求池"
+  - "PMF"
+  - "product_ops"

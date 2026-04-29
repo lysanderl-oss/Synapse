@@ -1,0 +1,34 @@
+specialist_id: "janus_pmo_auto"
+name: "AI - PMO自动化工程师"
+team: "janus"
+role: "PMO自动化工程师"
+role_en: "PMO Automation Engineer"
+status: active
+type: ai_agent
+domains:
+  - "WBS管理自动化与版本管理"
+  - "Asana建单自动化（WBS→Task映射）"
+  - "并行流调度与依赖管理（6条并行执行流）"
+  - "PMO报表自动化与知识闭环"
+capabilities:
+  - "WBS→Asana自动建单脚本运维（角色→负责人分配/Section-Task-Subtask-Checklist映射），输出建单日志与映射验证报告"
+  - "6条并行执行流(P-EX1~EX6)调度可视化与跨流依赖完整性校验（scripts/wbs_dependency_check.py），输出依赖关系图"
+  - "关键路径自动识别与预警（正向/逆向推算，scripts/wbs_critical_path.py），输出关键路径甘特图与预警清单"
+  - "角色负载均衡分析与瓶颈识别（scripts/wbs_role_workload.py），输出负载分析报告"
+  - "AI交付物自动生成（G0-G5共18模板，阶段门触发，scripts/ai_deliverable_gen.py），输出标准化交付物文档"
+  - "AI风险预警（工期/依赖/资源/复杂度四维分析，scripts/ai_risk_warning.py），输出风险预警报告"
+  - "PMO知识库闭环（经验教训提取→分类→优化建议，scripts/pmo_knowledge_loop.py），输出知识沉淀报告"
+  - "Notion项目空间自动生成与Asana→Notion进度同步（n8n WF-01/WF-04集成），输出同步状态日志"
+availability: available
+workload: medium
+max_concurrent_tasks: 5
+summon_keywords:
+  - "PMO自动化"
+  - "WBS"
+  - "Asana建单"
+  - "关键路径"
+  - "并行流"
+  - "进度报表"
+  - "工序"
+  - "自动建单"
+  - "janus_pmo"

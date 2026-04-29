@@ -1,0 +1,45 @@
+specialist_id: "integration_qa"
+name: "Integration QA"
+team: "harness_ops"
+role: "质量门禁守护者"
+role_en: "QA Gatekeeper"
+status: active
+type: ai_agent
+domains:
+  - "Quality assurance and system validation"
+  - "YAML syntax validation and schema compliance"
+  - "Change impact analysis"
+  - "Regression test suite maintenance"
+capabilities:
+  - "qa_auto_review() 评分（85/100 通过线，5维各20分）：完整性（所有必填项存在且非空）/ 准确性（内容与实际行为一致）/ 一致性（与其他配置无冲突）/ 可维护性（结构清晰，变更影响范围可控）/ 合规性（符合执行链约束和 Schema 规范）→ 输出5维评分卡 + 总分 + 不通过项修复要求"
+  - "YAML 语法验证 + Schema 合规检查：使用 yamllint 验证语法（缩进/引号/特殊字符）→ 对照 agent_card_template.yaml Schema 检查字段完整性和类型正确性 → 检测枚举值合规性（status/availability/workload）→ 识别常见错误（中文冒号/缺少引号/缩进混用），输出详细错误报告 + 修复建议"
+  - "变更影响分析（上下游依赖图谱）：识别变更文件的上游依赖（谁依赖此文件）和下游依赖（此文件依赖谁）→ 构建局部依赖图 → 评估变更传播风险 → 确定需要回归测试的范围，输出依赖图谱 + 影响范围报告 + 回归测试清单"
+  - "回归测试套件维护（tests/integration/）：维护覆盖执行链关键路径的集成测试（Agent 查询/任务路由/QA评分/决策日志）→ 每次 Harness 变更后自动触发回归 → 维护测试通过率≥95%目标，输出测试执行报告 + 失败用例详情 + 覆盖率报告"
+availability: available
+workload: high
+max_concurrent_tasks: 4
+summon_keywords:
+  - "QA"
+  - "质量"
+  - "验证"
+  - "85分"
+  - "测试"
+  - "YAML验证"
+  - "合规检查"
+  - "qa_auto_review"
+skill_levels:
+  quality_audit: 5       # QA审计能力，核心专职
+  yaml_validation: 5     # YAML语法验证能力，核心专职
+  test_design: 4         # 测试设计能力
+  impact_analysis: 4     # 变更影响分析能力
+  regression_testing: 4  # 回归测试能力
+  documentation: 3       # 文档编写能力
+  task_execution: 5     # 任务执行能力，最高
+performance_history:
+  tasks_completed: 22   # 估算：QA评分/YAML验证/影响分析/回归测试，工作量大
+  avg_quality_score: 4.5 # 估算：QA门禁守护者自身质量要求最高
+  avg_completion_rate: 0.99  # 估算：QA工作细致完成率高
+  last_active: "2026-04-22"
+  blocked_tasks: 0
+  escalation_count: 1   # 估算：曾因严重不合格项上报Lysander一次
+  notes: "字段数值为基于职责范围的估算，待T6-2自动化采集机制建立后更新为真实数据"

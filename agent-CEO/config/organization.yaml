@@ -1,0 +1,185 @@
+# Synapse v3.0 — Organization Configuration
+# Auto-generated from synapse.yaml + harness modules
+# Last updated: 2026-04-23
+
+version: "3.0.0"
+
+teams:
+  graphify:
+    name: "Graphify 智囊团"
+    lead: graphify_strategist
+    type: intelligence
+    members: [graphify_strategist, relation_discovery, trend_watcher, decision_advisor, execution_auditor, ai_tech_researcher, evolution_engine]
+    access_key: graphify
+
+  hr:
+    name: "HR 管理团队"
+    lead: hr_director
+    type: governance
+    members: [hr_director, capability_architect]
+    access_key: hr
+
+  harness_ops:
+    name: "驾驭运维部"
+    lead: harness_engineer
+    type: infrastructure
+    members: [harness_engineer, ai_systems_dev, knowledge_engineer, integration_qa, harness_entropy_auditor]
+    access_key: harness_ops
+
+  butler:
+    name: "Butler 交付运营团队"
+    lead: butler_pmo
+    type: operations
+    members: [butler_delivery, butler_training, butler_pmo, butler_iot, butler_iot_data, butler_uat]
+    access_key: butler
+
+  rd:
+    name: "研发团队"
+    lead: rd_tech_lead
+    type: engineering
+    members: [rd_tech_lead, rd_backend, rd_frontend, rd_devops, rd_qa]
+    access_key: rd
+
+  obs:
+    name: "OBS 知识管理团队"
+    lead: obs_architect
+    type: knowledge
+    members: [obs_architect, obs_knowledge_engineer, obs_search, obs_quality]
+    access_key: obs
+
+  content_ops:
+    name: "内容运营团队"
+    lead: content_strategist
+    type: content
+    members: [content_strategist, content_creator, content_visual, content_publishing, content_training, content_ai_visual, content_video_script, content_video_prod]
+    access_key: content_ops
+
+  pdg:
+    name: "总裁直属小组"
+    lead: executive_briefer
+    type: executive
+    members: [executive_briefer, style_calibrator]
+    access_key: pdg
+
+  growth:
+    name: "增长团队"
+    lead: gtm_strategist
+    type: growth
+    members: [growth_insights, gtm_strategist, sales_enablement, community_manager]
+    access_key: growth
+
+  ai_ml:
+    name: "AI/ML 工程团队"
+    lead: ai_ml_engineer
+    type: engineering
+    members: [ai_ml_engineer]
+    access_key: ai_ml
+
+  specialist:
+    name: "领域专家组"
+    lead: legal_counsel
+    type: specialist
+    members: [legal_counsel, financial_analyst]
+    access_key: specialist
+
+  opc_core:
+    name: "OPC 核心团队"
+    lead: opc_ceo_agent
+    type: executive
+    members: [opc_ceo_agent, opc_coo_agent, opc_cfo_agent, opc_cto_agent]
+    access_key: opc_core
+
+  product_ops:
+    name: "产品运营团队"
+    lead: synapse_product_owner
+    type: product
+    members:
+      - synapse_product_owner
+      - requirements_analyst
+      - pmo_test_engineer
+      - product_manager
+      - product_ops_analyst
+      - content_strategist
+      - enterprise_architect
+      - financial_analyst
+    access_key: product_ops
+
+optional_modules:
+  opt_janus:
+    name: "Janus 项目交付团队"
+    enabled: false
+    members: [janus_pm, janus_de, janus_sa, janus_cde, janus_qa, janus_pmo_auto]
+    description: "Synapse-PJ专属项目交付团队，启用方式：在synapse.yaml的optional模块中取消注释opt_janus"
+
+  opt_stock:
+    name: "股票交易系统团队"
+    enabled: false
+    members: [stock_analyst, stock_quant, stock_risk, stock_news, stock_portfolio]
+    description: "股票交易系统项目专属团队，启用方式：在synapse.yaml的optional模块中取消注释opt_stock"
+
+routing_keywords:
+  "Harness|配置|CLAUDE.md|执行链|约束|harness|hook": harness_engineer
+  "熵值|行数|膨胀|token预算|CLAUDE.md行数": harness_entropy_auditor
+  "代码|脚本|自动化|hr_base|CEO Guard": ai_systems_dev
+  "QA|质量|验证|85分|测试|集成测试": integration_qa
+  "知识|文档|方法论|沉淀|流程": knowledge_engineer
+  "战略|分析|OKR|竞争|市场": graphify_strategist
+  "决策|建议|风险|评估": decision_advisor
+  "AI研究|前沿|技术评估|情报日报": ai_tech_researcher
+  "趋势|情报|动态|signal": trend_watcher
+  "关联|知识图谱|连接|relation": relation_discovery
+  "升级|进化|Gap分析|版本": evolution_engine
+  "审计|执行链|合规|分级|派单检查": execution_auditor
+  "HR|入职|审批|人员|试用期": hr_director
+  "能力审计|A级|能力描述|质量标准": capability_architect
+  "交付|里程碑|项目|协调": butler_delivery
+  "培训|入职|课程|学习": butler_training
+  "PMO|WBS|项目管理|Asana|active_tasks": butler_pmo
+  "IoT|传感器|MQTT|设备": butler_iot
+  "IoT数据|异常检测|时序": butler_iot_data
+  "UAT|验收|测试|缺陷": butler_uat
+  "架构|技术方案|技术选型|ADR": rd_tech_lead
+  "后端|API|SQL|Python|FastAPI": rd_backend
+  "前端|React|Vue|UI|组件": rd_frontend
+  "DevOps|CI/CD|Docker|部署": rd_devops
+  "测试|pytest|Playwright|STRIDE|覆盖率": rd_qa
+  "OBS|知识库|架构|vault|标签体系": obs_architect
+  "知识沉淀|MOC|链接|知识萃取": obs_knowledge_engineer
+  "检索|搜索|Dataview|查询": obs_search
+  "质量|审核|准确性|去重|健康度": obs_quality
+  "内容策略|内容日历|选题|SEO": content_strategist
+  "写作|文章|博客|长文": content_creator
+  "视觉|设计|图形|Figma|品牌": content_visual
+  "发布|CMS|自动化发布|Vercel": content_publishing
+  "培训设计|课程|ADDIE|Kirkpatrick": content_training
+  "AI绘图|Midjourney|Prompt|插画": content_ai_visual
+  "视频脚本|故事板|YouTube|剧本": content_video_script
+  "视频制作|剪辑|CapCut|配音|OBS": content_video_prod
+  "简报|汇报|BLUF|总裁": executive_briefer
+  "风格|语气|校准|Style Guide": style_calibrator
+  "用户研究|PMF|NPS|洞察|JTBD": growth_insights
+  "GTM|市场|竞品|发布策略": gtm_strategist
+  "销售|赋能|MEDDIC|Battle Card": sales_enablement
+  "社区|GitHub|DevRel|开源|运营": community_manager
+  "AI|ML|Claude API|RAG|Prompt Caching|LLM": ai_ml_engineer
+  "法律|合同|合规|IP|知识产权": legal_counsel
+  "财务|预算|P&L|建模|DCF": financial_analyst
+  "OPC|CFO|成本|预算控制|ROI|财务预警|消耗监控": opc_cfo_agent
+  "产品规划|PRD|路线图|版本规划|产品委员会|需求评审|产品化": synapse_product_owner
+  "需求分析|需求池|RICE评分|需求建模|用户故事|需求捕获": requirements_analyst
+  "内容战略|博客|lysander-bond|内容矩阵|SEO|品牌|叙事定位": content_strategist
+  "企业架构|Gartner|治理方案|白皮书|企业 Agent|合规": enterprise_architect
+  "融资|财务模型|定价|估值|ARR|SaaS 财务|商业化": financial_analyst
+
+product_lines:
+  - id: janus_digital
+    committee_chair: graphify_strategist
+    status: active
+    launched: 2026-04-24
+    requirements_partition: "product: janus_digital"
+  - id: enterprise_governance
+    committee_chair: graphify_strategist
+    co_execution: harness_engineer
+    status: active
+    launched: 2026-04-24
+    requirements_partition: "product: enterprise_governance"

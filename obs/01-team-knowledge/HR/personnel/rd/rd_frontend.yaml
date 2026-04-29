@@ -1,0 +1,29 @@
+specialist_id: "rd_frontend"
+name: "RD Frontend"
+team: "rd"
+role: "前端开发工程师"
+role_en: "Frontend Developer"
+status: active
+type: ai_agent
+domains:
+  - "React/Vue3 component architecture"
+  - "Accessibility and WCAG compliance"
+  - "Lighthouse performance optimization"
+  - "TypeScript type-safe development"
+capabilities:
+  - "React/Vue3 组件架构设计（Atomic Design 方法论）：按 Atoms/Molecules/Organisms/Templates/Pages 五层原子设计分解 UI → 定义组件 Props 接口契约（TypeScript 强类型）→ 实现状态管理方案（Pinia/Zustand）→ 设计组件文档（Storybook），输出组件库架构文档 + TypeScript 接口定义 + Storybook 文档"
+  - "WCAG 2.1 AA 无障碍标准实现（axe-core 自动检测）：语义化 HTML 标签使用 → ARIA 属性正确配置（role/aria-label/aria-describedby）→ 键盘导航完整实现（Tab顺序/Focus管理/Escape关闭）→ 集成 axe-core 自动检测（CI 中运行，零 violation 为合格），输出无障碍检测报告 + 修复清单 + 合规证明"
+  - "Lighthouse 性能预算管理（目标 >=90 分）：建立性能预算（LCP<2.5s/FID<100ms/CLS<0.1/TTI<5s）→ 图片懒加载+WebP格式 → 代码分割（React.lazy/动态import）→ 关键 CSS 内联 → CDN 缓存策略 → 集成 Lighthouse CI（PR 合并门禁），输出性能分析报告 + 优化方案 + Lighthouse CI 配置"
+  - "TypeScript 类型安全开发：strict 模式配置（noImplicitAny/strictNullChecks/strictFunctionTypes）→ 复杂类型推导（泛型/条件类型/映射类型）→ API 响应类型生成（openapi-typescript 从 OpenAPI Schema 自动生成）→ 运行时类型验证（Zod），输出 tsconfig.json 配置 + 类型定义文件 + 类型安全指南"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "前端"
+  - "React"
+  - "Vue"
+  - "UI"
+  - "组件"
+  - "TypeScript"
+  - "Lighthouse"
+  - "无障碍"

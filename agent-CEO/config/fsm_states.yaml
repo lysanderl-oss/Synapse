@@ -1,0 +1,451 @@
+# =============================================================================
+# Synapse v3.0 — FSM 状态定义与转换规则
+# =============================================================================
+# 版本：1.0.0
+# 用途：Synapse 执行链状态机的完整状态定义、转换规则、审计约束
+# 来源：handoff_protocol.yaml (37字段) + harness_registry.yaml (32条规则)
+# 管理方：harness_engineer / execution_auditor
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# ① 状态定义（11个状态，与 ExecutionState.Enum 完全对齐）
+# -----------------------------------------------------------------------------
+states:
+
+  idle:
+    code: "IDLE"
+    description: "任务初始状态，尚未派单"
+    is_terminal: false
+    is_blocked: false
+    color: "gray"
+    entry_trigger: "TaskTracker.create() 时自动初始化"
+    next_valid: ["dispatched"]
+    usage: "新任务创建后进入 IDLE，等待 Lysander 派单"
+
+  dispatched:
+    code: "DISPATCHED"
+    description: "已派单，等待 Agent 接收"
+    is_terminal: false
+    is_blocked: false
+    color: "blue"
+    entry_trigger: "Lysander 调用 Agent 工具（派单）"
+    next_valid: ["acknowledged", "blocked", "cancelled"]
+    handoff_field: "dispatch_template 填充完毕，handoff_status=DISPATCHED"
+    audit_note: "P0: DISPATCHED 前必须是 IDLE"
+    usage: "子 Agent 尚未确认接收，FSM 在此等待"
+
+  acknowledged:
+    code: "ACKNOWLEDGED"
+    description: "Agent 已接收任务，已读取派单内容"
+    is_terminal: false
+    is_blocked: false
+    color: "cyan"
+    entry_trigger: "子 Agent 首次 ACK 响应或首次工具调用"
+    next_valid: ["in_progress", "blocked", "cancelled"]
+    handoff_field: "result_receipt 待填充"
+    usage: "Agent 确认任务，告知 Lysander 任务已开始处理"
+
+  in_progress:
+    code: "IN_PROGRESS"
+    description: "Agent 正在执行任务"
+    is_terminal: false
+    is_blocked: false
+    color: "yellow"
+    entry_trigger: "Agent 开始执行第一个实质性操作（Edit/Write/Bash）"
+    next_valid: ["qa_review", "blocked", "escalated", "cancelled"]
+    handoff_field: "result_receipt.status = 'in_progress'"
+    usage: "执行期间持续处于此状态，可多次往返"
+    audit_note: "ESCALATED 路径：Agent 发现无法解决的障碍，请求升级"
+
+  qa_review:
+    code: "QA_REVIEW"
+    description: "提交 QA + 智囊团审查"
+    is_terminal: false
+    is_blocked: false
+    color: "orange"
+    entry_trigger: "Agent 提交 result_receipt 且自评满足验收标准"
+    next_valid: ["completed", "partially_completed", "rejected"]
+    handoff_field: "result_receipt.quality.self_assessment_score + qa_passed"
+    visual_qa: "UI/前端变更必须执行截图验证"
+    audit_note: "P0-7: COMPLETED 必须从 QA_REVIEW 转换而来，不可跳过"
+    usage: "integration_qa 调用 qa_auto_review() 自动评分（>=85通过）"
+
+  completed:
+    code: "COMPLETED"
+    description: "任务全部完成，所有验收标准满足"
+    is_terminal: true
+    is_blocked: false
+    color: "green"
+    entry_trigger: "QA 审查通过（qa_passed=true）"
+    next_valid: []
+    handoff_field: "result_receipt.status = 'completed'"
+    audit_note: "终态，不可继续流转"
+    usage: "Lysander 向总裁交付最终结果"
+
+  partially_completed:
+    code: "PARTIALLY_COMPLETED"
+    description: "部分完成，存在遗留项需后续处理"
+    is_terminal: true
+    is_blocked: false
+    color: "yellow"
+    entry_trigger: "QA 审查通过但有遗留项"
+    next_valid: []
+    handoff_field: "result_receipt.status = 'partially_completed'"
+    audit_note: "终态，需 Lysander 决策后续"
+    usage: "Lysander 评估遗留项，决定是否开启新任务"
+
+  blocked:
+    code: "BLOCKED"
+    description: "执行阻塞，无法继续"
+    is_terminal: false
+    is_blocked: true
+    color: "red"
+    entry_trigger: "Agent 检测到无法解决的障碍（依赖缺失/权限不足/外部阻塞）"
+    next_valid: ["in_progress", "escalated", "cancelled"]
+    handoff_field: "result_receipt.status = 'blocked', blockers 字段必填"
+    audit_note: "P1: BLOCKED 超过 24h 必须 ESCALATED"
+    escalation_trigger: "BLOCKED 持续 >= 24h → 自动或手动 ESCALATED"
+    usage: "Lysander 介入解决阻塞，或升级到智囊团"
+
+  escalated:
+    code: "ESCALATED"
+    description: "已升级到 Lysander / 智囊团，等待干预"
+    is_terminal: false
+    is_blocked: true
+    color: "magenta"
+    entry_trigger: "BLOCKED 超过 24h，或 Agent/执行审计师主动升级"
+    next_valid: ["in_progress", "cancelled"]
+    handoff_field: "result_receipt.status = 'escalated'"
+    audit_note: "P2: ESCALATED 后 Lysander 必须介入决策"
+    usage: "Lysander 决策后，恢复到 IN_PROGRESS 或 CANCELLED"
+
+  rejected:
+    code: "REJECTED"
+    description: "QA 审查未通过，需返工"
+    is_terminal: false
+    is_blocked: false
+    color: "red"
+    entry_trigger: "QA 审查不通过（qa_passed=false 或评分 < 85）"
+    next_valid: ["in_progress", "cancelled"]
+    handoff_field: "result_receipt.status = 'rejected'"
+    usage: "Agent 根据 QA 反馈进行返工，修复后重新 submit_qa"
+
+  cancelled:
+    code: "CANCELLED"
+    description: "任务已取消"
+    is_terminal: true
+    is_blocked: false
+    color: "gray"
+    entry_trigger: "Lysander 主动取消，或依赖项失败导致"
+    next_valid: []
+    audit_note: "终态，不可恢复（需新建任务）"
+    usage: "任务终止，清理资源，通知相关方"
+
+
+# -----------------------------------------------------------------------------
+# ② 转换规则（状态图）
+# -----------------------------------------------------------------------------
+# 格式：from_state → [to_state1, to_state2, ...]
+# 每条规则的说明：
+#   trigger: 触发条件
+#   mandatory_check: 转换前必须通过的检查
+#   audit_rule: 关联的 harness_registry 规则（P0/P1/P2）
+
+transition_rules:
+
+  # ── 主路径 ────────────────────────────────────────────────────────────────
+
+  idle_to_dispatched:
+    from: "idle"
+    to: "dispatched"
+    trigger: "Lysander 调用 Agent 工具"
+    mandatory_check:
+      - "派单表已输出（EXEC-CHAIN-001 P0）"
+      - "问候语已输出（EXEC-CHAIN-002 P0）"
+      - "task_id 已生成"
+    audit_rule: "P0-5 强制团队派单制度"
+
+  dispatched_to_acknowledged:
+    from: "dispatched"
+    to: "acknowledged"
+    trigger: "子 Agent 首次 ACK 或首次工具调用"
+    mandatory_check: []
+    audit_rule: null
+
+  acknowledged_to_in_progress:
+    from: "acknowledged"
+    to: "in_progress"
+    trigger: "Agent 开始实质性执行"
+    mandatory_check:
+      - "Agent 已读取派单内容"
+    audit_rule: null
+
+  in_progress_to_qa_review:
+    from: "in_progress"
+    to: "qa_review"
+    trigger: "Agent 自评满足验收标准，主动提交"
+    mandatory_check:
+      - "所有 acceptance_criteria 已自检"
+      - "result_receipt 已填写 self_assessment_score"
+    audit_rule: "P0-7 QA审查不可跳过"
+
+  qa_review_to_completed:
+    from: "qa_review"
+    to: "completed"
+    trigger: "QA 通过（qa_auto_review >= 85 且无 P0 违规）"
+    mandatory_check:
+      - "audit_fsm_transition pass=True"
+      - "qa_passed=true"
+    audit_rule: "P0-7, QA-STANDARD-001"
+    visual_qa: "UI/前端变更必须截图验证"
+
+  qa_review_to_partially_completed:
+    from: "qa_review"
+    to: "partially_completed"
+    trigger: "QA 通过但存在遗留项"
+    mandatory_check:
+      - "qa_passed=true"
+      - "result_receipt.next_steps 已填写"
+    audit_rule: null
+
+  qa_review_to_rejected:
+    from: "qa_review"
+    to: "rejected"
+    trigger: "QA 不通过（qa_auto_review < 85 或发现 P0 违规）"
+    mandatory_check:
+      - "quality_notes 已填写不通过原因"
+    audit_rule: "P0-7, QA-STANDARD-001"
+
+  # ── 异常路径 ──────────────────────────────────────────────────────────────
+
+  rejected_to_in_progress:
+    from: "rejected"
+    to: "in_progress"
+    trigger: "Agent 修复问题，准备返工"
+    mandatory_check:
+      - "QA 反馈已读取"
+      - "revision_plan 已制定"
+    audit_rule: null
+
+  in_progress_to_blocked:
+    from: "in_progress"
+    to: "blocked"
+    trigger: "Agent 发现无法解决的障碍"
+    mandatory_check:
+      - "blockers 字段已填写原因"
+    audit_rule: null
+
+  acknowledged_to_blocked:
+    from: "acknowledged"
+    to: "blocked"
+    trigger: "Agent 接收后无法开始执行"
+    mandatory_check:
+      - "blockers 字段已填写原因"
+    audit_rule: null
+
+  dispatched_to_blocked:
+    from: "dispatched"
+    to: "blocked"
+    trigger: "派单后发现 Agent 不可用"
+    mandatory_check:
+      - "reason 已记录"
+    audit_rule: null
+
+  blocked_to_escalated:
+    from: "blocked"
+    to: "escalated"
+    trigger: "BLOCKED 超过 24h，或主动升级"
+    mandatory_check:
+      - "blocked_hours >= 24（自动化触发）"
+      - "Lysander 已知悉"
+    audit_rule: "P1-18 自动化事件触发"
+
+  escalated_to_in_progress:
+    from: "escalated"
+    to: "in_progress"
+    trigger: "Lysander 决策：解除阻塞，恢复执行"
+    mandatory_check:
+      - "Lysander 已在 active_tasks.yaml 记录决策"
+    audit_rule: "L3 决策"
+
+  in_progress_to_escalated:
+    from: "in_progress"
+    to: "escalated"
+    trigger: "Agent 发现战略级/跨团队障碍，主动升级"
+    mandatory_check:
+      - "escalation_reason 已填写"
+    audit_rule: null
+
+  # ── 取消路径（终态前均可取消）────────────────────────────────────────────
+
+  dispatched_to_cancelled:
+    from: "dispatched"
+    to: "cancelled"
+    trigger: "Lysander 取消派单"
+    mandatory_check:
+      - "cancellation_reason 已记录"
+    audit_rule: null
+
+  acknowledged_to_cancelled:
+    from: "acknowledged"
+    to: "cancelled"
+    trigger: "Lysander 取消任务"
+    mandatory_check:
+      - "cancellation_reason 已记录"
+    audit_rule: null
+
+  in_progress_to_cancelled:
+    from: "in_progress"
+    to: "cancelled"
+    trigger: "Lysander 终止执行"
+    mandatory_check:
+      - "cancellation_reason 已记录"
+    audit_rule: null
+
+  rejected_to_cancelled:
+    from: "rejected"
+    to: "cancelled"
+    trigger: "Lysander 决定不返工，取消任务"
+    mandatory_check:
+      - "cancellation_reason 已记录"
+    audit_rule: null
+
+  blocked_to_cancelled:
+    from: "blocked"
+    to: "cancelled"
+    trigger: "Lysander 决定放弃阻塞任务"
+    mandatory_check:
+      - "cancellation_reason 已记录"
+    audit_rule: null
+
+  escalated_to_cancelled:
+    from: "escalated"
+    to: "cancelled"
+    trigger: "Lysander 决策：取消任务"
+    mandatory_check:
+      - "cancellation_reason 已记录"
+    audit_rule: null
+
+
+# -----------------------------------------------------------------------------
+# ③ 审计约束（集成 harness_registry.yaml）
+# -----------------------------------------------------------------------------
+audit_constraints:
+
+  p0_rules:
+    - rule_id: "FSM-P0-001"
+      name: "COMPLETED 必须从 QA_REVIEW"
+      description: "任何任务在进入 COMPLETED 前必须经过 QA_REVIEW 状态"
+      source: "EXEC-CHAIN-003 / EXEC-CHAIN-004"
+      check: "to_state=='completed' implies from_state=='qa_review'"
+      severity: "P0"
+      action_on_violation: "阻止转换，记录到 ceo-guard-audit.log"
+
+    - rule_id: "FSM-P0-002"
+      name: "DISPATCHED 前必须是 IDLE"
+      description: "新任务派单前必须处于 IDLE 状态"
+      source: "EXEC-CHAIN-001"
+      check: "to_state=='dispatched' implies from_state in ('idle', '')"
+      severity: "P0"
+      action_on_violation: "阻止转换"
+
+    - rule_id: "FSM-P0-003"
+      name: "Visual QA 截图验证"
+      description: "UI/前端变更在 COMPLETED 前必须完成截图验证"
+      source: "EXEC-CHAIN-004"
+      check: "UI变更 implies visual_qa_screenshot_attached==true"
+      severity: "P0"
+      action_on_violation: "阻止 COMPLETED，要求补充截图"
+
+  p1_rules:
+    - rule_id: "FSM-P1-001"
+      name: "BLOCKED 超过 24h 必须 ESCALATED"
+      description: "任务处于 BLOCKED 状态超过 24小时，必须升级到 ESCALATED"
+      source: "AUTO-TRIGGER-001"
+      check: "from_state=='blocked' and blocked_hours>=24 implies to_state=='escalated'"
+      severity: "P1"
+      action_on_violation: "自动升级，通知 Lysander"
+
+    - rule_id: "FSM-P1-002"
+      name: "终态不可逆向流转"
+      description: "COMPLETED/PARTIALLY_COMPLETED/CANCELLED 不可流转到非终态"
+      source: "EXEC-CHAIN-005"
+      check: "from_state in terminal_states implies to_state in terminal_states"
+      severity: "P1"
+      action_on_violation: "警告，需要 Lysander 明确决策"
+
+  p2_rules:
+    - rule_id: "FSM-P2-001"
+      name: "ESCALATED 后 Lysander 必须介入"
+      description: "任务进入 ESCALATED 后，Lysander 必须做出决策才能恢复"
+      source: "L3 决策机制"
+      check: "from_state=='escalated' implies Lysander_decision_recorded==true"
+      severity: "P2"
+      action_on_violation: "记录到决策日志"
+
+
+# -----------------------------------------------------------------------------
+# ④ 状态颜色规范（用于 UI 渲染）
+# -----------------------------------------------------------------------------
+state_colors:
+  gray:     "#9ca3af"   # IDLE / CANCELLED
+  blue:     "#3b82f6"   # DISPATCHED
+  cyan:     "#06b6d4"   # ACKNOWLEDGED
+  yellow:   "#eab308"   # IN_PROGRESS / PARTIALLY_COMPLETED
+  orange:   "#f97316"   # QA_REVIEW
+  green:    "#22c55e"   # COMPLETED
+  red:      "#ef4444"   # BLOCKED / REJECTED
+  magenta:  "#d946ef"   # ESCALATED
+
+
+# -----------------------------------------------------------------------------
+# ⑤ FSM 与 handoff_protocol.yaml 的字段映射
+# -----------------------------------------------------------------------------
+handoff_field_mapping:
+  # FSM 状态 → handoff_protocol.yaml result_receipt.status 映射
+  status_mapping:
+    idle:                 "pending"
+    dispatched:           "dispatched"
+    acknowledged:         "acknowledged"
+    in_progress:          "in_progress"
+    qa_review:            "in_review"
+    completed:            "completed"
+    partially_completed:  "partially_completed"
+    blocked:              "blocked"
+    escalated:            "escalated"
+    rejected:             "rejected"
+    cancelled:            "cancelled"
+
+  # FSM history 字段 → handoff_protocol.yaml metadata 映射
+  history_metadata:
+    - fsm_field: "from"
+      handoff_field: "previous_state"
+    - fsm_field: "to"
+      handoff_field: "current_state"
+    - fsm_field: "reason"
+      handoff_field: "transition_note"
+    - fsm_field: "timestamp"
+      handoff_field: "state_changed_at"
+
+
+# -----------------------------------------------------------------------------
+# ⑥ 元数据
+# -----------------------------------------------------------------------------
+metadata:
+  created: "2026-04-22"
+  created_by: "harness_engineer"
+  task_id: "T6-3"
+  phase: "Phase 2 - FSM Engine"
+  version: "1.0.0"
+  fsm_file: "agent-CEO/harness_fsm.py"
+  source_files:
+    - "agent-CEO/config/handoff_protocol.yaml"  # 37字段，状态枚举
+    - "agent-CEO/config/harness_registry.yaml"  # 32条规则，审计约束
+  states_count: 11
+  transition_rules_count: 19
+  audit_rules_count:
+    p0: 3
+    p1: 2
+    p2: 1
+    total: 6
+  next: "T6-4（FSM 与 active_tasks.yaml 集成）"

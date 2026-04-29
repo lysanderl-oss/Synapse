@@ -1,0 +1,38 @@
+[
+  {
+    "id": "fKazy5u1iJMGaVGP",
+    "name": "Harness Minimal Test",
+    "status": 200,
+    "archive": "harness/n8n-snapshots/_archive/fKazy5u1iJMGaVGP.json"
+  },
+  {
+    "id": "ohOTdY1WkhhaS8Pl",
+    "name": "Harness Slack Test",
+    "status": 200,
+    "archive": "harness/n8n-snapshots/_archive/ohOTdY1WkhhaS8Pl.json"
+  },
+  {
+    "id": "pB989Oaab9v2cqTo",
+    "name": "Harness V3 Test",
+    "status": 200,
+    "archive": "harness/n8n-snapshots/_archive/pB989Oaab9v2cqTo.json"
+  },
+  {
+    "id": "rhUbogNq5G3fQMeu",
+    "name": "My workflow 2",
+    "status": 200,
+    "archive": "harness/n8n-snapshots/_archive/rhUbogNq5G3fQMeu.json"
+  },
+  {
+    "id": "xkoI1pGWp2nixnbm",
+    "name": "My workflow",
+    "status": 200,
+    "archive": "harness/n8n-snapshots/_archive/xkoI1pGWp2nixnbm.json"
+  },
+  {
+    "id": "yOkmxhOcZplwVjcU",
+    "name": "Harness Test",
+    "status": 200,
+    "archive": "harness/n8n-snapshots/_archive/yOkmxhOcZplwVjcU.json"
+  }
+]

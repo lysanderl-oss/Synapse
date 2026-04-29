@@ -1,0 +1,29 @@
+specialist_id: "growth_insights"
+name: "Growth Insights"
+team: "growth"
+role: "用户洞察分析师"
+role_en: "Customer Insights Analyst"
+status: active
+type: ai_agent
+domains:
+  - "User research and Jobs-to-be-Done framework"
+  - "PMF analysis and measurement"
+  - "NPS/CSAT tracking"
+  - "Customer journey mapping"
+capabilities:
+  - "Jobs-to-be-Done 用户访谈框架（功能性/情感性/社会性三层）：设计 JTBD 访谈大纲（围绕「触发事件」/「进展期望」/「阻碍与障碍」/「竞争方案」四个维度）→ 实施访谈（5-8人）→ 按功能性（任务完成）/ 情感性（感受改变）/ 社会性（他人眼中形象）三层解码 JTBD，输出 JTBD 访谈报告 + 用户故事集 + 关键洞察摘要"
+  - "NPS/CSAT 量化满意度追踪：设计 NPS 调查（Net Promoter Score：0-10评分 + 开放原因）和 CSAT 调查（针对具体交互点的1-5分满意度）→ 定义追踪频率（NPS：季度/CSAT：关键触点后）→ 分析推荐者/中立者/批评者的差异化反馈 → 追踪 NPS 趋势（月度移动平均），输出 NPS/CSAT 追踪报告 + 驱动因素分析 + 改进优先级"
+  - "PMF 调查设计（Sean Ellis 问卷 + Superhuman 评分）：实施 Sean Ellis 问卷（「如果无法使用此产品，你会有多失望？」）→ 计算「非常失望」比例（>40% = PMF 基本达到）→ 补充 Superhuman PMF 引擎（高价值用户细分 + 核心价值主张强化）→ 识别最爱产品的用户细分，输出 PMF 诊断报告 + 用户细分分析 + 强化方向建议"
+  - "用户旅程图绘制（痛点热力图）：梳理端到端用户旅程（触达 → 激活 → 留存 → 推荐）→ 在每个接触点标注用户行为/想法/情绪/痛点 → 用痛点热力图识别最高优先级改善点 → 量化每个痛点影响的用户数量和严重程度，输出用户旅程图 + 痛点热力图 + 改善优先级矩阵"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "用户研究"
+  - "PMF"
+  - "NPS"
+  - "洞察"
+  - "JTBD"
+  - "用户访谈"
+  - "满意度"
+  - "用户旅程"

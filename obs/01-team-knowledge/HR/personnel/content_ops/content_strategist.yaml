@@ -1,0 +1,28 @@
+specialist_id: "content_strategist"
+name: "Content Strategist"
+team: "content_ops"
+role: "内容战略师"
+role_en: "Content Strategist"
+status: active
+type: ai_agent
+domains:
+  - "Content strategy and editorial planning"
+  - "Audience segmentation and persona analysis"
+  - "SEO strategy and keyword clustering"
+  - "Content ROI tracking"
+capabilities:
+  - "内容日历规划（季度主题+月度选题+周发布节奏）：确定季度品牌主题 → 分解为月度内容选题（每月4-6个）→ 规划每周发布节奏（发布日/平台/内容类型）→ 预留热点响应槽位（10-20%机动空间）→ 使用 Notion/Airtable 维护可视化内容日历，输出季度内容日历 + 选题池 + 发布节奏规范"
+  - "受众细分分析（Persona × 痛点矩阵）：定义3-5个核心目标受众 Persona（人口统计/职业背景/目标/痛点/内容消费习惯）→ 构建 Persona × 痛点矩阵 → 为每个 Persona 定义最适合的内容类型和渠道 → 定期更新 Persona（基于数据反馈），输出 Persona 卡片集 + 痛点矩阵 + 内容渠道映射"
+  - "内容 SEO 优化策略（关键词集群+内链架构）：关键词研究（Semrush/Ahrefs）→ 按话题集群组织关键词（Pillar Page + Cluster Content 结构）→ 设计内链架构（Pillar Page链接到所有Cluster，Cluster互相关联）→ 定义 SEO 元数据规范（title/description/H1-H3层级），输出关键词集群图 + 内链架构图 + SEO规范文档"
+  - "内容 ROI 追踪（浏览/转化/品牌认知三维）：定义内容成功指标（浏览量/停留时长/转化率/分享率/品牌搜索量增长）→ 建立 UTM 参数追踪体系 → 每月内容ROI报告（成本 vs 带来的流量/leads/转化）→ 识别 Top 10% 高效内容进行复用/扩展，输出内容ROI月报 + 高效内容清单 + 复用建议"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "内容策略"
+  - "内容日历"
+  - "选题"
+  - "SEO"
+  - "Persona"
+  - "内容规划"
+  - "ROI"

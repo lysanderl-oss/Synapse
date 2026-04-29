@@ -1,0 +1,97 @@
+# Lysander-AI Hub Notion Configuration
+# Updated: 2026-04-26
+
+lysander_ai_hub:
+  hub_page_id: "34d114fc-090c-8161-a690-f613c4401b6a"  # 已由 API 验证（2026-04-26），旧 ID 81db 返回 404
+  hub_url: "https://www.notion.so/Hub-34d114fc090c8161a690f613c4401b6a"
+  database_id: "34d114fc-090c-81d9-b64f-d42a3d8a99c7"
+  database_url: "https://www.notion.so/34d114fc090c81d9b64fd42a3d8a99c7"
+  trae_page_id: "34d114fc-090c-81cc-9ae5-f86cb150da31"
+  products_page_id: "34e114fc-090c-81e5-ac9d-ffaa2fdf0450"
+  asset_map_page_id: "34e114fc-090c-817a-ad30-f978d16ed93c"
+  team_structure_page_id: "34e114fc-090c-817d-8349-e1e394e3dc7b"
+  notion_version: "2022-06-28"
+  parent_page_id: "34d114fc-090c-81c3-9f4c-e79ce0249b47"  # Singapore Keppel Project [Test Copy - 0425]，其父级为 PMO workspace 根（workspace:true）
+
+credentials:
+  # All credentials stored as Windows User Environment Variables
+  # Never hardcoded in scripts
+  env_vars:
+    - NOTION_TOKEN       # Notion integration token
+    - NOTION_DB_ID       # Lysander-AI work log database ID
+    - ANTHROPIC_API_KEY  # For AI-generated daily summaries
+
+sync:
+  schedule: "22:00 Dubai (UTC 18:00)"  # 工作日志日同步
+  weekly_hub_sync: "20:00 Dubai Sunday (UTC 16:00)"  # Hub 周度全同步
+  task_name: "Synapse-NotionDailySync"
+  task_state: "Ready"
+  enabled: true
+  weekly_workflow: ".github/workflows/hub-weekly-sync.yml"
+  fallback_buffer: "logs/notion-sync-buffer.json"
+  scripts:
+    collector: "scripts/claude_code_collector.py"
+    daily_sync: "scripts/notion_daily_sync.py"
+    codex_append: "scripts/codex_log_append.py"
+    diff_to_notion: "scripts/diff-to-notion.py"     # 新增
+    hub_health_check: "scripts/hub-health-check.py"  # 新增
+
+sources:
+  claude_code:
+    auto: true
+    data_sources:
+      - "git log (Dubai TZ, --since/--before)"
+      - "agent-CEO/data/intercept_log.yaml"
+    sync_trigger: "daily at 22:00 Dubai via Task Scheduler"
+  codex:
+    auto: true  # reads logs/codex-daily.md
+    append_script: "scripts/codex_log_append.py"
+    log_file: "logs/codex-daily.md"
+    append_usage: "py -3 scripts/codex_log_append.py \"task\" \"output\" \"done\""
+  trae:
+    auto: false  # manual update only
+    template: "Use Notion page: Trae Promotion Station"
+    page_id: "34d114fc-090c-81cc-9ae5-f86cb150da31"
+
+database_schema:
+  fields:
+    - Name: title
+    - Date: date
+    - Source: select  # Claude Code | Codex | Trae
+    - Level: select   # daily | weekly | milestone | strategic_insight
+    - Summary: rich_text
+    - KeyOutcomes: rich_text
+    - KeyDecisions: rich_text
+    - NextSteps: rich_text
+    - CommitCount: number
+    - SyncStatus: select  # auto | manual | retry
+
+backfill:
+  completed: true
+  date: "2026-04-25"
+  milestones_written: 5
+  entries:
+    - date: "2026-04-23"
+      source: "Claude Code"
+      level: "milestone"
+    - date: "2026-04-24"
+      source: "Claude Code"
+      level: "milestone"
+    - date: "2026-04-25"
+      source: "Claude Code"
+      level: "milestone"
+    - date: "2026-04-25"
+      source: "Codex"
+      level: "milestone"
+    - date: "2026-04-25"
+      source: "Trae"
+      level: "milestone"
+
+external_showcase:
+  target_date: "2026-05-02"
+  status: completed
+  content_completed: "2026-04-26"
+  sub_pages_created: 3
+  script: "scripts/notion_hub_builder.py"
+  manual_step_required: "总裁在 Notion 界面开启 Share to web + 拖动数据库到页面底部"
+  notes: "全量内容已上线：产品线/资产全景/团队体系3个子页面 + 落地页导航 + 自动化管道升级"

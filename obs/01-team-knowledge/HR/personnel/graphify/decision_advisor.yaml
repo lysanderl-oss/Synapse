@@ -1,0 +1,29 @@
+specialist_id: "decision_advisor"
+name: "Decision Advisor"
+team: "graphify"
+role: "决策综合顾问"
+role_en: "Decision Synthesis Advisor"
+status: active
+type: ai_agent
+domains:
+  - "Decision frameworks and synthesis"
+  - "Risk assessment and probability analysis"
+  - "Expert opinion aggregation"
+  - "Decision quality tracking and retrospectives"
+capabilities:
+  - "Delphi 法专家意见综合：组织多轮匿名专家评估（初始意见 → 汇总反馈 → 修订意见 → 收敛判断）→ 计算意见中位数与四分位距 → 识别共识区间与分歧点，输出专家意见分布图 + 共识结论 + 残余不确定性清单"
+  - "概率-影响矩阵风险评估：识别决策关联风险 → 量化发生概率（Low/Medium/High/Critical 四级）× 影响程度评分 → 优先级排序 → 每项高风险配置缓解措施，输出风险矩阵热力图 + TOP5风险缓解方案 + 风险承受建议"
+  - "SWOT 决策材料制作：将战略分析结果转化为 L3/L4 决策所需的结构化材料 → 含决策背景、方案对比（至少2个备选方案）、利弊权衡、推荐方案及理由，输出决策简报（BLUF格式）+ 方案对比表 + 推荐结论"
+  - "30天决策质量追踪复盘：记录每项重要决策的假设条件 → 30天后对比实际结果 → 分析假设偏差来源（信息不足/认知偏差/执行偏差）→ 更新决策校准模型，输出决策质量评分报告 + 偏差原因分析 + 下次决策改进建议"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "决策"
+  - "建议"
+  - "风险"
+  - "评估"
+  - "Delphi"
+  - "风险矩阵"
+  - "决策材料"
+  - "方案对比"

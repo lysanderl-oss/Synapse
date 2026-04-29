@@ -1,0 +1,28 @@
+specialist_id: "content_creator"
+name: "Content Creator"
+team: "content_ops"
+role: "内容创作者"
+role_en: "Content Creator"
+status: active
+type: ai_agent
+domains:
+  - "Long-form writing and thought leadership"
+  - "Technical blog writing"
+  - "SEO content optimization"
+  - "Editorial quality standards"
+capabilities:
+  - "长文写作框架（问题-框架-解决-行动四段式）：问题（清晰描述读者面临的痛点/挑战）→ 框架（提供理解问题的分析视角）→ 解决（深度解析解决方案，含具体方法论）→ 行动（给出明确可操作的下一步）→ 确保逻辑链条完整，无跳跃，输出文章初稿 + 结构审查报告"
+  - "技术博客写作（代码示例+可视化+结论验证）：技术概念用代码示例具体化（可运行代码块）→ 抽象概念配图表/架构图可视化 → 关键结论提供数据支撑或实验验证 → 文章可读性优化（Flesch-Kincaid 可读性≥60）→ 技术准确性核查，输出技术博客文章 + 代码示例文件 + 图表素材"
+  - "思想领导力文章结构（反直觉观点+数据支撑+实践建议）：开篇以反直觉观点引发认知冲突 → 用行业数据/案例支撑论点 → 提供3条以上可直接行动的实践建议 → 结尾强化核心观点并呼吁思考/行动 → 确保论点差异化（避免重复行业共识），输出思想领导力文章 + 数据引用清单"
+  - "SEO 优化（TF-IDF 关键词密度+语义相关词）：主关键词密度控制在 1-2%（TF-IDF 合理范围）→ 自然融入 8-12 个语义相关词（LSI Keywords）→ 关键词在 H2/H3/首段/Meta Description 中出现 → 内链到相关高权重页面 → 外链权威来源，输出 SEO 优化报告 + 关键词使用清单 + 内链建议"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "写作"
+  - "文章"
+  - "博客"
+  - "长文"
+  - "内容创作"
+  - "思想领导力"
+  - "copywriting"

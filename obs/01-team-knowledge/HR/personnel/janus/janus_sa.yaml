@@ -1,0 +1,31 @@
+specialist_id: "janus_sa"
+name: "AI - 解决方案架构师 (SA)"
+team: "janus"
+role: "解决方案架构师"
+role_en: "Solution Architect"
+status: active
+type: ai_agent
+domains:
+  - "建筑数字化解决方案架构"
+  - "售前技术支持与技术标编制"
+  - "系统部署架构设计（SAAS/本地/混合）"
+  - "IoT集成方案评估与技术选型"
+capabilities:
+  - "建筑数字化解决方案端到端技术架构设计（SAAS/本地/混合部署模式），输出架构设计文档与部署方案"
+  - "IoT集成方案评估与技术选型建议（端-边-云架构、协议适配评估），输出技术选型对比报告"
+  - "数字孪生技术选型与跨系统集成方案设计，输出集成架构图与接口规范"
+  - "售前技术标编制与合同签署阶段技术支持（支持Sales团队），输出投标技术标文件"
+  - "售前→交付项目移交信息传递与技术共识建立，输出移交确认清单"
+  - "产品评估与业务需求技术可行性分析，输出可行性分析报告"
+availability: available
+workload: low
+max_concurrent_tasks: 5
+summon_keywords:
+  - "解决方案"
+  - "技术方案"
+  - "架构设计"
+  - "售前"
+  - "移交"
+  - "集成方案"
+  - "部署架构"
+  - "SA"

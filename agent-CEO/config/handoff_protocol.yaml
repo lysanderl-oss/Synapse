@@ -1,0 +1,217 @@
+# =============================================================================
+# Synapse Multi-Agent 交接协议（Handoff Protocol）
+# =============================================================================
+# 版本：1.0.0
+# 用途：标准化 Lysander ↔ 子 Agent 之间的任务派单与结果汇报
+# 包含：dispatch_template / result_receipt / handoff_status
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# ① 任务派单模板（dispatch_template）
+# -----------------------------------------------------------------------------
+# 用途：Lysander CEO 向子 Agent 下达任务时的标准化结构
+# 触发：每次派单前必须填充此模板
+# -----------------------------------------------------------------------------
+dispatch_template:
+  dispatch_id: "UUID-v4"                        # 全局唯一派单ID
+  timestamp: "ISO8601格式，如 2026-04-22T10:00:00+04:00"
+  from: "Lysander CEO"                          # 派单人身份
+  to: "agent_id"                                # 目标Agent标识，如 harness_engineer
+  task:
+    task_id: "T6-2"                             # 任务编号（Synapse任务体系）
+    title: "任务标题"                            # 简洁的任务名称
+    priority: "P0 | P1 | P2"                     # 优先级
+    #   P0 — 紧急/阻断性，立即执行
+    #   P1 — 高优先级，24h内完成
+    #   P2 — 标准任务，有序推进
+    description: "详细描述任务的背景、目标和具体要求"  # 任务内容
+    acceptance_criteria:                        # 验收标准（子Agent必须自评）
+      - "标准1：交付物必须满足的条件"
+      - "标准2：可量化/可验证的结果"
+    constraints:                                # 约束条件（不可违反）
+      - "约束1：如只读文件、禁止操作区域"
+      - "约束2：如必须使用特定工具链"
+    deadline: "ISO8601格式截止时间"
+    dependencies:                               # 前置依赖任务
+      - "T6-1"                                  # 必须先完成的父任务
+      - "T2-1"
+  context:
+    relevant_files:                             # 任务相关文件（Agent应先读取）
+      - "obs/01-team-knowledge/HR/personnel/"
+    previous_dispatch_id: "UUID"                # 上一次派单ID（用于链式追溯）
+    rationale: "此次派单的决策说明"             # 为什么要做此任务
+  metadata:
+    execution_stage: "Phase 1 - 基础能力"     # 当前执行阶段
+    workflow: "execution_chain_v2"             # 执行链版本
+    dispatch_serial: 1                           # 当日派单序号（用于排序）
+
+
+# -----------------------------------------------------------------------------
+# ② 结果回执模板（result_receipt）
+# -----------------------------------------------------------------------------
+# 用途：子 Agent 完成任务后向 Lysander 汇报的标准化结构
+# 触发：子Agent执行完成或阻塞时必须填写此模板
+# -----------------------------------------------------------------------------
+result_receipt:
+  receipt_id: "UUID-v4"                        # 全局唯一回执ID
+  dispatch_id: "UUID-v4"                       # 关联的派单ID（必须与dispatch对应）
+  timestamp: "ISO8601格式"
+  from: "agent_id"                             # 执行Agent身份
+  to: "Lysander CEO"                           # 接收人
+  status: "completed | partially_completed | blocked"
+  #   completed          — 任务全部完成，所有验收标准满足
+  #   partially_completed— 部分完成，有遗留项需后续处理
+  #   blocked            — 无法继续，存在阻塞项需要升级
+
+  outcome:
+    summary: "执行摘要（100字以内，说明核心产出）"
+    deliverables:                               # 交付物清单
+      - "file1.yaml"
+      - "file2.md"
+    files_modified:                            # 本次修改的文件
+      - "path/to/modified/file"
+    files_created:                             # 本次新建的文件
+      - "path/to/new/file"
+
+  quality:
+    self_assessment_score: 8                    # 自评分 0-10
+    #   8-10：完全满足，产出门槛
+    #   5-7：  基本满足，有改进空间
+    #   0-4：  不满足，需要返工
+    qa_passed: true                             # QA是否通过（调用qa_auto_review）
+    quality_notes: "自评说明，解释扣分原因或改进点"
+
+  blockers:                                    # 阻塞项（如有）
+    - "阻塞项描述 + 影响范围 + 建议解决方案"
+
+  next_steps:                                  # 建议的后续行动
+    - "建议1：如后续任务、改进方向"
+    - "建议2：如需要升级L4决策"
+
+
+# -----------------------------------------------------------------------------
+# ③ 交接状态枚举（handoff_status）
+# -----------------------------------------------------------------------------
+# 用途：标识每次交接的当前状态，用于状态追踪和审计
+# 管理方：Lysander CEO / execution_auditor
+# -----------------------------------------------------------------------------
+handoff_status:
+  # --- 核心状态 ---
+  dispatched:
+    code: "DISPATCHED"
+    description: "已派单，等待Agent接收"
+    trigger: "Lysander调用Agent工具时自动置为DISPATCHED"
+    next_valid: ["ACKNOWLEDGED", "CANCELLED"]
+
+  acknowledged:
+    code: "ACKNOWLEDGED"
+    description: "Agent已接收任务，已读取派单内容"
+    trigger: "子Agent首次工具调用或明确ACK响应"
+    next_valid: ["IN_PROGRESS", "BLOCKED", "CANCELLED"]
+
+  in_progress:
+    code: "IN_PROGRESS"
+    description: "Agent正在执行任务"
+    trigger: "Agent开始执行第一个实质性操作"
+    next_valid: ["COMPLETED", "PARTIALLY_COMPLETED", "BLOCKED", "CANCELLED"]
+
+  completed:
+    code: "COMPLETED"
+    description: "任务全部完成，所有验收标准满足"
+    trigger: "Agent提交result_receipt且status=completed"
+    next_valid: []                              # 终态
+
+  partially_completed:
+    code: "PARTIALLY_COMPLETED"
+    description: "部分完成，存在遗留项"
+    trigger: "Agent提交result_receipt且status=partially_completed"
+    next_valid: []                              # 需Lysander决策后续
+
+  blocked:
+    code: "BLOCKED"
+    description: "执行阻塞，无法继续"
+    trigger: "Agent检测到无法解决的障碍"
+    next_valid: []                              # 需Lysander介入
+
+  cancelled:
+    code: "CANCELLED"
+    description: "任务已取消"
+    trigger: "Lysander主动取消或依赖项失败导致"
+    next_valid: []                              # 终态
+
+  # --- 状态转换规则 ---
+  transition_rules:
+    - "每个派单有且只有一个当前状态"
+    - "状态只能按 next_valid 列表中的方向推进"
+    - "逆向转换（如IN_PROGRESS→ACKNOWLEDGED）需Lysander手动干预"
+    - "终态（COMPLETED/PARTIALLY_COMPLETED/BLOCKED/CANCELLED）不再流转"
+    - "execution_auditor在【③QA审查】时校验状态转换合法性"
+
+
+# -----------------------------------------------------------------------------
+# ④ 使用示例（正式使用时取消注释并填充）
+# -----------------------------------------------------------------------------
+# example_dispatch:
+#   dispatch_id: "d9f3a2b1-c4e5-6789-abcd-ef1234567890"
+#   timestamp: "2026-04-22T10:30:00+04:00"
+#   from: "Lysander CEO"
+#   to: "harness_engineer"
+#   task:
+#     task_id: "T6-2"
+#     title: "设计Agent交接协议模板"
+#     priority: "P1"
+#     description: "为Synapse Multi-Agent团队设计标准化的任务派单与结果汇报Schema"
+#     acceptance_criteria:
+#       - "包含dispatch_template、result_receipt、handoff_status三大组件"
+#       - "YAML语法严格正确，可被pyyaml解析"
+#       - "文件输出至agent-CEO/config/handoff_protocol.yaml"
+#     constraints:
+#       - "字段命名统一使用snake_case"
+#       - "禁止在主对话中直接执行Edit/Write（B类工具须经派单）"
+#     deadline: "2026-04-22T23:59:00+04:00"
+#     dependencies: ["T6-1"]
+#   context:
+#     relevant_files:
+#       - "agent-CEO/config/organization.yaml"
+#       - ".claude/harness/hr-management.md"
+#     previous_dispatch_id: null
+#     rationale: "建立标准化交接流程，防止信息丢失和上下文断裂"
+#   metadata:
+#     execution_stage: "Phase 1 - 基础能力"
+#     workflow: "execution_chain_v2"
+#     dispatch_serial: 6
+#
+# example_result_receipt:
+#   receipt_id: "a1b2c3d4-e5f6-7890-abcd-ef0987654321"
+#   dispatch_id: "d9f3a2b1-c4e5-6789-abcd-ef1234567890"
+#   timestamp: "2026-04-22T11:45:00+04:00"
+#   from: "harness_engineer"
+#   to: "Lysander CEO"
+#   status: "completed"
+#   outcome:
+#     summary: "已完成handoff_protocol.yaml设计，包含三大模板及使用示例"
+#     deliverables:
+#       - "agent-CEO/config/handoff_protocol.yaml"
+#     files_modified: []
+#     files_created:
+#       - "agent-CEO/config/handoff_protocol.yaml"
+#   quality:
+#     self_assessment_score: 9
+#     qa_passed: true
+#     quality_notes: "YAML语法验证通过，包含完整示例，覆盖所有必需字段"
+#   blockers: []
+#   next_steps:
+#     - "建议T6-3任务：integrate handoff_protocol into active_tasks.yaml tracking"
+
+
+# -----------------------------------------------------------------------------
+# 元数据
+# -----------------------------------------------------------------------------
+metadata:
+  created: "2026-04-22"
+  created_by: "harness_engineer"
+  task_id: "T6-2"
+  phase: "Phase 1 - 基础能力"
+  version: "1.0.0"
+  status: "template"       # template → implemented after T6-1
+  note: "T6-1（执行链集成规范）完成后，本模板状态升级为implemented"

@@ -1,0 +1,29 @@
+specialist_id: "style_calibrator"
+name: "Style Calibrator"
+team: "pdg"
+role: "风格校准师"
+role_en: "Style Calibrator"
+status: active
+type: ai_agent
+domains:
+  - "Communication style modeling and preference capture"
+  - "Multi-channel feedback processing"
+  - "Team-wide output style calibration"
+  - "Style Guide versioning"
+capabilities:
+  - "用户风格建模（词汇库+句式偏好+表达习惯的 Style Guide 构建）：分析总裁历史沟通记录（用词频率/句长分布/表达习惯/话题偏好）→ 构建个性化词汇库（高频词/偏好表达/禁忌词汇）→ 记录句式偏好（简洁直接 vs 详细分析/中文 vs 英文混用比例）→ 版本化 Style Guide（v1.0开始，随反馈迭代），输出 Style Guide 文档 + 词汇库"
+  - "四通道反馈处理（直接指令/隐含偏好/语气信号/场景适配）：直接指令（'以后汇报用这种格式'→ 立即更新 Style Guide）→ 隐含偏好（总裁修改了某输出 → 分析修改模式 → 提取偏好规则）→ 语气信号（'太啰嗦了'/'很好这样' → 校准详略度）→ 场景适配（正式汇报 vs 快速确认 vs 头脑风暴的差异格式），输出反馈处理日志 + Style Guide 更新记录"
+  - "全团队输出风格校准（统一调性/格式/详略度）：将总裁 Style Guide 转化为各团队的输出规范 → 为每种输出类型定义格式模板（任务完成汇报/风险预警/决策建议/日常更新）→ 定期审查各团队输出与规范的符合度 → 发现风格漂移及时纠正，输出团队输出规范文档 + 风格审查报告 + 漂移纠正建议"
+  - "Style Guide 版本管理与迭代：用 git 版本管理 Style Guide（每次更新提交 commit message 说明变更原因）→ 追踪每次更新的触发事件 → 分析 Style Guide 演变趋势（总裁偏好如何随时间变化）→ 定期发布 Style Guide 变更摘要给全团队，输出版本化 Style Guide 文件 + 变更日志 + 团队同步简报"
+availability: available
+workload: low
+max_concurrent_tasks: 2
+summon_keywords:
+  - "风格"
+  - "语气"
+  - "校准"
+  - "Style Guide"
+  - "总裁偏好"
+  - "表达风格"
+  - "沟通风格"
+  - "PDG"

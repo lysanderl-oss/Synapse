@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Desktop_Commander__write_file",
+      "mcp__scheduled-tasks__list_scheduled_tasks",
+      "mcp__scheduled-tasks__create_scheduled_task",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "mcp__scheduled-tasks__update_scheduled_task",
+      "PowerShell(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\lysanderl_janusd\\\\Synapse-Mini\\\\scripts\\\\planx_migrate.ps1\" 2>&1)",
+      "PowerShell(& \"C:\\\\Users\\\\lysanderl_janusd\\\\Synapse-Mini\\\\scripts\\\\planx_migrate.ps1\" 2>&1)",
+      "PowerShell(powershell -ExecutionPolicy Bypass -File scripts/planx_migrate.ps1)",
+      "PowerShell(pwsh -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\lysanderl_janusd\\\\Synapse-Mini\\\\scripts\\\\planx_migrate.ps1\" 2>&1)",
+      "PowerShell(gh auth *)",
+      "PowerShell(gh repo *)",
+      "PowerShell(git *)",
+      "PowerShell(Get-Content \"C:\\\\Users\\\\lysanderl_janusd\\\\.claude\\\\projects\\\\C--Users-lysanderl-janusd-Synapse-Mini\\\\31a72be0-0ccb-462b-9e5a-2cfdd63522b3.jsonl\" | ForEach-Object { $_ | ConvertFrom-Json } | Select-Object -ExpandProperty type | Sort-Object -Unique | Out-String)",
+      "PowerShell(Get-Content \"C:\\\\Users\\\\lysanderl_janusd\\\\.claude\\\\projects\\\\C--Users-lysanderl-janusd-Synapse-Mini\\\\31a72be0-0ccb-462b-9e5a-2cfdd63522b3.jsonl\" | ForEach-Object { $_ | ConvertFrom-Json } | Where-Object { $_.type -eq \"system\" } | Select-Object -First 1 | ConvertTo-Json -Depth 4 | Out-String)",
+      "PowerShell(Get-Content \"C:\\\\Users\\\\lysanderl_janusd\\\\.claude\\\\projects\\\\C--Users-lysanderl-janusd-Synapse-Mini\\\\31a72be0-0ccb-462b-9e5a-2cfdd63522b3.jsonl\" | ForEach-Object { $_ | ConvertFrom-Json } | Where-Object { $_.type -eq \"last-prompt\" } | Select-Object -First 1 | ConvertTo-Json -Depth 4 | Out-String)",
+      "PowerShell(py *)",
+      "PowerShell([System.IO.Directory]::GetDirectories\\(\"C:\\\\Users\\\\lysanderl_janusd\\\\Synapse-Mini\\\\obs\\\\04-content-pipeline\"\\))",
+      "Bash(python3 *)"
+    ]
+  }
+}

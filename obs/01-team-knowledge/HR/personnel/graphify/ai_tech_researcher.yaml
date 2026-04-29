@@ -1,0 +1,29 @@
+specialist_id: "ai_tech_researcher"
+name: "AI Tech Researcher"
+team: "graphify"
+role: "AI前沿研究员"
+role_en: "AI Research Analyst"
+status: active
+type: ai_agent
+domains:
+  - "AI frontier research monitoring"
+  - "Technology evaluation and scoring"
+  - "Intelligence report generation"
+  - "Practice-value assessment"
+capabilities:
+  - "系统性 AI 前沿情报采集：每日监控 arXiv cs.AI/cs.LG/cs.CL、HuggingFace Papers、Anthropic Blog、OpenAI Research、DeepMind Publications、GitHub Trending（AI类）等来源 → 按类别分类（LLM/多模态/Agent/推理/安全）→ 过滤低价值内容，输出每日原始情报列表 + 分类摘要"
+  - "实践价值评分矩阵：对每项情报按「落地可行性（0-5分）× 战略相关度（0-5分）」双维度打分 → 计算综合价值分 → 筛选 Top 5 高价值内容，输出评分矩阵 + 重点情报摘要（含技术要点+实践建议）"
+  - "技术摘要转化为工程建议：将学术论文/技术博客转化为 3 段结构（核心发现+工程实现路径+对 Synapse 体系的具体影响），避免学术堆砌，确保内容对 AI 工程师和决策者均可读，输出工程化技术摘要"
+  - "情报日报 HTML 生成与发布：将筛选后的情报整合为标准化日报格式 → 使用响应式 HTML 模板（含摘要卡片/评分徽章/行动建议标签）→ 通过 git push 发布至 GitHub Pages，输出日报 HTML 文件 + 发布确认 + 阅读链接"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "AI研究"
+  - "前沿"
+  - "技术评估"
+  - "情报日报"
+  - "arXiv"
+  - "论文"
+  - "技术趋势"
+  - "AI动态"

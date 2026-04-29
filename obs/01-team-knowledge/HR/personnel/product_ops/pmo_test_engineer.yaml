@@ -1,0 +1,488 @@
+specialist_id: "pmo_test_engineer"
+name: "PMO 测试工程师"
+team: "product_ops"
+role: "PMO自动化系统测试负责人"
+role_en: "PMO Automation Test Engineer"
+status: active
+type: ai_agent
+
+domains:
+  - "PMO Auto 系统功能验收测试"
+  - "回归测试与版本验证"
+  - "测试用例库维护与管理"
+  - "缺陷识别与测试报告"
+
+responsibilities:
+  - "测试用例维护：持久持有 PMO Auto 系统完整测试用例库，版本变更时自动更新"
+  - "版本验收测试：每次 PMO 系统改版/升级时执行完整 E2E 验证"
+  - "回归测试：基于历史测试用例对改版范围执行回归，确保无功能退化"
+  - "测试报告：出具标准化测试报告（含步骤结果/缺陷清单/验收结论）"
+
+capabilities:
+  - "E2E 全流程测试：项目录入→WBS同步→Asana建单→Webhook注册→通知验证，输出逐步测试结果"
+  - "PRD 一致性核查：对照 PRD 需求逐条核验 AC，判断已实现/未实现/部分实现"
+  - "源码探查：读取 Python/YAML/JSON 源码，识别硬编码凭证/时区混用/TODO未完成等代码质量问题"
+  - "n8n 工作流验证：检查 WF-01 至 WF-08 的节点配置、凭证引用方式、触发条件"
+  - "数据库结构验证：核查 SQLite schema（notified_events/webhook_subscriptions/webhook_events_dedup 表）"
+  - "缺陷分级：将发现的问题分为 P0/P1/P2/P3，配合 RICE 评分评估修复优先级"
+
+availability: available
+workload: low
+max_concurrent_tasks: 3
+
+summon_keywords:
+  - "PMO测试"
+  - "验收测试"
+  - "PMO Auto"
+  - "测试报告"
+  - "回归测试"
+  - "WF-06"
+  - "WF-08"
+  - "Webhook测试"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 测试用例库 v1.0
+# 维护规则：PMO Auto 系统版本升级后，pmo_test_engineer 负责更新此库
+# ─────────────────────────────────────────────────────────────────────────────
+test_suite_version: "v1.5"
+last_updated: "2026-04-27"
+
+test_case_usage_rule: >
+  test_copy_parameters 是参照模板，执行测试时需先从参考项目（Singapore Keppel 0423）
+  读取原始字段值，然后新建一条独立的 Test Copy 项目执行全流程测试。
+  不直接在原始参考项目上操作。TC-A01 至 TC-A06 均基于新建的 Test Copy 项目执行，
+  原始 0423 项目仅作为字段参考标本，不进行任何写操作。
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 强制校验原则（REQ-012-TC-01，2026-04-24 新增）
+# 源起：REQ-012 首轮诊断发现 Singapore Keppel Test Copy 项目 Asana 任务 assignee
+#       全部为 null，V2.0 GA 测试未发现，因 GA 仅覆盖反向链路（Asana→n8n→Slack），
+#       未测正向链路（Notion WBS→Asana Task 创建）。
+# ─────────────────────────────────────────────────────────────────────────────
+mandatory_validation_principles:
+
+  - id: "PRINCIPLE-001"
+    name: "WBS 正向链路验证必须深入任务粒度"
+    added_at: "2026-04-24"
+    source: "REQ-012-TC-01 首轮诊断"
+    applies_to:
+      - "WF-02 → WF-03 → WF-04 → WF-05 任一步骤执行后的验证"
+      - "WBS 正向链路 E2E 测试（Notion WBS → Asana Task 创建）"
+    statement: >
+      WBS 正向链路（WF-02 → WF-03 → WF-04 → WF-05）的任一步骤执行成功后，必须通过
+      Asana API 验证任务粒度的数据完整性，不能仅依赖 n8n 执行成功或 Notion 回填状态
+      作为通过判据。
+    mandatory_checks:
+      - field: "assignee"
+        rule: "每个应分配的任务 assignee 非 null"
+      - field: "parent"
+        rule: "子任务（L4）的 parent 字段正确指向父任务（L3）"
+      - field: "dependencies"
+        rule: "L3/L4 的前置依赖字段正确 wired"
+      - field: "custom_fields"
+        rule: "key_deliverable / 负责角色 等自定义字段非空"
+      - field: "section"
+        rule: "任务正确归属到 L2 阶段对应的 Section"
+    fail_criterion: >
+      上述任一校验项在应有值时为空或错误映射，即使 n8n 和 Notion 侧都显示成功，
+      测试用例也必须 FAIL。
+    root_cause_note: >
+      2026-04-24 REQ-012 首轮诊断中，总裁发现 Singapore Keppel Test Copy 项目的
+      Asana 任务 assignee 全部为 null。此问题在 V2.0 GA（TC-A01~A06）中未被发现，
+      因为 GA 测试仅覆盖反向链路（Asana → n8n → Slack），未测正向链路
+      （Notion WBS → Asana Task 创建）。本原则旨在防止同类问题在 GA 后再次暴露。
+    severity: "P0"
+    enforcement: "每次 WBS 相关测试（含回归）必查，缺失即视为测试方法论违规"
+
+  - id: "PRINCIPLE-002"
+    name: "Test Copy 必须包含完整团队成员信息（团队信息维护 = 已维护）"
+    added_at: "2026-04-27"
+    source: "总裁重复反馈（2026-04-25 首次，2026-04-27 再次）"
+    applies_to:
+      - "所有 Test Copy 项目创建（TC-A01 前置）"
+      - "任何触发 WF-01 的测试项目录入"
+    statement: >
+      Test Copy 项目在 Notion Registry 中创建时，「团队信息维护」字段必须设置为
+      「已维护」，且 pm_email / de_email / sa_email / cde_email 四个邮箱字段必须
+      全部非空。任何团队字段为空或「团队信息维护 = 未维护」的测试均视为无效测试，
+      不得记录为有效验收结果。
+    mandatory_checks:
+      - field: "团队信息维护"
+        rule: "status = 已维护（非 未维护 / 维护中）"
+      - field: "pm_email"
+        rule: "非空，格式为有效邮箱"
+      - field: "de_email"
+        rule: "非空，格式为有效邮箱"
+      - field: "sa_email"
+        rule: "非空，格式为有效邮箱"
+      - field: "cde_email"
+        rule: "非空，格式为有效邮箱"
+    fail_criterion: >
+      任何上述字段为空或「团队信息维护 = 未维护」时，TC-A01 测试 FAIL，
+      后续 TC-A02 至 TC-A06 测试结果全部标记为 INVALID（数据不完整，结论不可信）。
+    root_cause_note: >
+      2026-04-25 E2E 首次发现此问题，总裁要求记录并修订测试创建流程，但未落实到
+      YAML 知识库中。2026-04-27 E2E 重现相同问题（Test Copy - 0427 创建时团队信息
+      未维护），导致仅 PM 加入 Asana 项目，DE/SA/CDE 成员未加入，并错误记录为
+      BUG-004（代码缺陷）。实际为测试数据问题，代码本身行为正确。
+      本原则记录于此以确保跨会话持久化，防止第三次重现。
+    severity: "P0"
+    enforcement: "TC-A01 执行前必查，字段不完整则终止测试并补全数据后重跑"
+
+test_cases:
+
+  # ────────────────────────────────────────────────────────────────────────
+  # 测试套件 A：全流程 E2E（基于 Singapore Keppel Project 参考项目）
+  # 参考项目：Singapore Keppel Project 0423（Notion Registry）
+  # ────────────────────────────────────────────────────────────────────────
+  - suite: "A-E2E-全流程"
+    description: "基于 Singapore Keppel Project 0423 参数执行完整 PMO 流程"
+
+    reference_project:
+      project_name: "Singapore Keppel Project 0423"
+      notion_registry_page_id: "347114fc-090c-80d1-b2ea-ee6c279e01f7"
+      asana_project_gid: "1214145351020337"
+      team: "ProjectProgressTesting"
+      team_gid: "1213938170960375"
+      data_source: "Notion Registry DB + Asana Project (v1.5.x 验证项目)"
+      notes: >
+        0423 项目为 v1.5.1 阶段 E2E 重跑验证项目，111 个 Asana 任务（含 L2/L3/L4），
+        13 个顶层任务。WBS 导入状态曾历经「失败→待导入→已完成」全状态流转，
+        是最完整的真实测试参考标本。
+
+    test_copy_parameters:
+      project_name: "Singapore Keppel Project [Test Copy - 0423]"
+      # 以下字段已通过 Notion MCP API 实时读取（2026-04-23）
+      pm_lead: "lysander"
+      pm_email: "lysanderl@janusd.com"
+      de_name: "Spike"
+      de_email: "spikez@janusd.com"
+      sa_name: "Rose"
+      sa_email: "rosaw@janusd.com"
+      cde_name: "Suzy"
+      cde_email: "suzyl@janusd.com"
+      sales_name: "Euclid"
+      sales_email: "euclidw@janusd.com"
+      contract_signed_date: "2026-04-18"
+      contract_number: "HT-2026-023"
+      contract_amount: 423
+      client_key_contact: "Euclid"
+      client_name: "Janus"
+      project_status: "已签约"
+      project_type: "商业综合体"
+      project_background: >
+        MEOS 智慧楼宇平台在 Keppel Land Group 新加坡办公楼（Keppel South Central，简称 KSC）的试点测试方案。
+        MEOS 是来自中国的新一代智能楼宇操作系统（Intelligent Building Operating System），由 Persagy 公司研发，
+        已在中国大量商业建筑中成功落地。本次试点聚焦于楼宇空调系统（HVAC），具体针对冷机组（Chiller Plant）
+        和空气处理机组（AHUs），通过实际运行验证平台在能耗管理、故障检测与运维优化三大核心领域的能力。
+      estimated_delivery_cycle: 6
+      estimated_start_date: "2026-04-16"
+      estimated_end_date: "2026-10-16"
+      estimated_tech_date: null  # 原始项目无此字段值
+      contract_text: "Keppel_South_Central_Pilot_Test_Proposal_售前说明.docx（附件，API 不可复制）"
+      # Test Copy 新页面信息（2026-04-23 创建）
+      test_copy_notion_page_id: "34b114fc-090c-81e6-8826-e785b6382974"
+      test_copy_notion_url: "https://www.notion.so/34b114fc090c81e68826e785b6382974"
+      # 以下字段已通过服务器 DB 实时确认（2026-04-23）
+      asana_project_gid: "1214145351020337"
+      asana_webhook_gid: "1214207630300422"
+      asana_webhook_active: true
+      notion_registry_page_id: "347114fc-090c-80d1-b2ea-ee6c279e01f7"
+      asana_task_count: 111
+      asana_top_level_tasks: 13
+      asana_tasks_with_deps: 106
+      asana_total_deps: 107
+
+    steps:
+
+      - id: "TC-A01"
+        name: "项目录入/创建"
+        description: "在 Notion Registry 创建新项目页，填写所有 test_copy_parameters 字段"
+        trigger: "手动创建 Notion 页面（推荐 Notion UI），确保状态为「已签约」后等待 WF-01 轮询"
+        expected:
+          - "Notion Registry 新增一条项目页，项目名称为 Singapore Keppel Project [Test Copy - 0423]"
+          - "状态字段为「已签约」"
+          - "WF-01 每 5 分钟轮询 Notion API，自动拾取新页面并执行（最多等待 5 分钟）"
+        pass_criteria: "Notion 页面存在，WF-01 在 n8n Executions 显示 success"
+        fail_criteria: "WF-01 执行报错，或 Notion 页面字段填写不全，或 WF-01 在 n8n 为 inactive 状态；或 团队信息维护 ≠ 已维护（PRINCIPLE-002 违反，测试结果 INVALID）"
+        important_note: >
+          WF-01 通过 n8n Schedule Trigger（每 5 分钟）轮询 Notion API 触发，NOT 通过 Notion
+          Automation Webhook。WF-01 与 Notion Automation 完全无关。
+          正确的测试触发方式：
+            1. 在 Notion UI 手动创建页面（或通过 MCP 创建后确认页面在正确数据库
+               ccb49243-a892-4691-bf0f-6adb3b1e576d 中，且状态字段名为"状态"）
+            2. 确认 WF-01 在 n8n（https://n8n.lysander.bond）为 Active 状态（前置条件）
+            3. 等待最多 5 分钟，WF-01 轮询自动触发
+            4. 或直接在 n8n UI 手动触发 WF-01 执行（跳过等待）
+          不应：仅用 Notion MCP API 创建页面后立即期待 WF-01 触发——MCP API
+          创建的页面满足 WF-01 查询条件，但前提是 WF-01 在 n8n 处于 Active 状态。
+          历史注意：v1.5.1 E2E 测试（2026-04-19）通过 wbs_trigger.py 脚本直接
+          调用 wbs_to_asana.py，完全绕过了 WF-01 n8n 节点。WF-01 的 n8n 端
+          激活状态在历史测试中从未被端到端验证。
+        preconditions:
+          - "【PRINCIPLE-002 强制】团队信息维护 = 已维护（Notion 状态字段，非 未维护）"
+          - "【PRINCIPLE-002 强制】pm_email / de_email / sa_email / cde_email 全部非空"
+          - "WF-01 在 n8n 平台为 Active 状态"
+          - "n8n Notion API 凭证有效"
+          - "n8n Gemini API 凭证有效"
+          - "n8n Asana PAT 凭证有效"
+          - "Test Copy 页面位于数据库 ccb49243-a892-4691-bf0f-6adb3b1e576d"
+
+      - id: "TC-A02"
+        name: "WBS 同步到 Asana"
+        description: "WF-01 执行后，wbs_to_asana.py 将 Notion WBS DB 中的任务同步到 Asana"
+        trigger: "WF-01 执行完成后自动触发（wbs_trigger.py 定时轮询）"
+        expected:
+          - "Asana 中创建新项目，项目名称含「Test Copy - 0423」"
+          - "任务数量与参考项目 0423（111 tasks）相近（允许因 WBS 版本差异有 ±10 条偏差）"
+          - "L2/L3/L4 层级任务均已创建"
+          - "Notion Registry 的 WBS导入状态 从「待导入」变为「已完成」"
+        pass_criteria: "Asana 项目存在且任务数 ≥ 50，Notion 状态为「已完成」"
+        fail_criteria: "Asana 项目不存在，或 Notion 状态卡在「导入中」/「失败」"
+
+      - id: "TC-A03"
+        name: "项目空间初始化（Notion Hub 页）"
+        description: "WF-01 在创建 Asana 项目后，同步在 Notion 创建 Project Hub 页"
+        trigger: "WF-01 执行链"
+        expected:
+          - "Notion 中存在对应 Hub 页面"
+          - "Hub 页面包含 Asana 项目链接"
+          - "Registry 条目中 Asana项目GID 字段已回填"
+        pass_criteria: "Hub 页面存在，Asana GID 已写入 Registry"
+        fail_criteria: "Hub 页面为空或不存在"
+
+      - id: "TC-A04"
+        name: "Webhook 注册（V2.0 新功能）"
+        description: "调用 POST /webhooks/asana/register-team 对新 Test Copy 项目注册 Webhook"
+        trigger: "手动调用 pmo-api: POST /webhooks/asana/register-team"
+        payload:
+          target_url: "https://pmo-api.lysander.bond/webhooks/asana"
+        expected:
+          - "API 返回 HTTP 200"
+          - "新建项目出现在 registered 列表中（不在 skipped/failed 中）"
+          - "webhook_subscriptions 表新增一条 active=1 的记录"
+          - "GET /webhooks/asana/health 返回 active_subscriptions 数量增加"
+        pass_criteria: "registered 列表包含 Test Copy 项目，health 端点 active_subscriptions 增加"
+        fail_criteria: "项目出现在 failed 列表，或 API 返回 4xx/5xx"
+
+      - id: "TC-A05"
+        name: "幂等注册验证（REQ-001 AC3）"
+        description: "重复执行 /register-team，验证幂等机制"
+        trigger: "再次调用 POST /webhooks/asana/register-team（与 TC-A04 相同参数）"
+        expected:
+          - "Test Copy 项目出现在 skipped 列表（reason: already_exists）"
+          - "webhook_subscriptions 记录数不增加"
+          - "日志显示 SKIP: already registered"
+        pass_criteria: "项目在 skipped 列表，记录数未增"
+        fail_criteria: "项目再次出现在 registered 列表（重复注册）"
+
+      - id: "TC-A06"
+        name: "任务完成 Webhook 通知验证"
+        description: "在 Test Copy Asana 项目中完成一个有 dependent 的任务，验证 WF-08 通知路径"
+        trigger: "在 Asana 中手动完成一个有下游依赖任务的任务"
+        expected:
+          - "pmo-api 日志显示 accepted=1"
+          - "WF-08 执行成功（n8n Executions 中显示 success）"
+          - "dependent 任务的 Assignee 在 60 秒内收到 Slack DM"
+          - "webhook_events_dedup 表新增去重记录"
+        pass_criteria: "Slack DM 到达时间 ≤ 60秒，pmo-api accepted=1"
+        fail_criteria: "pmo-api accepted=0，或 60 秒后 PM 未收到 DM"
+
+  # ────────────────────────────────────────────────────────────────────────
+  # 测试套件 B：PRD 需求验收（V2.0）
+  # ────────────────────────────────────────────────────────────────────────
+  - suite: "B-PRD-需求验收"
+    description: "逐条验证 V2.0 PRD 需求的验收标准（AC）"
+
+    requirements:
+
+      - req_id: "REQ-009"
+        title: "Asana 目标团队范围可配置化"
+        priority: "P1"
+        acs:
+          - id: "AC1"
+            check: "config.yaml 存在 asana.target_team_gid 字段，默认值为 1213938170960375"
+            method: "读取 config/config.yaml，grep target_team_gid"
+          - id: "AC2"
+            check: "代码全局搜索 ProjectProgressTesting 和 1213938170960375，结果为 0 条硬编码（config 默认值除外）"
+            method: "grep -r '1213938170960375' --include='*.py'（排除 config.yaml）"
+          - id: "AC3"
+            check: "修改 target_team_gid 后，注册脚本自动使用新团队范围（通过日志确认）"
+            method: "日志验证"
+
+      - req_id: "REQ-001"
+        title: "全量 Asana Webhook 注册"
+        priority: "P1"
+        acs:
+          - id: "AC1"
+            check: "批量注册后，GET /webhooks/asana/list 返回的 active_subscriptions 等于团队非 archived 项目数（±1）"
+            method: "调用 health 端点，对比 Asana team projects 数量"
+          - id: "AC2"
+            check: "新建项目的 PM 在任务完成后 ≤ 60 秒收到 Slack DM"
+            method: "E2E 计时验证（TC-A06）"
+          - id: "AC3"
+            check: "重复注册幂等：记录数不增加，日志显示 SKIP"
+            method: "TC-A05 验证"
+
+      - req_id: "REQ-005"
+        title: "WF-06 硬编码凭证安全化"
+        priority: "P2"
+        acs:
+          - id: "AC1"
+            check: "WF-06_任务依赖通知.json 中搜索 2/1213400756695149、xoxb-，结果为 0 条"
+            method: "grep 源文件"
+          - id: "AC2"
+            check: "WF-06 通过 n8n Credentials Store 读取凭证后正常执行"
+            method: "n8n UI 手动触发，观察执行日志"
+          - id: "AC3"
+            check: "缺失凭证时 WF-06 抛出明确错误（非静默失败）"
+            method: "删除凭证后手动触发"
+
+      - req_id: "REQ-003"
+        title: "时区统一化"
+        priority: "P2"
+        acs:
+          - id: "AC1"
+            check: "config.yaml 中无 Asia/Singapore 残留"
+            method: "grep config.yaml"
+          - id: "AC2"
+            check: "所有 WF JSON 的 settings.timezone 均为 Asia/Dubai"
+            method: "grep n8n-workflows/*.json"
+
+      - req_id: "REQ-004"
+        title: "WF-06/WF-08 幂等去重共享"
+        priority: "P2"
+        acs:
+          - id: "AC1"
+            check: "webhook_events_dedup 表存在（004_shared_dedup.sql 已执行）"
+            method: "SQLite schema 检查"
+          - id: "AC2"
+            check: "/dedup-check 端点存在且可调用"
+            method: "curl POST /webhooks/asana/dedup-check"
+          - id: "AC3"
+            check: "WF-06 Code 节点含 TODO 注释（尚未完全实现 API 调用去重）"
+            method: "读取 WF-06 JSON 源码"
+
+      - req_id: "REQ-002"
+        title: "WBS L3/L4 前置依赖字段"
+        priority: "P2"
+        acs:
+          - id: "AC1"
+            check: "wbs_to_asana.py 含 L3/L4 coverage 统计日志"
+            method: "grep wbs_to_asana.py"
+          - id: "AC2"
+            check: "Notion WBS DB 存在前置依赖字段定义"
+            method: "Notion API 查询 DB schema"
+
+  # ────────────────────────────────────────────────────────────────────────
+  # 测试套件 C：安全与配置合规
+  # ────────────────────────────────────────────────────────────────────────
+  - suite: "C-安全配置合规"
+    description: "检查凭证安全性和配置一致性"
+
+    security_rules:
+      - "SSH测试时验证env var只取前4位(cut -c1-4)，不dump完整值"
+      - "不在报告/日志中输出完整 PAT/Token"
+      - "docker exec 脚本中读取凭证后只打印前缀（[:8]），禁止 print 完整值"
+      - "命令行中禁止硬编码完整 JWT / Bearer Token，必须通过服务器端变量传递"
+
+    checks:
+      - id: "SEC-01"
+        name: "WF-06 硬编码凭证扫描"
+        check: "WF-06_任务依赖通知.json 中无明文 PAT/Token"
+        severity: "HIGH"
+
+      - id: "SEC-02"
+        name: "config.yaml 明文凭证（已知豁免）"
+        check: "config.yaml secrets 区域存在明文凭证，属于 V2.0 已知豁免项（依赖文件权限控制）"
+        severity: "MEDIUM"
+        note: "PRD 明确：pmo-api 侧 config.yaml 明文维持现状，辅以 chmod 600 控制"
+
+      - id: "SEC-03"
+        name: "时区一致性"
+        check: "config.yaml 和所有 WF JSON 时区均为 Asia/Dubai"
+        severity: "LOW"
+
+      - id: "SEC-04"
+        name: "HMAC 签名验证"
+        check: "asana_webhook.py 使用 get_all_active_secrets() 多重验证（V2.0 关键修复）"
+        severity: "HIGH"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 测试报告模板
+# ─────────────────────────────────────────────────────────────────────────────
+report_template:
+  sections:
+    - "执行摘要"
+    - "V2.0 产品全貌（调研结果）"
+    - "PRD 一致性对比表"
+    - "全流程测试结果（逐步骤）"
+    - "测试数据明细"
+    - "缺陷清单"
+    - "验收结论"
+    - "下一步建议"
+  output_path: "obs/06-daily-reports/YYYY-MM-DD-pmo-v200-acceptance-report.md"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 版本历史
+# ─────────────────────────────────────────────────────────────────────────────
+version_history:
+  - version: "v1.5"
+    date: "2026-04-27"
+    author: "harness_engineer（总裁反馈强制修订）"
+    changes: >
+      PRINCIPLE-002 强制修订（P0）——总裁二次反馈：
+      1) 新增 PRINCIPLE-002「Test Copy 必须包含完整团队成员信息」；
+      2) 根因记录：2026-04-25 首次反馈未落实，2026-04-27 E2E 重现相同问题；
+      3) TC-A01 preconditions 新增两条 PRINCIPLE-002 强制检查作为 BLOCKER；
+      4) TC-A01 fail_criteria 增加 PRINCIPLE-002 违规判据；
+      5) 版本号升至 v1.5
+      本次修订目的：确保「团队信息维护 = 已维护」要求跨会话持久化，防止第三次重现。
+
+  - version: "v1.4"
+    date: "2026-04-24"
+    author: "harness_engineer（REQ-012-TC-01 方法论升级）"
+    changes: >
+      REQ-012-TC-01 方法论升级：
+      1) 新增 mandatory_validation_principles 区块，含 PRINCIPLE-001
+         「WBS 正向链路验证必须深入任务粒度」；
+      2) 强制 Asana API 任务粒度校验（assignee/parent/dependencies/custom_fields/section）；
+      3) 校验失败判据：n8n/Notion 显示成功但任一任务粒度字段为空/错配即 FAIL；
+      4) 根因：Singapore Keppel Test Copy 项目 assignee 全部为 null，V2.0 GA
+         （TC-A01~A06）未覆盖正向链路（Notion WBS → Asana Task 创建）；
+      5) 版本号升至 v1.4
+
+  - version: "v1.3"
+    date: "2026-04-23"
+    author: "integration_qa + harness_engineer + product_manager（P0 根因分析联合执行小组）"
+    changes: >
+      WF-01 根因分析后更新（P0 任务）：
+      1) TC-A01 trigger 描述从"Notion Automation 触发"修正为"n8n Schedule Trigger 每5分钟轮询"；
+      2) TC-A01 新增 important_note——WF-01 触发机制说明 + 历史测试绕过 WF-01 节点的注意事项；
+      3) TC-A01 新增 preconditions 前置条件列表（4 项 n8n 凭证 + 数据库 ID 确认）；
+      4) 版本号升至 v1.3
+
+  - version: "v1.2"
+    date: "2026-04-23"
+    author: "integration_qa + pmo_test_engineer + product_manager（product_ops 联合执行小组）"
+    changes: >
+      第三轮（最终轮）验收更新：
+      1) test_copy_parameters 全面填入通过 Notion MCP API 实时读取的原始字段值
+         （pm_lead/pm_email/de/sa/cde/sales 团队、合同字段、日期、背景等）；
+      2) 新增 Test Copy 页面 ID（34b114fc-090c-81e6-8826-e785b6382974）和 URL；
+      3) Suite C 新增 security_rules 区块（4 条 SSH/凭证安全操作规范）；
+      4) 版本号升至 v1.2
+
+  - version: "v1.1"
+    date: "2026-04-23"
+    author: "product_manager + pmo_test_engineer（product_ops）"
+    changes: >
+      第二轮验收更新：1) 新增 test_case_usage_rule 明确 Test Copy 使用规则；
+      2) test_copy_parameters 补充服务器实时确认的 Asana/Notion 字段值
+      （asana_project_gid/webhook_gid/task_count 等）；
+      3) 标注 Notion 字段需手动核实原因（安全约束限制自动读取）；
+      4) 版本号升至 v1.1
+  - version: "v1.0"
+    date: "2026-04-23"
+    author: "pmo_test_engineer（product_ops）"
+    changes: "初始版本，基于 PMO Auto V2.0 验收任务创建，含 3 个测试套件（E2E/PRD/安全）"

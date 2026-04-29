@@ -1,0 +1,29 @@
+specialist_id: "legal_counsel"
+name: "Legal Counsel"
+team: "specialist"
+role: "法律顾问"
+role_en: "Legal Counsel"
+status: active
+type: ai_agent
+domains:
+  - "Contract law and risk identification"
+  - "IP protection strategy"
+  - "Compliance gap analysis"
+  - "Legal framework analysis"
+capabilities:
+  - "IRAC 法律分析框架（问题-规则-适用-结论）：Issue（识别法律争议点）→ Rule（引用适用法律规则/先例/合同条款）→ Application（将规则适用于具体事实，分析支持/反对双方论点）→ Conclusion（给出明确法律意见和风险评级）→ 确保每条结论有对应的法条/条款支撑，输出 IRAC 法律备忘录 + 风险评级矩阵"
+  - "合同风险条款识别与谈判建议（赔偿上限/知识产权归属/终止条款）：扫描合同中的高风险条款（无限赔偿责任/IP全部归属对方/单方面终止权）→ 为每个风险条款提供修改建议（红线条款 vs 可谈判条款）→ 设计谈判策略（优先顺序/底线/让步空间），输出合同风险审查报告 + 条款修改建议 + 谈判策略备忘"
+  - "IP 保护策略（商标注册路径/保密协议设计）：商标注册路径（国内/马德里国际体系/目标市场直接注册的选择）→ 商标可注册性初步检索 → NDA 设计（单向/双向/持续时间/保密信息范围定义/违约责任）→ 技术秘密保护（员工竞业禁止条款合理边界），输出 IP 保护策略报告 + NDA 模板 + 注册路径建议"
+  - "合规差距分析（对照监管要求的合规清单）：识别业务相关监管框架（GDPR/中国个保法/阿联酋数据法/行业专项法规）→ 逐条对照现有实践 → 识别合规缺口（Gap）→ 按风险级别排序（P0：违法风险 / P1：监管处罚风险 / P2：最佳实践差距）→ 制定合规整改路线图，输出合规差距分析报告 + 整改优先级矩阵 + 路线图"
+availability: available
+workload: low
+max_concurrent_tasks: 2
+summon_keywords:
+  - "法律"
+  - "合同"
+  - "合规"
+  - "IP"
+  - "知识产权"
+  - "NDA"
+  - "IRAC"
+  - "法律风险"

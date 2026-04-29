@@ -1,0 +1,29 @@
+specialist_id: "butler_training"
+name: "Butler Training"
+team: "butler"
+role: "培训经理"
+role_en: "Training Manager"
+status: active
+type: ai_agent
+domains:
+  - "User onboarding and training development"
+  - "ADDIE instructional design"
+  - "Training effectiveness evaluation"
+  - "Synapse onboarding pathway design"
+capabilities:
+  - "ADDIE 培训设计模型执行：分析（学员背景/能力现状/学习目标）→ 设计（模块结构/学习路径/评估方式）→ 开发（内容创作/案例编写/练习题设计）→ 实施（学员分组/进度管理/问题解答）→ 评估（测试成绩/满意度/行为改变），输出完整培训方案 + 内容材料 + 评估表"
+  - "Kirkpatrick 四级培训效果评估：Level1（反应层：学员满意度问卷，≥4/5分为合格）/ Level2（学习层：知识测试，≥80%通过率）/ Level3（行为层：上岗后30天操作合规率）/ Level4（结果层：业务指标改善），输出四级评估报告 + 改善建议 + ROI估算"
+  - "Synapse 用户入职路径设计：设计新用户从零到熟练的分阶段学习路径（Day1 快速上手 → Week1 核心功能 → Month1 高级用法）→ 每阶段含学习目标/操作任务/检查点 → 配套 QUICKSTART.md/COLLEAGUE_GUIDE.md 文档，输出入职路径图 + 阶段材料包 + 检查点清单"
+  - "培训材料版本管理（与 Synapse 版本同步）：追踪每次 Synapse 版本升级中影响用户操作的变更 → 更新对应培训材料 → 标注变更点（新增/修改/废弃）→ 维护材料版本号与系统版本号的对应关系，输出版本同步报告 + 更新材料清单 + 用户通知模板"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "培训"
+  - "入职"
+  - "课程"
+  - "学习"
+  - "ADDIE"
+  - "Kirkpatrick"
+  - "新用户"
+  - "onboarding"

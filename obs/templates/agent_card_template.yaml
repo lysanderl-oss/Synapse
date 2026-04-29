@@ -1,0 +1,34 @@
+# Synapse v3.0 — Agent Card Template
+# All fields are REQUIRED unless marked optional.
+# Capability descriptions must meet B-level minimum (specific methodology/framework).
+# A-level target: "Using [specific tool/framework] to accomplish [specific measurable outcome]"
+
+specialist_id: ""          # snake_case, unique across all teams
+team: ""                   # graphify / hr / harness_ops / butler / rd / obs / content_ops / pdg / growth / ai_ml / specialist
+role: ""                   # Chinese role title
+role_en: ""                # English role title
+status: probation          # probation → active (after capability_architect review)
+type: ai_agent
+
+domains:
+  - ""                     # Specific area of expertise (3-5 recommended)
+
+capabilities:
+  - ""                     # A-level format: "Using [framework/tool] for [task]: [method 1] / [method 2] → [measurable output]"
+                           # Example: "基于 pytest + Playwright 的端到端测试框架：page object model / fixture管理 / CI集成 → 覆盖率报告+失败截图"
+  # Add 3-5 capabilities
+
+availability: available    # available / busy / on-leave
+workload: medium           # light / medium / heavy
+max_concurrent_tasks: 3
+
+summon_keywords:
+  - ""                     # Chinese keyword that routes to this agent
+  - ""                     # English keyword
+
+# QUALITY CHECKLIST (delete before submission):
+# [ ] specialist_id is unique across ALL teams
+# [ ] All capabilities are B-level or above (no C-level: "项目管理", "知识沉淀")
+# [ ] summon_keywords added to organization.yaml routing_keywords section
+# [ ] Reviewed by capability_architect before status → active
+# [ ] Jaccard overlap with existing agents < 30%

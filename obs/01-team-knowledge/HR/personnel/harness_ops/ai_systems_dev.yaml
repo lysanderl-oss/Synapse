@@ -1,0 +1,46 @@
+specialist_id: "ai_systems_dev"
+name: "AI Systems Dev"
+team: "harness_ops"
+role: "AI系统开发工程师"
+role_en: "AI Systems Developer"
+status: active
+type: ai_agent
+domains:
+  - "AI toolchain development and automation engineering"
+  - "CEO Guard hook development"
+  - "n8n workflow integration"
+  - "Python automation scripting"
+capabilities:
+  - "hr_base.py 决策引擎开发维护：实现 Agent 查询（get_agent/search_agents）、任务路由（route_task）、QA 评分（qa_auto_review，85/100通过线）、决策日志记录（JSONL格式）等核心功能 → 单元测试覆盖率≥80% → 支持跨平台（Windows/Mac/Linux），输出功能模块代码 + 单元测试套件 + API文档"
+  - "CEO Guard JS Hook 开发（PreToolUse/PostToolUse）：PreToolUse 拦截 Lysander 直接调用 Edit/Write/Bash/Read 等工具 → 检查 ceo_guard_override 标志 → 阻断违规操作（返回 decision: block + 说明）→ PostToolUse 记录执行日志到 audit/ceo_guard_overrides.jsonl，输出 hook 脚本 + settings.json 配置 + 测试用例"
+  - "n8n Workflow 设计与集成：设计定时触发器（6am/8am/10am Dubai timezone）→ 配置 HTTP Request 节点调用 Claude API → 设置 Webhook 监听代码变更事件 → 实现 Slack 通知节点，输出 workflow JSON 导出文件 + n8n_integration.yaml 配置 + 集成测试文档"
+  - "Python 自动化脚本开发（错误处理/日志/retry）：遵循 Python 最佳实践（类型注解/docstring/logging 模块）→ 实现指数退避 retry 逻辑（tenacity 库）→ 结构化异常处理（自定义异常类 + 错误码体系）→ 支持 --dry-run 模式，输出脚本代码 + requirements.txt + 使用手册"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "代码"
+  - "脚本"
+  - "自动化"
+  - "hook"
+  - "hr_base"
+  - "CEO Guard"
+  - "n8n"
+  - "Python"
+  - "开发"
+skill_levels:
+  python_development: 5  # Python开发能力，核心专职
+  hook_development: 4     # Hook脚本开发（CEO Guard）
+  automation_scripting: 5 # 自动化脚本开发
+  code_review: 4          # 代码审查能力
+  documentation: 3        # 文档编写能力
+  system_integration: 4   # 系统集成（n8n/API）
+  task_execution: 5      # 任务执行能力，最高
+performance_history:
+  tasks_completed: 15   # 估算：hr_base.py/hook/n8n workflow/自动化脚本
+  avg_quality_score: 4.1 # 估算：代码开发质量稳定，80%覆盖
+  avg_completion_rate: 0.96  # 估算：开发任务偶有复杂需求调整
+  last_active: "2026-04-22"
+  blocked_tasks: 1       # 估算：n8n集成曾因API配置问题阻塞
+  escalation_count: 0
+  notes: "字段数值为基于职责范围的估算，待T6-2自动化采集机制建立后更新为真实数据"

@@ -1,0 +1,133 @@
+# Fan-out Pipeline 配置
+# Phase 2 T1-3 — 评审维度权重 + 来源可信度配置
+# 参考 T1-2 质量雷达图维度
+
+version: "1.0.0"
+last_updated: "2026-04-22"
+
+# ============================================================
+# 评审维度配置
+# ============================================================
+dimensions:
+  accuracy:
+    base_score: 4.0        # 准确性基础分
+    confidence: 0.85        # 评审置信度
+    # 来源权重（影响准确性评分）
+    source_weights:
+      anthropic: 1.3
+      techcrunch: 1.2
+      arxiv: 1.1
+      github: 1.1
+      huggingface: 1.1
+      wired: 1.0
+      the_verge: 1.0
+      default: 1.0
+      unknown-blog: 0.7
+      forum: 0.6
+
+  actionability:
+    base_score: 3.5        # 实用性基础分（评分标准略严格）
+    confidence: 0.80
+    # 行动建议关键词权重
+    action_keywords:
+      high: ["应该", "必须", "recommend", "should", "must"]
+      medium: ["建议", "可以", "需要", "consider", "suggest"]
+      low: ["可能", "或许", "might", "could"]
+
+  recency:
+    base_score: 4.5        # 时效性基础分（新鲜内容更可信）
+    confidence: 0.90
+    # 时间衰减规则
+    decay_rules:
+      # 超过 X 小时，分数 -= Y
+      72: 2.0
+      48: 1.5
+      24: 0.5
+      12: 0.0
+
+  relevance:
+    base_score: 3.5        # 相关性基础分
+    confidence: 0.75
+    # 相关关键词列表
+    keywords:
+      - agent
+      - ai
+      - automation
+      - synapse
+      - janus
+      - workflow
+      - claude
+      - llm
+      - n8n
+      - multi-agent
+      - harness
+      - intelligence
+      - pipeline
+      - rag
+      - orchestration
+      - workflow-automation
+      - research
+    # 高相关来源
+    high_relevance_sources:
+      - anthropic
+      - huggingface
+      - github
+      - arxiv
+      - techcrunch
+
+  completeness:
+    base_score: 3.0        # 完整性基础分（评分最严格）
+    confidence: 0.80
+    # 完整性要素检查
+    required_elements:
+      - background    # 背景/原因
+      - impact       # 影响/结果
+      - recommendation  # 建议/行动
+    # 每包含一个要素，+0.6 分
+    score_per_element: 0.6
+
+# ============================================================
+# 决策阈值
+# ============================================================
+decision:
+  approve_threshold: 4.0   # avg_score >= 4.0 → APPROVE (P1)
+  conditional_threshold: 3.0  # avg_score >= 3.0 → CONDITIONAL_APPROVE (P2)
+  # avg_score < 3.0 → REJECT (P3)
+
+# ============================================================
+# 管线配置
+# ============================================================
+pipeline:
+  max_workers: 5           # 并行评审线程数
+  timeout_seconds: 30      # 单次评审超时
+  enable_batch: true       # 支持批量评审
+
+# ============================================================
+# 质量雷达图映射
+# ============================================================
+radar:
+  # 将维度得分映射到雷达图维度标签（0-100 归一化）
+  # T1-2 风格：85分以上为优秀，70-85为良好，70以下为不合格
+  thresholds:
+    excellent: 85
+    good: 70
+    needs_improvement: 50
+
+# ============================================================
+# Phase 1 vs Phase 2 对比说明
+# ============================================================
+phase_comparison:
+  phase1:
+    description: "串行评审（情报日报 → 情报行动）"
+    reviewers: 1
+    review_depth: "单一视角"
+    转化率: "87.5%（基于7天数据）"
+  phase2:
+    description: "Fan-out 并行评审（5维度并行）"
+    reviewers: 5
+    review_depth: "多维度综合"
+    expected_benefits:
+      - "更高的评审覆盖度（5个独立视角）"
+      - "更快的处理速度（并行执行）"
+      - "更客观的评分（去中心化）"
+      - "瓶颈维度识别（自动发现薄弱环节）"

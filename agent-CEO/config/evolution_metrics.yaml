@@ -1,0 +1,101 @@
+# Synapse v3.0 — Evolution Metrics Config
+# Phase 3 T5-2: 进化度量仪表盘
+
+version: "1.0.0"
+created: "2026-04-22"
+
+metrics:
+  efficiency:
+    task_completion_rate:
+      name: "任务按时完成率"
+      description: "按时完成任务数 / 总任务数"
+      unit: "%"
+      target: 90.0
+      direction: "higher_is_better"
+      threshold_green: 90.0
+      threshold_yellow: 80.0
+
+    avg_task_duration:
+      name: "平均任务时长"
+      description: "所有已完成任务的平均完成时间（分钟）"
+      unit: "min"
+      target: 60.0
+      direction: "lower_is_better"
+      threshold_green: 60.0
+      threshold_yellow: 90.0
+
+    p0_escalation_rate:
+      name: "P0升级率"
+      description: "需要上报总裁的任务占比（越低越好）"
+      unit: "%"
+      target: 5.0
+      direction: "lower_is_better"
+      threshold_green: 5.0
+      threshold_yellow: 10.0
+
+  quality:
+    qa_pass_rate:
+      name: "QA通过率"
+      description: "qa_auto_review >=85 通过的任务占比"
+      unit: "%"
+      target: 80.0
+      direction: "higher_is_better"
+      threshold_green: 80.0
+      threshold_yellow: 70.0
+
+    avg_quality_score:
+      name: "平均质量评分"
+      description: "所有任务的 QA 评分均值（0-100）"
+      unit: "/100"
+      target: 85.0
+      direction: "higher_is_better"
+      threshold_green: 85.0
+      threshold_yellow: 75.0
+
+    blocker_resolution_time:
+      name: "阻塞解决时间"
+      description: "从阻塞发生到解决的中位时间（分钟）"
+      unit: "min"
+      target: 120.0
+      direction: "lower_is_better"
+      threshold_green: 120.0
+      threshold_yellow: 240.0
+
+  growth:
+    agent_capability_trend:
+      name: "Agent能力成长曲线"
+      description: "各 Agent 质量评分趋势（0-5，基于 performance_history）"
+      unit: "/5"
+      target: 4.0
+      direction: "higher_is_better"
+      threshold_green: 4.0
+      threshold_yellow: 3.5
+
+    self_improvement_impact:
+      name: "自我改进效果"
+      description: "改进闭环采纳率（已采纳建议 / 总建议）"
+      unit: "%"
+      target: 50.0
+      direction: "higher_is_better"
+      threshold_green: 50.0
+      threshold_yellow: 30.0
+
+data_sources:
+  execution_records:
+    file: "agent-CEO/data/execution_records.json"
+    fields: ["agent_id", "task_id", "quality_score", "completion_time_minutes",
+             "blockers", "task_type", "priority", "outcome", "timestamp"]
+
+  improvement_suggestions:
+    file: "agent-CEO/data/improvement_suggestions.json"
+    fields: ["suggestion_id", "category", "priority", "status", "created_at", "adopted_at"]
+
+  active_tasks:
+    file: "agent-CEO/config/active_tasks.yaml"
+    fields: ["task_id", "execution_state", "team", "priority"]
+
+reporting:
+  frequency: "daily"
+  automation_time: "10:30am Dubai"
+  output_format: "markdown"
+  output_location: "obs/06-daily-reports/{date}-evolution-report.md"

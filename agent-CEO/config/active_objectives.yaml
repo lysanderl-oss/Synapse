@@ -1,0 +1,367 @@
+# Synapse Active Objectives — 目标层状态文件
+# 用途：跨会话持有总裁已授权的"目标 + 授权范围"，避免每次对话重新请示
+# 读取时机：每次会话启动时，Lysander 必须 Read 本文件
+# 维护时机：
+#   - 总裁批准新 Objective 时追加
+#   - 里程碑完成时更新 current_milestone / next_milestone / last_progress_at
+#   - Objective 完成时 status: in_progress → completed
+# 与 active_tasks.yaml 的区别：
+#   - active_tasks.yaml 是"任务清单"（颗粒：单任务）
+#   - active_objectives.yaml 是"目标清单"（颗粒：总裁级目标，含授权范围）
+
+version: "1.1.0"
+last_updated: "2026-04-26"
+
+# D2 全自动 INTEL 消化规则（总裁 2026-04-26 批准）
+# 配合 CLAUDE.md 【0.5】②.5 步使用
+# Lysander 在每次会话 resume 时自动消化 pending-dispatch INTEL
+
+dispatch_rules:
+  enabled: true
+  source: "OBJ-INTEL-LOOP-CLOSURE D2 升级"
+  approved_by: 总裁刘子杨
+  approved_at: "2026-04-26"
+
+  # 规则按顺序匹配，第一条命中即生效
+  rules:
+    - name: "P0 立即派单"
+      conditions:
+        priority: P0
+        rice_score_min: 18
+      action: dispatch_immediately
+      target_team: harness_ops
+      notes: "Lysander 主对话立即调 Agent 工具创建子 Agent 执行"
+
+    - name: "P1 高分升级 REQ"
+      conditions:
+        priority: P1
+        rice_score_min: 15
+      action: upgrade_to_req
+      target_pool: requirements_pool.yaml
+      target_status: approved
+      notes: "自动入需求池等 Q2/Q3 排期"
+
+    - name: "P2 中分入池低优先"
+      conditions:
+        priority: P2
+        rice_score_min: 10
+      action: upgrade_to_req
+      target_status: approved
+      target_priority: P2
+      notes: "Q3 或之后排期"
+
+    - name: "P3 / 低分自动延期"
+      conditions:
+        priority: P3
+      action: mark_deferred
+      target_status: deferred
+      notes: "记录但不处理"
+
+    - name: "未匹配规则保留待人工"
+      conditions:
+        default_fallback: true
+      action: keep_pending
+      notes: "Lysander 在汇报中明确列出"
+
+  safeguards:
+    max_auto_dispatch_per_session: 3
+    max_auto_upgrade_per_session: 10
+    require_lysander_summary: true
+    revert_on_error: true
+
+  override_keywords:
+    - "暂停自动消化"
+    - "全部留待审查"
+    - "今天先不要 review INTEL"
+
+  # 已处理统计（每次自动消化后追加，便于总裁审计）
+  history: []
+
+objectives:
+  - id: OBJ-INTEL-LOOP-CLOSURE
+    title: 情报管线全自动闭环（档 A3 + D2：自动入 active_tasks + 自动消化）
+    category: synapse_core
+    approved_by: 总裁刘子杨
+    approved_at: "2026-04-26"
+    deadline: "2026-04-26 当日"
+    status: completed
+    completed_at: "2026-04-26"
+    current_milestone: "全部完成"
+    next_milestone: null
+    last_progress_at: "2026-04-26 commit b5e7f52 + tag infra-1.0.7"
+    progress_evidence:
+      - "阶段 1（commit 25d5b98）：action_agent.py 入池逻辑落地，RUN 24959552361 写入 7 条 INTEL-20260427-001~007"
+      - "阶段 1（commit 1902496）：workflow auto-commit (active_tasks.yaml + action-report)"
+      - "阶段 2（commit 7f50337）：D2 全自动消化规则落地（CLAUDE.md ②.5 步 + dispatch_rules 5 规则 + 4 safeguards）"
+      - "阶段 2（commit dab3751）：D2 dispatch_rules 模拟匹配验证，暴露 rice.score P0 数据契约缺陷"
+      - "阶段 2（commit b5e7f52）：_normalize_rice 4 级 fallback 修复 + 7 条 INTEL backfilled rice.score"
+      - "总裁参与度：100% → 50% (A3) → 0% (D2)"
+      - "version lock: VERSION infra 1.0.6 → 1.0.7 + CHANGELOG [infra v1.0.7] + git tag infra-1.0.7"
+
+    motivation: |
+      之前 intel-action 仅生成 markdown，闭环只到 L2 评估层。
+      L3 执行层断裂（INTEL 任务无任何自动写回 active_tasks.yaml）。
+      最近 7 天 12 条 INTEL 任务 ID → 实际入库 0 条。
+
+      档 A3 设计：
+      - intel-action 评估完成后，自动 append 到 active_tasks.yaml
+        (status=approved-pending-dispatch)
+      - WF-09 通知 #ai-agents-noti「今日新增 N 条 INTEL」
+      - 派单/执行权仍归 Lysander 主对话（人工把关）
+      - 与 task-resume.yml 同构合规（已有先例）
+
+      D2 升级（2026-04-26 总裁批准）：
+      - 每次会话开场自动 review Pending-Dispatch INTEL
+      - dispatch_rules 5 规则 + 4 safeguards 自动派单
+      - 总裁参与度从 50% 降至 0%
+
+    authorization_scope: |
+      Lysander 自主完成 action_agent.py 改造 + workflow 配置 + 验证 + 版本锁定。
+      过程中问题自主决策，不请示。
+
+    halt_conditions:
+      - "真阻塞"
+      - "超授权"
+      - "偏离>30%"
+      - "L4 触发"
+
+    milestones:
+      - name: 实施
+        status: completed
+        target_date: "2026-04-26"
+      - name: 完成
+        status: completed
+        target_date: "2026-04-26"
+
+  - id: OBJ-Q2-INTEL-PIPELINE
+    title: Q2 情报管线产品化架构
+    category: synapse_core
+    approved_by: 总裁刘子杨
+    approved_at: "2026-04-24"
+    deadline: "2026-05-31"
+    status: in_progress
+
+    # 当前进度快照
+    current_milestone: "Week 2 完成（切流生产，2026-04-24）"
+    next_milestone: "Week 3 心跳监控 + 成本验证"
+    last_progress_at: "2026-04-24 commits 2fdda86 + 3c75904 + edbd5588 + 2e6f82a + {本次}"
+    progress_evidence:
+      - "Week 1 全量交付（3 workflow + 5 Python + 4 prompts/templates + 4 secrets）"
+      - "首次 workflow 成功跑通 RUN_ID=24899362371"
+      - "2026-04-24 情报日报自动产出（340 行 HTML）"
+      - "Week 2 批次 1：notify_slack 显式日志（commit 2fdda86）"
+      - "Week 2 批次 1：3 workflow 手动触发全通过（RUN 24900939702 / 24900859718 / 24901344126）"
+      - "Week 2 批次 1：并发 push 静默 bug 修复（commit 3c75904，retry-rebase 3 次）"
+      - "Week 2 批次 2：Golden set HTML diff 等价通过（field 4/4 + CSS 70.6% 重叠）"
+      - "Week 2 批次 3：MD golden diff 等价通过（4 专家全命中 + 结构增强）"
+      - "Week 2 批次 3：3 workflow cron schedule 启用（Dubai 06:00/08:00/10:00 自动运行）"
+      - "次生发现：REQ-INFRA-004 (n8n WF-09 channel_not_found，P2) 入池"
+
+    # 授权范围（Lysander 在此范围内自主，无需请示）
+    authorization_scope: |
+      Lysander 按已批准 Q2 WBS 自主推进，包括：
+      - 子任务派单、工具选择、顺序安排
+      - 小 bug 修复、依赖升级、环境配置
+      - GitHub Actions / Python / Jinja2 / Claude API 技术选型细节
+      - Slack 通知路径按已批准策略（复用 n8n WF-09）
+      - 1-2 次修复循环内的自主诊断 + 重试
+
+    # 中断请示条件（以下 4 种才中断并上报）
+    halt_conditions:
+      - "真正阻塞：需总裁外部操作（控制台登录 / 凭证轮换 / 合同签署）"
+      - "超出授权范围：新增预算 / 新产品线 / 对外承诺"
+      - "计划偏离 > 30%：实际工作量 / 成本 / 时间超预期 30%+"
+      - "L4 触发：法律 / 预算 > 100万 / 公司存续 / 总裁指定"
+
+    # 关联资料
+    wbs_ref: obs/06-daily-reports/2026-04-24-q2-intelligence-pipeline-implementation-plan.md
+    roundtable_ref: obs/06-daily-reports/2026-04-24-intelligence-pipeline-roundtable.md
+    req_pool_ref: "requirements_pool.yaml REQ-INFRA-003"
+
+    # 里程碑列表
+    milestones:
+      - name: Week 1 架构骨架
+        status: completed
+        completed_at: "2026-04-24"
+      - name: Week 2 验证 + 切流
+        status: completed
+        completed_at: "2026-04-24"
+        target_date: "2026-05-01"
+      - name: Week 3 心跳 + 成本验证
+        status: pending
+        target_date: "2026-05-08"
+      - name: Week 4 Q3/Q4 骨架预留
+        status: pending
+        target_date: "2026-05-15"
+
+    # 汇报节奏（默认每 milestone 完成时做一次 snapshot 汇报）
+    report_cadence: per_milestone
+
+  - id: OBJ-N8N-WORKFLOW-AUDIT
+    title: n8n Workflow 全量梳理 + Slack 通知路径统一
+    category: synapse_core
+    approved_by: 总裁刘子杨
+    approved_at: "2026-04-25"
+    deadline: "2026-05-15"
+    status: completed
+    completed_at: "2026-04-25"
+
+    current_milestone: "全部 4 阶段 completed"
+    next_milestone: "（已完成，无后续）"
+    last_progress_at: "2026-04-25 commit 本次 + tag infra-1.0.5"
+    progress_evidence:
+      - "阶段 1 分析：2026-04-25-n8n-workflow-full-audit.md (298 行) + 2026-04-25-wf09-routing-diagnosis.md (176 行)"
+      - "阶段 2 评估：2026-04-25-n8n-audit-evaluation.md (261 行，4 组多档方案)"
+      - "阶段 3 方案评审：Lysander 综合呈报，总裁批准 Lysander 推荐方案"
+      - "阶段 4 P0-A (commit f455e1b)：Slack 路由 recipient='president' 默认值，验证 RUN 24924636231 / WF-09 Exec 11640"
+      - "阶段 4 P1-A (commit 42a4d9a)：WF-09 重命名 Synapse-Audit-Webhook-Coverage + WF-06/08 改造走 WF-09"
+      - "阶段 4 P2-B (commit fa4f8f6)：类 1 删 6 条 + 类 2 archived 12 条 + 4 Active error 根因定位"
+      - "阶段 4 P3-A (commit 3cd4d50)：命名规范文档 + 5 个冲突 workflow 重命名（WF-02/04/05 副路）"
+      - "完成报告：obs/06-daily-reports/2026-04-25-obj-n8n-audit-completion-report.md"
+      - "git tag infra-1.0.5 已推送"
+
+    authorization_scope: |
+      Lysander 在分析、评估、方案评审阶段自主推进；
+      执行阶段（删除/重命名/Slack 路径修改）必须先呈报总裁批准。
+
+    halt_conditions:
+      - "任何执行性修改（删除 workflow / 重命名 / 改 Slack 路径）必须先呈报总裁"
+      - "调研发现 P0 级 workflow 已损坏或失效"
+      - "超出授权范围"
+      - "L4 触发"
+
+    wbs_ref: 待评估阶段产出
+    req_pool_ref: 待立项
+
+    milestones:
+      - name: 阶段 1 分析（调研全量 workflow + 根因）
+        status: completed
+        target_date: "2026-04-25"
+      - name: 阶段 2 评估（形成多档方案）
+        status: completed
+        target_date: "2026-04-26"
+      - name: 阶段 3 方案评审（Lysander 综合 + 呈报总裁）
+        status: completed
+        target_date: "2026-04-26"
+      - name: 阶段 4 执行（等总裁批准）
+        status: completed
+        target_date: "2026-04-30"
+
+    report_cadence: per_milestone
+
+  - id: OBJ-BLOG-PIPELINE-CLOUD
+    title: 博客发布管线云端化（参考情报管线 GitHub Actions 模式）
+    category: synapse_core
+    approved_by: 总裁刘子杨
+    approved_at: "2026-04-26"
+    deadline: "2026-04-26 当日"
+    status: completed
+    completed_at: "2026-04-26"
+
+    current_milestone: "全部 4 stage 完成"
+    next_milestone: "（已完成）"
+    last_progress_at: "2026-04-26 全部完成"
+    progress_evidence:
+      - "本任务启动注册"
+      - "Stage 1 完成：synapse-sessions 私有 repo 创建（534MB / 2057 jsonl）+ scripts/sessions_watcher.py（once/daemon/dry-run）+ SESSIONS_REPO_TOKEN 注入（commits d4645e4 / 33149de / 614afdb）"
+      - "Stage 2 完成：.github/workflows/blog-publish.yml cron 0 18 UTC + session-to-worklog/auto-publish-blog 云端化（env/CLI 重定向，本机向后兼容）+ 4 处真实 bug 修复（commits 20cfb39 / e438006 / 08983a9 / e0ce771 / 273c9ec）"
+      - "Stage 2 端到端验证：RUN 24952227885 全成功，3 篇文章已发布 lysander.bond"
+      - "Stage 3 完成：Synapse-WorklogExtractor disable（备份 _archive/Synapse-WorklogExtractor_pre-disable.xml）+ Synapse-SessionsWatcher Task 注册（每 5 分钟 once 模式，python 绝对路径）+ .github/workflows/blog-heartbeat.yml（每日 23:00 Dubai 检查 last_sync 新鲜度）"
+      - "Stage 4 完成：VERSION → infra 1.0.6 + CHANGELOG 新段 + Objective completed + 综合完成报告归档 + git tag infra-1.0.6"
+      - "二级问题消解：0x80070002（旧 Task disable）/ 双源不一致（云端只走 src/content/blog/）/ index 列表更新（云端 build 自动）"
+
+    # 战略动机
+    motivation: |
+      博客管线当前 100% 锁本机：
+      - Layer 1 触发：Windows Task Scheduler 仅本机开机时跑
+      - Layer 2 抽取：本机 Python 脚本扫 .claude/projects/
+      - Layer 3 发布：本机 git push
+      关机即停。需复制情报管线（GitHub Actions cron）模式实现云端化。
+
+    # 方案 A 核心架构
+    architecture: |
+      Stage 1：上传层（本机轻量 watcher）
+        本机 .claude/projects/*.jsonl
+        → 文件监听 + 增量同步
+        → 私有 GitHub repo: synapse-sessions
+
+      Stage 2：处理层（GitHub Actions cron）
+        synapse-sessions checkout
+        → session-to-worklog（云端）
+        → auto-publish-blog（云端 + QA）
+        → 写入 lysander-bond + git push
+        → WF-09 Slack 通知
+
+    # 授权范围
+    authorization_scope: |
+      Lysander 自主推进 4 阶段（含问题修复决策）：
+      - Stage 1：基础设施 + watcher
+      - Stage 2：GitHub Actions workflow + 脚本云端化改造
+      - Stage 3：cron 启用 + 心跳监控 + 旧 Task 关停
+      - Stage 4：双账号扩展 + 收尾归档
+
+      过程中问题由 Lysander 审批。
+      仅 4 种情况中断：真阻塞 / 超授权 / 偏离>30% / L4。
+
+    # 中断条件
+    halt_conditions:
+      - "真正阻塞：需总裁外部操作（控制台登录 / 凭证轮换 / 合同签署）"
+      - "超出授权范围：新增预算 / 涉及对外承诺 / 新产品线"
+      - "计划偏离 > 30%：实际工作量超预期 30%+"
+      - "L4 触发：法律 / >100万 / 公司存续"
+
+    # 关联资料
+    plan_doc: 来自 2026-04-26 主对话 Lysander 综合策划
+    req_pool_ref: 待立项 REQ-INFRA-006
+
+    # 4 阶段里程碑
+    milestones:
+      - name: Stage 1 基础设施 + watcher
+        status: completed
+        target_date: "2026-04-26"
+      - name: Stage 2 GitHub Actions workflow
+        status: completed
+        target_date: "2026-04-26"
+      - name: Stage 3 切流 + 监控
+        status: completed
+        target_date: "2026-04-26"
+      - name: Stage 4 收尾归档
+        status: completed
+        target_date: "2026-04-26"
+
+    # 二级问题消解预期
+    side_effects: |
+      OBJ shipped 后自然消解的二级问题：
+      - 二级 1（Synapse-WorklogExtractor 0x80070002）→ 旧 Task 关停，本问题消失
+      - 二级 2（博客双源不一致）→ 云端版本只写 src/content/blog/{zh,en}/
+      - 二级 3（博客 index 列表更新）→ 本任务包含
+      - 二级 4（A1 wevtutil）→ 独立，仍需总裁手工
+
+    # 风险登记
+    risks:
+      - "本机 watcher 崩溃 → session 不上传 → 心跳监控兜底"
+      - "session 含敏感对话 → 私有 repo + GitHub Secrets 隔离"
+      - "双账号（lysanderl@janusd.io / .com）→ watcher 同时监听两个目录"
+      - "切换电脑 → watcher 装多机即可"
+
+    report_cadence: per_milestone（每 stage 完成 snapshot 汇报）+ 全部完成时终态汇报
+
+completed_objectives: []
+
+# 使用指南
+usage_notes: |
+  新 Objective 注册流程：
+  1. 总裁在对话中明确批准某个 WBS / Roadmap / 大型方案
+  2. Lysander 立即派单 synapse_product_owner 将其注册入本文件
+  3. Objective 生效后，Lysander 跨会话持有该目标
+
+  Objective 完成流程：
+  1. 所有 milestones 均为 completed
+  2. Lysander 派单 synapse_product_owner 将 Objective 迁移到 completed_objectives
+  3. 向总裁做最终终结汇报
+
+  新会话 resume 流程：
+  1. Lysander 主对话启动时 Read 本文件
+  2. 检查有无 in_progress 目标
+  3. 若用户新诉求在某 Objective 范围内 → 按 authorization_scope 自主推进
+  4. 若为全新诉求 → 走完整【0.5】承接流程

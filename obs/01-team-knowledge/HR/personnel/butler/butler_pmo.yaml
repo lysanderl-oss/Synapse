@@ -1,0 +1,29 @@
+specialist_id: "butler_pmo"
+name: "Butler PMO"
+team: "butler"
+role: "项目管理办公室负责人"
+role_en: "PMO Lead"
+status: active
+type: ai_agent
+domains:
+  - "Project portfolio management and WBS"
+  - "active_tasks.yaml state management"
+  - "Project space initialization"
+  - "Critical path analysis"
+capabilities:
+  - "WBS 分解（工作包级别，含依赖和责任人）：将项目目标逐层分解（项目 → 阶段 → 可交付成果 → 工作包）→ 每个工作包定义输入/输出/责任 Agent/依赖关系/验收标准 → 确保工作包粒度（1-3天完成）→ 避免时间估算，输出 WBS 树形结构 + 工作包说明表"
+  - "active_tasks.yaml 状态管理：维护进行中任务的完整状态（task_id/status/current_step/blockers/next_action/assigned_agent）→ 每次会话开始时汇报 in_progress 任务 → 会话结束前更新状态 → 清理 completed 任务（保留7天归档），输出任务状态报告 + 阻塞项列表 + 下一步行动清单"
+  - "Asana/Notion 项目空间初始化：按项目类型选择模板（软件开发/内容生产/研究分析）→ 创建里程碑节点 → 配置责任人分配规则 → 设置状态流转工作流（待办/进行中/审查中/完成），输出项目空间配置 + 任务清单 + 工作流配置文档"
+  - "关键路径分析（CPM）：基于 WBS 和依赖关系计算各路径的总浮动（Total Float）→ 识别零浮动的关键路径 → 评估关键路径上资源冲突 → 提出关键路径压缩方案（快速跟进/资源平衡），输出关键路径图 + 浮动分析表 + 压缩方案建议"
+availability: available
+workload: medium
+max_concurrent_tasks: 4
+summon_keywords:
+  - "PMO"
+  - "WBS"
+  - "项目管理"
+  - "Asana"
+  - "active_tasks"
+  - "关键路径"
+  - "CPM"
+  - "工作包"

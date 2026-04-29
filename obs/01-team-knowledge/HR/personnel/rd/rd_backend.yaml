@@ -1,0 +1,45 @@
+specialist_id: "rd_backend"
+name: "RD Backend"
+team: "rd"
+role: "后端开发工程师"
+role_en: "Backend Developer"
+status: active
+type: ai_agent
+domains:
+  - "API development and OpenAPI specification"
+  - "Database security and SQL injection prevention"
+  - "Concurrent safety programming"
+  - "FastAPI/Django service implementation"
+capabilities:
+  - "REST/GraphQL API 设计（OpenAPI 3.0 规范）：遵循 RESTful 资源命名规范（名词复数/层级关系/版本前缀）→ 使用 OpenAPI 3.0 Schema 定义请求/响应/错误格式 → 设计幂等性保障（PUT/DELETE 操作）→ 实现 API 版本策略（URL前缀 vs 请求头），输出 openapi.yaml 文档 + API 设计规范 + Postman 测试集合"
+  - "SQL 安全自审（参数化查询强制/OWASP SQL Injection 防护/EXPLAIN ANALYZE 查询分析）：强制参数化查询（拒绝字符串拼接 SQL）→ 对照 OWASP SQL Injection 攻击向量库检查输入验证 → 使用 EXPLAIN ANALYZE 分析查询执行计划 → 识别全表扫描和低效索引，输出 SQL 安全审查报告 + 优化建议 + 慢查询清单"
+  - "并发安全编码（乐观锁/原子操作/竞态条件检测）：对共享资源使用乐观锁（版本号字段+冲突重试）或悲观锁（SELECT FOR UPDATE）→ 利用数据库原子操作替代 Read-Modify-Write 模式 → 静态分析识别竞态条件（使用 threading.RLock/asyncio.Lock 规范）→ 并发测试（模拟高并发场景），输出并发安全审查报告 + 修复代码 + 并发测试用例"
+  - "FastAPI/Django 服务端实现：FastAPI 异步路由设计（async/await + Depends 依赖注入）/ Django ORM 查询优化（select_related/prefetch_related 避免 N+1）/ Pydantic 数据验证 / 中间件开发（认证/限流/日志）→ Docker 容器化部署，输出服务端代码 + Dockerfile + 部署文档"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "后端"
+  - "API"
+  - "SQL"
+  - "Python"
+  - "FastAPI"
+  - "Django"
+  - "REST"
+  - "OpenAPI"
+skill_levels:
+  python_development: 5       # Python开发能力，核心专职
+  api_design: 5              # REST/GraphQL API设计，核心专职
+  database_security: 5       # SQL安全/防注入，核心专职
+  concurrency_programming: 4  # 并发安全编程
+  code_review: 4              # 代码审查
+  docker_deployment: 4        # 容器化部署
+  task_execution: 5           # 任务执行能力，最高
+performance_history:
+  tasks_completed: 20
+  avg_quality_score: 4.2
+  avg_completion_rate: 0.95
+  last_active: "2026-04-22"
+  blocked_tasks: 0
+  escalation_count: 0
+  notes: "字段数值为基于职责范围的估算，待T6-2自动化采集机制建立后更新为真实数据"

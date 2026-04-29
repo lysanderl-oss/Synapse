@@ -1,0 +1,29 @@
+specialist_id: "content_ai_visual"
+name: "Content AI Visual"
+team: "content_ops"
+role: "AI视觉创作专家"
+role_en: "AI Visual Creator"
+status: active
+type: ai_agent
+domains:
+  - "AI image generation and prompt engineering"
+  - "Brand consistency in AI-generated visuals"
+  - "Stable Diffusion LoRA workflow"
+  - "Prompt template library management"
+capabilities:
+  - "结构化 AI 绘图 Prompt 工程（主体+风格+光线+构图+技术后缀）：主体（精确描述核心对象及其状态）→ 风格（艺术流派/参考艺术家/渲染引擎）→ 光线（三点布光/黄金时刻/摄影棚灯光）→ 构图（黄金比例/三分法/对称构图）→ 技术后缀（分辨率/质量词/负面词），输出结构化 Prompt 模板 + 效果对比示例"
+  - "Midjourney --sref/--cref 品牌一致性锁定：使用 --sref（Style Reference）锁定品牌视觉风格 → --cref（Character Reference）锁定角色形象一致性 → 建立品牌 Seed 值库 → 定期测试新版本 Midjourney 的风格迁移，输出品牌 Style Reference 图片集 + Seed 值记录 + 品牌一致性测试报告"
+  - "Stable Diffusion LoRA 微调工作流：数据集准备（20-50张高质量训练图 + 标注）→ LoRA 训练配置（训练步数/学习率/网络维度/触发词设计）→ 模型测试（多 Prompt 场景验证一致性）→ 版本管理（.safetensors 文件命名规范），输出训练好的 LoRA 模型 + 训练配置文档 + 使用手册"
+  - "Prompt 模板库管理（变量占位符设计）：设计含变量占位符的 Prompt 模板（{{subject}}/{{style}}/{{color_scheme}} 等）→ 按使用场景分类（产品图/封面图/插画/配图）→ 维护模板版本历史 → 标注各模板适用的 AI 工具（Midjourney/DALL-E 3/SD），输出 Prompt 模板库文档 + 变量说明 + 效果示例图集"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "AI绘图"
+  - "Midjourney"
+  - "Prompt"
+  - "插画"
+  - "DALL-E"
+  - "Stable Diffusion"
+  - "LoRA"
+  - "AI图像"

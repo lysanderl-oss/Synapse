@@ -1,0 +1,79 @@
+name: Task Auto-Resume
+
+on:
+  workflow_dispatch:  # Week 1 只手动触发
+  # Week 2 切流生产启用（2026-04-24）
+  schedule:
+    - cron: '0 2 * * *'  # UTC 02:00 = Dubai 06:00
+
+permissions:
+  contents: write  # 需要回写 active_tasks.yaml
+
+concurrency:
+  group: task-resume
+  cancel-in-progress: false  # 不要并行跑多份
+
+jobs:
+  resume:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install "anthropic>=0.40" requests pyyaml jinja2 "ruamel.yaml>=0.17"
+
+      - name: Run task resume agent (with retry)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+          PYTHONIOENCODING: utf-8
+          EXECUTOR_ID: github-actions-bot
+        run: |
+          MAX_ATTEMPTS=3
+          RETRY_WAIT=60
+          ATTEMPT=1
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            echo "[Retry] Attempt $ATTEMPT/$MAX_ATTEMPTS"
+            pushd scripts/intelligence > /dev/null
+            if python resume_agent.py; then
+              echo "[Retry] Success on attempt $ATTEMPT"
+              popd > /dev/null
+              exit 0
+            fi
+            popd > /dev/null
+            ATTEMPT=$((ATTEMPT + 1))
+            if [ $ATTEMPT -le $MAX_ATTEMPTS ]; then
+              echo "[Retry] Wait ${RETRY_WAIT}s before next attempt"
+              sleep $RETRY_WAIT
+            fi
+          done
+          echo "[Retry] All $MAX_ATTEMPTS attempts failed"
+          exit 1
+
+      - name: Commit updated active_tasks.yaml
+        run: |
+          git config user.name "synapse-intel-bot"
+          git config user.email "intel-bot@synapse-pj.local"
+          git add agent-CEO/config/active_tasks.yaml obs/06-daily-reports/*-resume-summary.md 2>/dev/null || true
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore(resume): task resume ${{ github.run_id }}"
+          # Retry push with rebase-on-conflict (other bot workflows may push concurrently)
+          for attempt in 1 2 3; do
+            if git push origin HEAD:${{ github.ref_name }}; then
+              echo "Push succeeded on attempt $attempt"
+              exit 0
+            fi
+            echo "Push attempt $attempt failed, rebasing..."
+            git pull --rebase origin ${{ github.ref_name }} || { echo "Rebase failed"; exit 1; }
+          done
+          echo "Push failed after 3 attempts"
+          exit 1

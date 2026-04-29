@@ -1,0 +1,4 @@
+2.0.0
+# PMO Auto Monday subsystem version
+# v2.0.0 (2026-04-29): Phase 2 GA — WF-01~09 全适配，pmo-api Monday 路由上线，P0 验收全通过
+# v1.0.0 (2026-04-28): Phase 1 — 架构设计 + Registry Board + EN Notion 数据源 + 规格定义

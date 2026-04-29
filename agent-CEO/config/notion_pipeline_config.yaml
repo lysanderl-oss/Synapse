@@ -1,0 +1,289 @@
+# Notion 内容产品管线配置
+# 维护者：notion_architect
+# 最后更新：2026-04-27
+# 说明：每次涉及 Notion Hub 操作时，必须先读取此文件了解现状，再规划变更
+
+pipeline_meta:
+  name: "Lysander-AI Hub 内容产品管线"
+  purpose: "以产品视角管理 Hub 的所有内容，确保每次操作有迹可循，内容有序增长"
+  owner: notion_architect
+  update_policy: "每次 Notion 操作完成后，必须更新本文件的 current_state 和 change_log"
+
+# ============================================================
+# Hub 页面树（权威状态，每次操作后必须更新）
+# ============================================================
+hub:
+  verified_hub_id: "34d114fc-090c-81db-a651-c2386164b46f"  # API 核查确认 2026-04-27，授权后 200 OK
+  hub_url: "https://www.notion.so/Lysander-AI-Hub-34d114fc090c81dba651c2386164b46f"
+  hub_title: "Lysander-AI Hub"
+  integration_access: true   # Janus PMO n8n integration — 总裁已授权，2026-04-27 确认
+
+  # 已知子页面（API 核查确认，2026-04-27）
+  known_pages:
+    - title: "Lysander-AI 工作日志"
+      id: "34d114fc-090c-81d9-b64f-d42a3d8a99c7"
+      type: database
+      purpose: "日常工作日志，三线（Claude Code/Codex/Trae）自动同步"
+      api_verified: true
+      field_count: 1
+
+    - title: "🏭 产品线详情 | Products"
+      id: "34e114fc-090c-81e5-ac9d-ffaa2fdf0450"
+      type: page
+      purpose: "三条 AI 产品线详细介绍"
+      api_verified: true
+      block_count: 9
+
+    - title: "📊 资产全景 | Asset Map"
+      id: "34e114fc-090c-817a-ad30-f978d16ed93c"
+      type: page
+      purpose: "Synapse 体系资产全貌"
+      api_verified: true
+      block_count: 19
+
+    - title: "👥 团队体系 | Team Structure"
+      id: "34e114fc-090c-817d-8349-e1e394e3dc7b"
+      type: page
+      purpose: "56 Agent 团队结构介绍"
+      api_verified: true
+      block_count: 24
+
+  # 注意：Trae 推广站 ID 34d114fc-090c-81cc-9ae5-f86cb150da31 在 Hub 内不存在（API 不可见）
+
+    - title: "Claude Code 工作台"
+      id: "34f114fc-090c-8169-b7b7-d5300485c8b2"
+      type: page
+      url: "https://www.notion.so/Claude-Code-34f114fc090c8169b7b7d5300485c8b2"
+      purpose: "Claude Code 工具线的所有成果、工作日志、知识沉淀"
+      parent: hub_root
+      api_verified: true
+      created: "2026-04-27"
+
+    - title: "成果物 Dashboard"
+      id: "34f114fc-090c-81dd-b007-c581cbc90177"
+      type: page
+      url: "https://www.notion.so/Dashboard-34f114fc090c81ddb007c581cbc90177"
+      purpose: "52 项成果物分类索引（A/B/C/D 四类），含总览统计"
+      parent: "Claude Code 工作台"
+      api_verified: true
+      created: "2026-04-27"
+
+    - title: "可下载文档"
+      id: "34f114fc-090c-819c-93c9-ea145234eb1a"
+      type: page
+      url: "https://www.notion.so/34f114fc090c819c93c9ea145234eb1a"
+      purpose: "3 份真实附件（PDF x2 + DOCX x1），通过 File Upload API 上传"
+      parent: "成果物 Dashboard"
+      api_verified: true
+      created: "2026-04-27"
+
+# ============================================================
+# 内容增加规范（产品视角）
+# ============================================================
+content_addition_protocol:
+
+  before_any_operation:
+    - step: 读取此文件，了解 Hub 当前结构
+    - step: 确认目标页面的正确 ID（从 known_pages 查找）
+    - step: 明确新内容放置的页面层级（parent page）
+    - step: 评估是否需要新建页面还是在现有页面追加
+    - step: 如涉及附件，确认使用 approved_methods 中的方案
+
+  after_any_operation:
+    - step: 更新 known_pages（如有新建页面，添加到列表）
+    - step: 更新 change_log（记录本次操作内容）
+    - step: 验证操作结果（API 返回 URL 或读取页面确认）
+
+  content_placement_rules:
+    claude_code_theme:
+      parent: "Claude Code 工作台页面（待创建）"
+      sub_categories:
+        成果物: "成果物 Dashboard 子页面"
+        工作日志: "工作日志数据库（已有，通过 daily sync 自动写入）"
+        知识沉淀: "Claude Code 工作台 → 知识沉淀子页面"
+
+    recurring_reports:
+      destination: "工作日志数据库"
+      method: "notion_daily_sync.py 自动写入，非手动"
+
+    milestone_documents:
+      destination: "Claude Code 工作台 → 成果物 Dashboard"
+      method: "notion_architect 规划 → notion_content_ops 执行"
+
+# ============================================================
+# 附件与文件下载策略
+# ============================================================
+file_strategy:
+
+  api_limitation: |
+    [更新 2026-04-27] Notion File Upload API 已验证可用。
+    正确端点：POST /v1/file_uploads（下划线，非连字符）。
+    流程：1) POST /v1/file_uploads → 获取 upload_id + upload_url（/send 端点）
+          2) POST upload_url（multipart/form-data）→ 上传实际文件内容
+          3) 在 Notion block 中用 file_upload_id 引用文件
+    注意：upload 有效期 1 小时（expiry_time）
+
+  file_upload_api:
+    endpoint: "POST https://api.notion.com/v1/file_uploads"
+    verified_date: "2026-04-27"
+    status: "available"
+    send_endpoint: "POST https://api.notion.com/v1/file_uploads/{id}/send"
+    headers_required:
+      - "Authorization: Bearer {NOTION_TOKEN}"
+      - "Notion-Version: 2022-06-28"
+      - "Content-Type: application/json"
+    request_body: '{"filename": "xxx.pdf", "content_type": "application/pdf"}'
+    response_fields:
+      - id: "file upload UUID"
+      - upload_url: "send endpoint URL"
+      - status: "pending → uploaded"
+      - expiry_time: "1 hour from creation"
+
+  approved_methods:
+    method_1:
+      name: "Notion File Upload API（首选）"
+      how: "POST /v1/file_uploads 创建会话 → multipart POST upload_url/send 上传文件"
+      result: "Notion 原生附件，真实文件存储，无需公开 URL"
+      prerequisite: "NOTION_TOKEN 有效，文件在本地路径可访问"
+      priority: 1
+
+    method_2:
+      name: "GitHub Raw URL + Notion Bookmark/File Block"
+      how: "将文件 git push 到公开仓库，用 raw URL 在 Notion 中创建 bookmark 或 file block"
+      result: "真实可点击下载链接"
+      prerequisite: "文件必须在 GitHub 公开仓库中"
+      priority: 2
+
+    method_3:
+      name: "Notion PDF Embed Block（外部 URL）"
+      how: "先获取文件的公开 URL，用 API 创建 type=pdf 的 embed block"
+      result: "Notion 内嵌 PDF 预览 + 下载按钮"
+      api_format: |
+        {
+          "type": "pdf",
+          "pdf": {
+            "type": "external",
+            "external": {"url": "https://...公开URL..."}
+          }
+        }
+      priority: 3
+
+    method_4:
+      name: "手动上传（Notion UI）"
+      how: "总裁或操作者在 Notion 界面手动拖拽上传文件"
+      result: "Notion 原生附件，最稳定"
+      note: "兜底方案，仅在前三种均不可行时使用"
+      priority: 4
+
+  forbidden:
+    - "在文字中写'点击下载'但没有真实 URL"
+    - "把本地文件路径当下载链接"
+    - "用 API 创建假的 file block（没有真实 URL）"
+
+# ============================================================
+# 操作日志（每次操作后追加）
+# ============================================================
+change_log:
+  - date: "2026-04-27"
+    operator: "Lysander + notion_architect（新设）"
+    action: "产品管线初始化，建立规范"
+    pages_affected: []
+    note: "首次建立，Hub 页面树待 API 核查后补充"
+
+  - date: "2026-04-27"
+    operator: "notion_architect + ai_systems_dev"
+    action: "Hub 真实结构核查 + File Upload API 验证"
+    pages_affected:
+      - "34d114fc-090c-81db-a651-c2386164b46f (Hub root — 总裁授权后 200 OK)"
+      - "34d114fc-090c-81d9-b64f-d42a3d8a99c7 (工作日志 DB — 确认可访问)"
+    findings:
+      hub_access: "Hub 现在已对 Janus PMO n8n integration 授权，API 返回 200"
+      hub_children: "4个直接子项：工作日志DB + 产品线详情 + 资产全景 + 团队体系"
+      no_claude_code_page: "Hub 内不存在 Claude Code 工作台，需要新建"
+      file_upload_api: "可用，正确端点为 /v1/file_uploads（下划线），非 /v1/file-uploads"
+    note: "更新 known_pages、verified_hub_id、file_strategy approved_methods"
+
+  - date: "2026-04-27"
+    operator: "notion_content_ops + ai_systems_dev"
+    action: "Claude Code 工作台完整建立 + 3 份文件真实上传"
+    pages_created:
+      - title: "Claude Code 工作台"
+        id: "34f114fc-090c-8169-b7b7-d5300485c8b2"
+        url: "https://www.notion.so/Claude-Code-34f114fc090c8169b7b7d5300485c8b2"
+      - title: "成果物 Dashboard"
+        id: "34f114fc-090c-81dd-b007-c581cbc90177"
+        url: "https://www.notion.so/Dashboard-34f114fc090c81ddb007c581cbc90177"
+      - title: "可下载文档"
+        id: "34f114fc-090c-819c-93c9-ea145234eb1a"
+        url: "https://www.notion.so/34f114fc090c819c93c9ea145234eb1a"
+    file_uploads:
+      - filename: "synapse-commercial-value.pdf"
+        upload_id: "34f114fc-090c-8104-b7f2-00b2495c36bc"
+        status: "uploaded"
+        size_bytes: 276592
+      - filename: "finlease-synapse-proposal.pdf"
+        upload_id: "34f114fc-090c-81e1-af06-00b2dddaf01b"
+        status: "uploaded"
+        size_bytes: 432652
+      - filename: "finlease-dev-survey.docx"
+        upload_id: "34f114fc-090c-8168-a0ff-00b274390a63"
+        status: "uploaded"
+        size_bytes: 39868
+    note: "S1-S6 全部完成，A/B/C/D 四类成果物 Dashboard 已建立，3份附件通过 File Upload API 真实上传"
+
+  - date: "2026-04-27"
+    operator: "Lysander + 全团队"
+    action: "Plan B 周度全自动管线落地（总裁批准）"
+    changes:
+      - "新增 automation_pipeline 配置段"
+      - "工作日志 DB Schema 补全（9个字段）"
+      - "错误页面清理（Keppel PMO 2个错误页面已 archive）"
+      - "新增 scripts/diff-to-notion.py + scripts/hub-health-check.py"
+      - "新增 .github/workflows/hub-weekly-sync.yml（周度 Cron）"
+
+# ============================================================
+# 自动化管线配置（Plan B 周度全自动，2026-04-27 总裁批准）
+# ============================================================
+automation_pipeline:
+  approved_by: 总裁刘子杨
+  approved_at: "2026-04-27"
+  cadence: weekly
+
+  # 每周日 20:00 Dubai (UTC 16:00) GitHub Actions 触发
+  weekly_sync:
+    trigger: "GitHub Actions hub-weekly-sync.yml"
+    schedule: "0 16 * * 0"  # 每周日 UTC 16:00 = Dubai 20:00
+    workflow_file: ".github/workflows/hub-weekly-sync.yml"
+    steps:
+      - step: 1
+        script: "scripts/asset_counter.py"
+        purpose: "更新 logs/asset_snapshot.yaml"
+      - step: 2
+        script: "scripts/diff-to-notion.py"
+        purpose: "对比快照 vs 上次同步状态，自动更新 Notion 资产全景"
+        state_file: "logs/hub-sync-state.yaml"
+      - step: 3
+        script: "scripts/hub-health-check.py"
+        purpose: "全面健康检查 + Slack 周报"
+        output: "logs/hub-health-{date}.md"
+
+  # 里程碑触发规则（OBJ completed 时 Lysander 执行）
+  milestone_trigger:
+    trigger_condition: "OBJ status → completed"
+    executor: "Lysander 主对话"
+    checklist:
+      - "新 PDF/报告产出？→ 上传到 可下载文档 + 更新 成果物 Dashboard"
+      - "Agent 数量变化？→ 触发 diff-to-notion.py"
+      - "新产品线上线？→ 更新 产品线详情"
+
+  # 内容价值过滤器
+  content_filter:
+    include:
+      - "可向外展示的成果物（PDF/报告/提案）"
+      - "体系级里程碑（VERSION bump / OBJ shipped）"
+      - "总裁批准的新产品线或战略方向"
+      - "资产数量变化超过5个"
+    exclude:
+      - "过程调试文件、临时脚本"
+      - "内部技术决策文档（归 OBS/decision-log）"
+      - "每日例行工作日志（工作日志 DB 层处理）"

@@ -1,0 +1,230 @@
+[
+  {
+    "id": "40mJOR8xXtubjGO4",
+    "name": "WF-04 PMO周报自动化",
+    "active": true,
+    "last_error": {
+      "execution_id": "6659",
+      "started_at": "2026-04-19T17:27:49.969Z",
+      "last_node": "写入 Notion 周报库",
+      "error_node_name": "写入 Notion 周报库",
+      "error_message": "The resource you are requesting could not be found",
+      "error_description": "Could not find database with ID: 2c3a7590-d03b-482a-bcf1-c70ecf11c852. Make sure the relevant pages and databases are shared with your integration \"Janus PMO n8n\"."
+    },
+    "nodes": [
+      {
+        "name": "每周一 09:00 触发",
+        "type": "n8n-nodes-base.scheduleTrigger"
+      },
+      {
+        "name": "获取 Asana 活跃项目",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "过滤活跃项目",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "获取每个项目任务",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "统计与分析",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "Gemini 生成周报",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "提取 Gemini 回复",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "写入 Notion 周报库",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "Slack 推送摘要",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "更新 Slack 推送状态",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "ManualTestTrigger",
+        "type": "n8n-nodes-base.webhook"
+      }
+    ]
+  },
+  {
+    "id": "IXEFFpLwnlcggK2E",
+    "name": "WF-02 任务变更通知",
+    "active": true,
+    "last_error": {
+      "execution_id": "11145",
+      "started_at": "2026-04-24T18:30:00.025Z",
+      "last_node": "搜索变更任务",
+      "error_node_name": "搜索变更任务",
+      "error_message": "Bad request - please check your parameters",
+      "error_description": "You must specify at least one search filter."
+    },
+    "nodes": [
+      {
+        "name": "每30分钟触发",
+        "type": "n8n-nodes-base.scheduleTrigger"
+      },
+      {
+        "name": "ManualTestTrigger",
+        "type": "n8n-nodes-base.manualTrigger"
+      },
+      {
+        "name": "计算时间窗口",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "搜索变更任务",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "过滤有效变更",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "有变更任务？",
+        "type": "n8n-nodes-base.if"
+      },
+      {
+        "name": "格式化变更消息",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "Slack变更通知",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "无变更（结束）",
+        "type": "n8n-nodes-base.noOp"
+      }
+    ]
+  },
+  {
+    "id": "knVJ8Uq2D1UZmpxr",
+    "name": "WF-06 任务依赖链通知",
+    "active": true,
+    "last_error": {
+      "execution_id": "11620",
+      "started_at": "2026-04-25T06:00:35.050Z",
+      "last_node": "查询近期完成任务",
+      "error_node_name": null,
+      "error_message": "A 'json' property isn't an object [item 0]",
+      "error_description": "In the returned data, every key named 'json' must point to an object."
+    },
+    "nodes": [
+      {
+        "name": "每60分钟轮询",
+        "type": "n8n-nodes-base.scheduleTrigger"
+      },
+      {
+        "name": "计算时间窗口",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "获取团队活跃项目",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "过滤活跃项目",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "查询近期完成任务",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "处理依赖链",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "发送 Slack 通知",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "有通知需要汇报？",
+        "type": "n8n-nodes-base.if"
+      },
+      {
+        "name": "Notify via WF-09 (was 发送监控汇总)",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "本轮无通知（结束）",
+        "type": "n8n-nodes-base.noOp"
+      }
+    ]
+  },
+  {
+    "id": "rlEylvNQW55UPbAq",
+    "name": "WF-05 逾期任务预警",
+    "active": true,
+    "last_error": {
+      "execution_id": "10105",
+      "started_at": "2026-04-23T17:00:00.054Z",
+      "last_node": "写入 Notion 逾期预警日志",
+      "error_node_name": "写入 Notion 逾期预警日志",
+      "error_message": "The resource you are requesting could not be found",
+      "error_description": "Could not find database with ID: f5cf12cf-b6b6-4664-b5ce-5fa3956b7174. Make sure the relevant pages and databases are shared with your integration \"Janus PMO n8n\"."
+    },
+    "nodes": [
+      {
+        "name": "每日 09:00 触发",
+        "type": "n8n-nodes-base.scheduleTrigger"
+      },
+      {
+        "name": "获取 ProjectProgressTesting 团队项目",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "过滤活跃项目",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "获取每个项目任务",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "识别逾期任务",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "是否有逾期任务？",
+        "type": "n8n-nodes-base.if"
+      },
+      {
+        "name": "逐条处理逾期任务",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "写入 Notion 逾期预警日志",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "汇总逾期任务发送 Slack",
+        "type": "n8n-nodes-base.code"
+      },
+      {
+        "name": "Slack 预警通知",
+        "type": "n8n-nodes-base.httpRequest"
+      },
+      {
+        "name": "无逾期任务（结束）",
+        "type": "n8n-nodes-base.noOp"
+      },
+      {
+        "name": "ManualTestTrigger",
+        "type": "n8n-nodes-base.webhook"
+      }
+    ]
+  }
+]

@@ -1,0 +1,98 @@
+name: Hub Weekly Sync
+
+# Lysander-AI Hub 周度全自动管线 (Plan B)
+# 每周日 UTC 16:00 = Dubai 20:00 运行
+# 三步：asset_counter → diff-to-notion → hub-health-check
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # UTC 16:00 Sunday = Dubai 20:00 Sunday
+    - cron: '0 16 * * 0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hub-weekly-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests pyyaml
+
+      - name: Step 1 — asset_counter.py (update snapshot)
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python scripts/asset_counter.py || echo "[WARN] asset_counter failed (non-blocking)"
+
+      - name: Step 2 — diff-to-notion.py (sync asset delta to Notion)
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          PYTHONIOENCODING: utf-8
+        run: python scripts/diff-to-notion.py
+
+      - name: Step 3 — hub-health-check.py (weekly health report)
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          N8N_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_N8N }}
+          PYTHONIOENCODING: utf-8
+        run: python scripts/hub-health-check.py
+
+      - name: Commit state files
+        if: always()
+        run: |
+          git config user.name "synapse-hub-bot"
+          git config user.email "hub-bot@synapse-pj.local"
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "[Hub] No state changes to commit"
+            exit 0
+          fi
+          git add logs/hub-sync-state.yaml logs/hub-health-*.md logs/asset_snapshot.yaml 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "[Hub] Nothing staged"
+            exit 0
+          fi
+          git commit -m "chore(hub): weekly sync ${{ github.run_id }}"
+          for i in 1 2 3; do
+            if git push origin HEAD:${{ github.ref_name }}; then
+              echo "[Hub] Push success on attempt $i"
+              exit 0
+            fi
+            echo "[Hub] Push attempt $i failed, rebasing..."
+            git pull --rebase origin ${{ github.ref_name }} || { echo "Rebase failed"; exit 1; }
+          done
+          echo "[Hub] Push failed after 3 attempts"
+          exit 1
+
+      - name: Notify failure via Slack
+        if: failure()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping"
+            exit 0
+          fi
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"recipient\": \"president\",
+              \"title\": \"🚨 Hub 周度同步失败 ${{ github.run_id }}\",
+              \"body\": \"hub-weekly-sync 异常 — 见 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\",
+              \"source\": \"hub-weekly-sync\",
+              \"priority\": \"critical\"
+            }" || echo "[Slack] notify failed (non-blocking)"

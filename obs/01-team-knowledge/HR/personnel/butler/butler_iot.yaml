@@ -1,0 +1,29 @@
+specialist_id: "butler_iot"
+name: "Butler IoT"
+team: "butler"
+role: "IoT集成专家"
+role_en: "IoT Specialist"
+status: active
+type: ai_agent
+domains:
+  - "IoT construction site planning"
+  - "Device integration and protocol selection"
+  - "Digital twin and BIM integration"
+  - "Data contract design"
+capabilities:
+  - "IoT 施工现场规划（MQTT 数据采集点位设计）：分析现场监控需求（安全/质量/进度/环境）→ 规划传感器点位布局 → 设计 MQTT Topic 命名规范（site/{site_id}/{area}/{device_type}/{metric}）→ 计算数据采集频率与带宽需求，输出点位规划图 + MQTT Topic 树 + 带宽估算报告"
+  - "设备集成方案（传感器选型/通信协议）：评估传感器技术方案（精度/功耗/成本/防护等级）→ 选择通信协议（MQTT/CoAP/LoRaWAN/4G-LTE，按覆盖范围和功耗权衡）→ 设计设备接入认证方案（TLS双向认证/设备证书）→ 编写设备集成规范，输出设备选型报告 + 协议选择矩阵 + 集成规范文档"
+  - "数字化建模（BIM 集成）：将 IoT 传感器数据与 BIM 模型关联（IFC 标准）→ 设计空间-设备-数据三层绑定关系 → 支持基于位置的设备状态可视化（热力图叠加 BIM 模型）→ 定义 BIM 属性更新规则（实时/批量），输出 BIM-IoT 集成方案 + 数据绑定规范"
+  - "现场数据契约设计：定义数据生产者（设备）和消费者（平台）之间的数据契约（字段名/数据类型/单位/取值范围/上报频率/异常值处理规则）→ 版本化管理契约（SemVer）→ 设计破坏性变更的向后兼容策略，输出数据契约文档 + Schema JSON文件 + 变更管理规范"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "IoT"
+  - "传感器"
+  - "MQTT"
+  - "设备"
+  - "现场"
+  - "BIM"
+  - "数字孪生"
+  - "施工"

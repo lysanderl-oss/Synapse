@@ -1,0 +1,1669 @@
+# Weekly Audit Report — 2026-W17
+
+**Generated**: 2026-04-27 09:35 (Dubai Time)
+**Period**: 2026-04-20 → 2026-04-27
+
+## Executive Summary
+
+| Metric | Value |
+|--------|-------|
+| Period | 2026-W17 |
+| Total tool calls | 3091 |
+| Violations detected | 1610 |
+| Unique sessions with violations | 5 |
+
+**Status**: ATTENTION REQUIRED — 1610 violation(s) detected.
+
+### Violation Breakdown
+
+- Bash direct calls: 1104
+- Edit direct calls: 272
+- Write direct calls: 234
+
+### Violation Details
+
+- `[2026-04-23 05:07:42]` [Bash] grep -n 
+- `[2026-04-23 05:07:54]` [Bash] git add scripts/generate-article.py scripts/generate-daily-intelligence.py agent
+- `[2026-04-23 05:08:42]` [Bash] git commit -m 
+- `[2026-04-23 05:09:07]` [Bash] git push origin main
+- `[2026-04-23 05:10:49]` [Bash] git push origin main
+- `[2026-04-23 05:18:12]` [Bash] crontab -l 2>/dev/null; echo 
+- `[2026-04-23 05:18:51]` [Bash] ls 
+- `[2026-04-23 05:19:08]` [Bash] ls logs/n8n_executions/ 2>/dev/null; grep -r 
+- `[2026-04-23 05:19:24]` [Bash] grep -r 
+- `[2026-04-23 05:23:05]` [Bash] grep -r 
+- `[2026-04-23 05:26:50]` [Bash] grep -r 
+- `[2026-04-23 05:39:49]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\n8n_integration.ya
+- `[2026-04-23 05:39:54]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\.claude\settings.local.json
+- `[2026-04-23 05:40:39]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\n8n_integration.ya
+- `[2026-04-23 05:41:35]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\unified-n
+- `[2026-04-23 05:50:23]` [Bash] echo 
+- `[2026-04-23 05:56:19]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\n8n-wf-mi
+- `[2026-04-23 06:01:05]` [Bash] wc -l /c/Users/lysanderl_janusd/n8n_workflows.json 2>/dev/null || echo 
+- `[2026-04-23 06:03:56]` [Bash] 
+- `[2026-04-23 06:05:41]` [Bash] ls ~/.claude/skills/gstack/ 2>/dev/null && echo 
+- `[2026-04-23 06:06:35]` [Bash] find ~/.claude/skills/gstack/browse/dist -name 
+- `[2026-04-23 06:07:03]` [Bash] ls ~/.claude/skills/gstack/setup* 2>/dev/null && cat ~/.claude/skills/gstack/set
+- `[2026-04-23 06:12:43]` [Bash] curl -s -X GET 
+- `[2026-04-23 06:13:49]` [Bash] curl -s -X GET 
+- `[2026-04-23 06:14:38]` [Bash] curl -s -X GET 
+- `[2026-04-23 06:18:44]` [Bash] curl -s -X GET 
+- `[2026-04-23 06:20:13]` [Bash] curl -s -X GET 
+- `[2026-04-23 06:38:13]` [Bash] cd C:/Users/lysanderl_janusd/Synapse-Mini && git log --oneline -5
+- `[2026-04-23 06:39:14]` [Bash] curl -s -X GET 
+- `[2026-04-23 06:41:09]` [Bash] curl -s -X GET 
+- `[2026-04-23 06:53:34]` [Bash] cd C:/Users/lysanderl_janusd/Synapse-Mini && python3 -c 
+- `[2026-04-23 06:57:28]` [Bash] cd 
+- `[2026-04-23 06:57:28]` [Bash] cd 
+- `[2026-04-23 06:57:29]` [Bash] cd 
+- `[2026-04-23 06:57:29]` [Bash] find . -type f -o -type d | head -200
+- `[2026-04-23 06:57:29]` [Bash] ls -lhR --time-style=long-iso 2>/dev/null | head -300
+- `[2026-04-23 06:57:30]` [Bash] tree -L 3 -a --du 2>/dev/null || find . -maxdepth 3 | sort
+- `[2026-04-23 06:57:49]` [Bash] find 
+- `[2026-04-23 06:57:54]` [Bash] git log --oneline -20
+- `[2026-04-23 06:57:55]` [Bash] find /c/Users/lysanderl_janusd/Synapse-Mini -name 
+- `[2026-04-23 06:57:55]` [Bash] find /c/Users/lysanderl_janusd/Synapse-Mini -name 
+- `[2026-04-23 06:59:19]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\plan-x-ta
+- `[2026-04-23 07:05:30]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\plan-x-ta
+- `[2026-04-23 07:07:10]` [Bash] find 
+- `[2026-04-23 07:08:39]` [Bash] ls 
+- `[2026-04-23 07:08:45]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 07:09:10]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 07:09:15]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\organization.yaml
+- `[2026-04-23 07:09:21]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\organization.yaml
+- `[2026-04-23 07:09:26]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\organization.yaml
+- `[2026-04-23 07:09:41]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 07:09:51]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 07:17:50]` [Bash] cd 
+- `[2026-04-23 07:17:56]` [Bash] cd 
+- `[2026-04-23 07:17:57]` [Bash] cd 
+- `[2026-04-23 07:18:00]` [Bash] cd 
+- `[2026-04-23 07:18:19]` [Bash] cd 
+- `[2026-04-23 07:18:28]` [Bash] ls -la 
+- `[2026-04-23 07:18:36]` [Bash] cd 
+- `[2026-04-23 07:18:43]` [Bash] cd 
+- `[2026-04-23 07:19:01]` [Bash] cd 
+- `[2026-04-23 07:19:13]` [Bash] cd 
+- `[2026-04-23 07:19:24]` [Bash] cd C:/Users/lysanderl_janusd/Synapse-Mini && git add obs/01-team-knowledge/HR/pl
+- `[2026-04-23 07:19:25]` [Bash] cd 
+- `[2026-04-23 07:22:41]` [Bash] N8N_KEY=
+- `[2026-04-23 07:22:53]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\n8n_integration.ya
+- `[2026-04-23 07:24:40]` [Bash] N8N_KEY=
+- `[2026-04-23 07:27:21]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\.claude\settings.local.json
+- `[2026-04-23 08:15:00]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\.claude\settings.local.json
+- `[2026-04-23 08:19:47]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\planx_migrate.ps1
+- `[2026-04-23 08:21:51]` [Bash] ls 
+- `[2026-04-23 08:21:52]` [Bash] ls 
+- `[2026-04-23 08:22:39]` [Bash] ls 
+- `[2026-04-23 08:22:41]` [Bash] ls 
+- `[2026-04-23 08:23:22]` [Bash] wc -l 
+- `[2026-04-23 08:23:32]` [Bash] mkdir -p 
+- `[2026-04-23 08:23:39]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\05-industry-knowledge\index.md
+- `[2026-04-23 08:24:16]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\05-industry-knowledge\blog\202
+- `[2026-04-23 08:24:21]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\00-daily-work\index.md
+- `[2026-04-23 08:24:26]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\personal\README.md
+- `[2026-04-23 08:24:50]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\personal\blog-wechat-publish-s
+- `[2026-04-23 08:25:04]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\OBS第二大脑2.0系统
+- `[2026-04-23 08:25:15]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\pmo_lessons_
+- `[2026-04-23 08:25:21]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/scripts/planx_migrate.ps1 2>/dev/null 
+- `[2026-04-23 08:26:04]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\positions
+- `[2026-04-23 08:26:16]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\positions
+- `[2026-04-23 08:26:23]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\positions
+- `[2026-04-23 08:26:26]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\positions
+- `[2026-04-23 08:26:32]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\positions
+- `[2026-04-23 08:26:35]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\positions
+- `[2026-04-23 08:26:41]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_o
+- `[2026-04-23 08:26:43]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\positions
+- `[2026-04-23 08:27:28]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\positions
+- `[2026-04-23 08:27:40]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\evolution
+- `[2026-04-23 08:27:43]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requireme
+- `[2026-04-23 08:27:57]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_c
+- `[2026-04-23 08:28:19]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\daily-intelligence\2026-04-10-
+- `[2026-04-23 08:29:12]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\daily-intelligence\2026-04-10-
+- `[2026-04-23 08:29:15]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\generated-articles\index.md
+- `[2026-04-23 08:29:42]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:29:51]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:29:57]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:29:58]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\generated-articles\harness-eng
+- `[2026-04-23 08:30:13]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:30:22]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:30:33]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:30:44]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:30:50]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\generated-articles\illustratio
+- `[2026-04-23 08:30:50]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:30:56]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:31:02]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:31:08]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:31:13]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\generated-articles\synapse-con
+- `[2026-04-23 08:31:21]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 08:31:23]` [Bash] cp 
+- `[2026-04-23 08:31:33]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-
+- `[2026-04-23 08:31:44]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-project-knowledge\index.md
+- `[2026-04-23 08:31:45]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\planx_migrate.ps1
+- `[2026-04-23 08:31:52]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-project-knowledge\wechat-ar
+- `[2026-04-23 08:32:01]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\planx_migrate.ps1
+- `[2026-04-23 08:32:46]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\index.md
+- `[2026-04-23 08:33:07]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\article-g
+- `[2026-04-23 08:33:18]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\credentia
+- `[2026-04-23 08:33:33]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\daily-wor
+- `[2026-04-23 08:34:13]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\harness-e
+- `[2026-04-23 08:35:03]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\psl-presi
+- `[2026-04-23 08:36:13]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\readonly-
+- `[2026-04-23 08:36:34]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\skill-tem
+- `[2026-04-23 08:37:10]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\spe-video
+- `[2026-04-23 08:38:11]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\video-pro
+- `[2026-04-23 08:41:34]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\spe-video
+- `[2026-04-23 08:42:10]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\synapse-p
+- `[2026-04-23 08:42:20]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\work-reco
+- `[2026-04-23 08:45:05]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\quality-a
+- `[2026-04-23 08:45:18]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\index.md
+- `[2026-04-23 08:45:55]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\agent-pr
+- `[2026-04-23 08:46:55]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\gstack-s
+- `[2026-04-23 08:47:23]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\synapse-
+- `[2026-04-23 08:48:02]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\synapse-
+- `[2026-04-23 08:48:37]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\synapse-
+- `[2026-04-23 08:49:07]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\website-
+- `[2026-04-23 09:32:06]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\website-
+- `[2026-04-23 09:32:48]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\website-
+- `[2026-04-23 09:32:57]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\decision
+- `[2026-04-23 09:33:19]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\decision
+- `[2026-04-23 09:34:31]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-session-snapshots\budget-co
+- `[2026-04-23 09:35:32]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-session-snapshots\INCIDENT_
+- `[2026-04-23 09:36:07]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-session-snapshots\keppel-re
+- `[2026-04-23 09:37:48]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-session-snapshots\meos-b-ph
+- `[2026-04-23 09:39:44]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-session-snapshots\SESSION_S
+- `[2026-04-23 09:41:16]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-session-snapshots\SESSION_S
+- `[2026-04-23 09:42:49]` [Bash] ls 
+- `[2026-04-23 09:42:57]` [Bash] ls 
+- `[2026-04-23 09:42:58]` [Bash] ls 
+- `[2026-04-23 09:42:59]` [Bash] ls 
+- `[2026-04-23 09:43:04]` [Bash] mkdir -p 
+- `[2026-04-23 09:43:09]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\.obsidian\app.json
+- `[2026-04-23 09:43:10]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\.obsidian\community-plugins.js
+- `[2026-04-23 09:43:13]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\.obsidian\core-plugins.json
+- `[2026-04-23 09:43:14]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\.obsidian\appearance.json
+- `[2026-04-23 09:43:29]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\.obsidian\plugins\obsidian-git
+- `[2026-04-23 09:43:31]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\.obsidian\plugins\obsidian-git
+- `[2026-04-23 09:43:34]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\.obsidian\plugins\meld-encrypt
+- `[2026-04-23 09:43:42]` [Bash] ls 
+- `[2026-04-23 09:50:34]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\planx_migrate.ps1
+- `[2026-04-23 09:52:54]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 09:57:04]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pl
+- `[2026-04-23 09:57:12]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 09:57:48]` [Bash] ls 
+- `[2026-04-23 09:58:31]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-session-snapshots\SESSION_S
+- `[2026-04-23 09:58:35]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 09:58:50]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 10:08:09]` [Bash] API_KEY=
+- `[2026-04-23 10:09:25]` [Bash] echo 
+- `[2026-04-23 10:09:57]` [Bash] cd /c/Users/lysanderl_janusd/Claude\ Code && find . -type f -o -type d | head -1
+- `[2026-04-23 10:10:17]` [Bash] ls -la 
+- `[2026-04-23 10:10:33]` [Bash] find 
+- `[2026-04-23 10:10:34]` [Bash] find 
+- `[2026-04-23 10:12:01]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 10:13:36]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 10:13:40]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 10:13:43]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 10:13:47]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 10:13:56]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 10:30:40]` [Bash] cd /c/Users/lysanderl_janusd && find . -maxdepth 1 -type d | head -20
+- `[2026-04-23 10:30:51]` [Bash] ls -la /c/Users/lysanderl_janusd/ | grep -i 
+- `[2026-04-23 10:31:17]` [Bash] ls -la 
+- `[2026-04-23 10:31:34]` [Bash] find 
+- `[2026-04-23 10:31:50]` [Bash] ls -la 
+- `[2026-04-23 10:32:08]` [Bash] find '/mnt/c/Users/lysanderl_janusd/Claude Code/ai-team-system' -type f \( -name
+- `[2026-04-23 11:00:20]` [Bash] ls 
+- `[2026-04-23 11:00:49]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 11:01:04]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 11:01:10]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\organization.yaml
+- `[2026-04-23 11:01:15]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\organization.yaml
+- `[2026-04-23 11:01:40]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_op
+- `[2026-04-23 11:10:31]` [Bash] ls 
+- `[2026-04-23 11:12:12]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-23 11:14:44]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pm
+- `[2026-04-23 11:15:40]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-23 11:19:42]` [Bash] cat ~/.ssh/config
+- `[2026-04-23 11:19:51]` [Bash] curl -s -H 
+- `[2026-04-23 11:20:05]` [Bash] cd 
+- `[2026-04-23 11:20:12]` [Bash] ls 
+- `[2026-04-23 11:20:33]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:20:34]` [Bash] curl -s -H 
+- `[2026-04-23 11:21:01]` [Bash] ls 
+- `[2026-04-23 11:21:20]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:21:27]` [Bash] curl -s -H 
+- `[2026-04-23 11:22:03]` [Bash] curl -s -H 
+- `[2026-04-23 11:22:12]` [Edit] Edit: C:\Users\lysanderl_janusd\synapse-core\core\harness\02-constraints.md
+- `[2026-04-23 11:22:45]` [Bash] curl -s -H 
+- `[2026-04-23 11:23:10]` [Edit] Edit: C:\Users\lysanderl_janusd\synapse-core\core\harness\03-workflow.md
+- `[2026-04-23 11:23:16]` [Bash] curl -s -H 
+- `[2026-04-23 11:23:23]` [Edit] Edit: C:\Users\lysanderl_janusd\synapse-core\core\harness\03-workflow.md
+- `[2026-04-23 11:23:46]` [Edit] Edit: C:\Users\lysanderl_janusd\synapse-core\core\harness\05-hr.md
+- `[2026-04-23 11:23:52]` [Bash] cat /tmp/actions_logs_run2/0_deploy.txt | grep -A 5 -B 2 -i 
+- `[2026-04-23 11:24:07]` [Edit] Edit: C:\Users\lysanderl_janusd\synapse-core\synapse.yaml
+- `[2026-04-23 11:24:23]` [Bash] tail -100 /tmp/actions_logs_run2/0_deploy.txt
+- `[2026-04-23 11:24:27]` [Edit] Edit: C:\Users\lysanderl_janusd\synapse-core\README.md
+- `[2026-04-23 11:24:32]` [Bash] cd 
+- `[2026-04-23 11:25:24]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 11:26:16]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 11:27:12]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 11:28:12]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 11:28:57]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 11:29:32]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 11:30:10]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 11:30:48]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:31:44]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:32:29]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:33:01]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:33:47]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:33:59]` [Bash] cd 
+- `[2026-04-23 11:34:23]` [Bash] ls 
+- `[2026-04-23 11:34:32]` [Bash] ls 
+- `[2026-04-23 11:34:44]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:35:49]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:36:03]` [Write] Write: C:\Users\lysanderl_janusd\Claude Code\lysander-bond\src\pages\synapse\ind
+- `[2026-04-23 11:36:27]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:36:39]` [Bash] cd 
+- `[2026-04-23 11:37:32]` [Bash] cd 
+- `[2026-04-23 11:38:05]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:38:26]` [Bash] cd 
+- `[2026-04-23 11:38:53]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:39:15]` [Bash] cd 
+- `[2026-04-23 11:39:46]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:39:48]` [Bash] curl -s -H 
+- `[2026-04-23 11:40:25]` [Bash] curl -s -H 
+- `[2026-04-23 11:40:40]` [Bash] ssh lysander-server 
+- `[2026-04-23 11:41:41]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 11:41:56]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 11:42:07]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 11:43:17]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 11:43:24]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 11:43:31]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 11:44:16]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pm
+- `[2026-04-23 11:44:25]` [Bash] echo 
+- `[2026-04-23 12:05:13]` [Bash] cd 
+- `[2026-04-23 12:05:25]` [Bash] ls 
+- `[2026-04-23 12:05:25]` [Bash] ls 
+- `[2026-04-23 12:06:14]` [Bash] mkdir -p 
+- `[2026-04-23 12:07:36]` [Write] Write: C:\Users\lysanderl_janusd\.claude\commands\github-push.md
+- `[2026-04-23 12:08:45]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\.claude\commands\github-push.md
+- `[2026-04-23 12:10:27]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 12:11:02]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 12:12:08]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 12:12:50]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 12:13:39]` [Bash] curl -s -X POST 
+- `[2026-04-23 12:14:38]` [Bash] curl -s 
+- `[2026-04-23 12:41:56]` [Bash] cd 
+- `[2026-04-23 12:42:33]` [Bash] cd 
+- `[2026-04-23 12:43:48]` [Bash] cd 
+- `[2026-04-23 12:46:44]` [Write] Write: C:\Users\lysanderl_janusd\synapse-core\.gitignore
+- `[2026-04-23 12:47:12]` [Write] Write: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依
+- `[2026-04-23 12:47:22]` [Write] Write: C:\Users\lysanderl_janusd\.git-credentials
+- `[2026-04-23 12:48:35]` [Write] Write: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-08_web
+- `[2026-04-23 12:48:47]` [Bash] cd 
+- `[2026-04-23 13:13:04]` [Edit] Edit: C:\Users\lysanderl_janusd\synapse-core\.git\config
+- `[2026-04-23 13:21:14]` [Edit] Edit: C:\Users\lysanderl_janusd\synapse-core\.git\config
+- `[2026-04-23 13:22:09]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 13:22:23]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 13:24:38]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:25:00]` [Bash] cd 
+- `[2026-04-23 13:25:38]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:26:41]` [Bash] scp 
+- `[2026-04-23 13:27:58]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:28:24]` [Bash] gh auth status
+- `[2026-04-23 13:29:09]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:30:04]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:31:21]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:32:57]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:34:04]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:35:39]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:36:55]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:38:44]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:39:36]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:40:52]` [Bash] ssh lysander-server 
+- `[2026-04-23 13:43:09]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pm
+- `[2026-04-23 13:43:17]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 13:43:40]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 13:43:48]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 13:44:00]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 14:13:35]` [Bash] git -C 
+- `[2026-04-23 14:13:44]` [Bash] git -C 
+- `[2026-04-23 14:13:52]` [Bash] git -C 
+- `[2026-04-23 14:14:07]` [Bash] gh run list --repo lysanderl-glitch/lysander-bond --limit 10 2>&1
+- `[2026-04-23 14:14:20]` [Bash] ls 
+- `[2026-04-23 14:14:31]` [Bash] ls 
+- `[2026-04-23 14:14:31]` [Bash] ls 
+- `[2026-04-23 14:14:41]` [Bash] ls 
+- `[2026-04-23 14:14:41]` [Bash] ls 
+- `[2026-04-23 14:14:51]` [Bash] ls 
+- `[2026-04-23 14:14:52]` [Bash] ls 
+- `[2026-04-23 14:14:53]` [Bash] ls 
+- `[2026-04-23 14:18:11]` [Bash] ls 
+- `[2026-04-23 14:18:11]` [Bash] ls 
+- `[2026-04-23 14:18:27]` [Edit] Edit: C:\Users\lysanderl_janusd\Claude Code\lysander-bond\src\pages\blog\index.a
+- `[2026-04-23 14:19:05]` [Bash] ls -la 
+- `[2026-04-23 14:19:13]` [Bash] ls 
+- `[2026-04-23 14:19:15]` [Bash] ls 
+- `[2026-04-23 14:19:26]` [Bash] git -C 
+- `[2026-04-23 14:20:01]` [Bash] git -C 
+- `[2026-04-23 14:20:32]` [Bash] ssh lysander-server 
+- `[2026-04-23 14:21:44]` [Bash] ssh lysander-server 
+- `[2026-04-23 14:22:28]` [Bash] ssh lysander-server 
+- `[2026-04-23 14:24:25]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pm
+- `[2026-04-23 14:24:32]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 14:24:57]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 14:25:07]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-23 14:28:16]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\blog\index.astro
+- `[2026-04-23 14:29:06]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\blog\index.astro
+- `[2026-04-23 14:29:45]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\blog\index.astro
+- `[2026-04-23 14:30:17]` [Bash] git -C 
+- `[2026-04-23 14:33:18]` [Bash] gh run list --repo lysanderl-glitch/lysander-bond --limit 5
+- `[2026-04-23 14:33:27]` [Bash] git -C 
+- `[2026-04-23 14:33:57]` [Bash] git -C 
+- `[2026-04-23 14:34:16]` [Bash] git -C 
+- `[2026-04-23 14:34:45]` [Bash] git -C 
+- `[2026-04-23 14:35:26]` [Bash] curl -s 
+- `[2026-04-23 14:35:27]` [Bash] gh run list --repo lysanderl-glitch/lysander-bond --limit 10
+- `[2026-04-23 14:36:08]` [Bash] git -C 
+- `[2026-04-23 14:36:47]` [Bash] git -C 
+- `[2026-04-23 14:37:08]` [Bash] gh run list --repo lysanderl-glitch/lysander-bond --limit 20 --json headSha,disp
+- `[2026-04-23 14:37:46]` [Bash] gh workflow list --repo lysanderl-glitch/lysander-bond
+- `[2026-04-23 14:38:16]` [Bash] gh workflow run 259309296 --repo lysanderl-glitch/lysander-bond --ref main && sl
+- `[2026-04-23 14:40:12]` [Bash] git -C 
+- `[2026-04-23 14:40:56]` [Bash] git -C 
+- `[2026-04-23 14:41:30]` [Bash] sleep 5 && gh run list --repo lysanderl-glitch/lysander-bond --limit 3
+- `[2026-04-23 14:54:52]` [Bash] find 
+- `[2026-04-23 14:55:06]` [Bash] ls 
+- `[2026-04-23 14:55:18]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-content-pipeline\_templates
+- `[2026-04-23 14:55:21]` [Bash] find 
+- `[2026-04-23 14:55:24]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-content-pipeline\_templates
+- `[2026-04-23 14:55:29]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-content-pipeline\_templates
+- `[2026-04-23 14:55:37]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-content-pipeline\README.md
+- `[2026-04-23 14:55:49]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\00-daily-work\2026-04-23-work-
+- `[2026-04-23 14:55:49]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-content-pipeline\_inbox\.gi
+- `[2026-04-23 14:55:52]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-content-pipeline\_drafts\.g
+- `[2026-04-23 14:55:52]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-content-pipeline\_published
+- `[2026-04-23 14:56:30]` [Bash] wc -l 
+- `[2026-04-23 14:56:47]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\blog\index.astro
+- `[2026-04-23 14:57:33]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\blog\ai-application-shar
+- `[2026-04-23 14:58:12]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\blog\ai-second-brain-pre
+- `[2026-04-23 14:58:49]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\blog\n8n-wechat-blog-wor
+- `[2026-04-23 14:59:36]` [Bash] git -C 
+- `[2026-04-23 15:23:18]` [Bash] ls 
+- `[2026-04-23 15:23:18]` [Bash] ls 
+- `[2026-04-23 15:28:10]` [Bash] ls 
+- `[2026-04-23 15:28:20]` [Bash] ls 
+- `[2026-04-23 15:28:28]` [Bash] ls /c/Users/lysanderl_janusd/.claude/projects/C--Users-lysanderl-janusd-Synapse-
+- `[2026-04-23 15:28:37]` [Bash] head -c 3000 /c/Users/lysanderl_janusd/.claude/projects/C--Users-lysanderl-janus
+- `[2026-04-23 15:28:48]` [Bash] python3 -c 
+- `[2026-04-23 15:32:16]` [Bash] python3 -c 
+- `[2026-04-23 15:32:22]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 15:34:03]` [Bash] 
+- `[2026-04-23 15:35:46]` [Bash] 
+- `[2026-04-23 15:36:50]` [Bash] 
+- `[2026-04-23 15:37:43]` [Bash] 
+- `[2026-04-23 15:38:34]` [Bash] 
+- `[2026-04-23 15:39:19]` [Bash] ssh lysander-server 'cat /etc/nginx/sites-enabled/n8n.lysander.bond'
+- `[2026-04-23 15:42:05]` [Bash] ssh lysander-server 'grep -E 
+- `[2026-04-23 15:44:48]` [Bash] claude --version 2>&1
+- `[2026-04-23 15:44:55]` [Bash] claude --help 2>&1 | head -80
+- `[2026-04-23 15:45:07]` [Bash] cd 
+- `[2026-04-23 15:45:31]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 15:45:49]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 15:45:52]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 15:45:59]` [Bash] cd 
+- `[2026-04-23 15:47:08]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 15:47:11]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 15:47:14]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 15:47:18]` [Bash] cd 
+- `[2026-04-23 15:48:56]` [Bash] nslookup pmo-api.lysander.bond 8.8.8.8 2>&1; echo 
+- `[2026-04-23 15:49:07]` [Bash] curl -s -H 
+- `[2026-04-23 15:49:40]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:50:29]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:50:33]` [Bash] curl -s -H 
+- `[2026-04-23 15:51:12]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:51:28]` [Bash] curl -s -H 
+- `[2026-04-23 15:52:04]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:52:25]` [Bash] curl -s -H 
+- `[2026-04-23 15:52:49]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:53:29]` [Bash] curl -s -H 
+- `[2026-04-23 15:54:22]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:55:21]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-08_webh
+- `[2026-04-23 15:55:23]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:55:33]` [Bash] ls 
+- `[2026-04-23 15:56:09]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:56:38]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-08_webh
+- `[2026-04-23 15:56:39]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:56:46]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\auto-publish-blog.py
+- `[2026-04-23 15:56:54]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 15:56:57]` [Bash] cd 
+- `[2026-04-23 15:57:45]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 15:57:49]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:57:58]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\auto-publish-blog.py
+- `[2026-04-23 15:58:01]` [Bash] cd 
+- `[2026-04-23 15:58:35]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:59:19]` [Bash] ssh lysander-server 
+- `[2026-04-23 15:59:20]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 16:00:04]` [Bash] ssh lysander-server 
+- `[2026-04-23 16:00:17]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-06_任务依赖
+- `[2026-04-23 16:00:57]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-08_webh
+- `[2026-04-23 16:01:09]` [Bash] ssh lysander-server 
+- `[2026-04-23 16:01:50]` [Bash] 
+- `[2026-04-23 16:02:06]` [Bash] ssh lysander-server 
+- `[2026-04-23 16:02:57]` [Bash] git -C 
+- `[2026-04-23 16:03:04]` [Bash] ssh lysander-server 
+- `[2026-04-23 16:03:09]` [Bash] 
+- `[2026-04-23 16:03:54]` [Bash] ssh lysander-server 
+- `[2026-04-23 16:05:03]` [Bash] curl -s -H 
+- `[2026-04-23 16:08:03]` [Bash] curl -s -H 
+- `[2026-04-23 16:11:59]` [Bash] curl -s -H 
+- `[2026-04-23 16:18:49]` [Bash] curl -s -H 
+- `[2026-04-23 16:20:00]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 16:20:04]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 16:20:08]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 16:20:15]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 16:21:32]` [Bash] curl -s -H 
+- `[2026-04-23 16:23:48]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 16:23:49]` [Bash] curl -s -H 
+- `[2026-04-23 16:23:57]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 16:24:03]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 16:24:31]` [Bash] ssh lysander-server 
+- `[2026-04-23 16:25:06]` [Bash] curl -s -H 
+- `[2026-04-23 16:25:49]` [Bash] ssh lysander-server 
+- `[2026-04-23 16:28:13]` [Bash] curl -s -H 
+- `[2026-04-23 16:29:14]` [Bash] curl -s -H 
+- `[2026-04-23 16:30:17]` [Bash] curl -s -H 
+- `[2026-04-23 16:31:32]` [Bash] curl -s -H 
+- `[2026-04-23 16:32:15]` [Bash] curl -s -X POST 
+- `[2026-04-23 16:32:27]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\session-to-worklog.py
+- `[2026-04-23 16:33:26]` [Bash] sleep 8 && curl -s -H 
+- `[2026-04-23 16:34:16]` [Bash] curl -s -H 
+- `[2026-04-23 16:36:17]` [Bash] curl -s -H 
+- `[2026-04-23 16:37:31]` [Bash] curl -s -H 
+- `[2026-04-23 16:38:03]` [Bash] curl -s -H 
+- `[2026-04-23 16:38:46]` [Bash] curl -s -H 
+- `[2026-04-23 16:39:29]` [Bash] N8N_KEY=
+- `[2026-04-23 16:40:43]` [Bash] N8N_KEY=
+- `[2026-04-23 16:42:15]` [Bash] N8N_KEY=
+- `[2026-04-23 16:43:28]` [Bash] N8N_KEY=
+- `[2026-04-23 16:44:29]` [Bash] SLACK_TOKEN=
+- `[2026-04-23 16:44:49]` [Bash] cd 
+- `[2026-04-23 16:45:20]` [Bash] python -c 
+- `[2026-04-23 16:46:05]` [Bash] test -f 
+- `[2026-04-23 16:46:31]` [Bash] N8N_KEY=
+- `[2026-04-23 16:47:39]` [Bash] N8N_KEY=
+- `[2026-04-23 16:49:07]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\n8n_integration.ya
+- `[2026-04-23 16:54:29]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\CLAUDE.md
+- `[2026-04-23 16:54:52]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-23 16:54:53]` [Bash] python3 -c 
+- `[2026-04-23 16:57:16]` [Bash] ls 
+- `[2026-04-23 16:57:26]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/agent-CEO/config/ && ls /c/Users/lysan
+- `[2026-04-23 16:57:35]` [Bash] mkdir -p /c/Users/lysanderl_janusd/Synapse-Mini/agent-CEO/config/president-os
+- `[2026-04-23 16:57:50]` [Bash] 
+- `[2026-04-23 16:58:01]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\president-os\brie
+- `[2026-04-23 16:58:39]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\president-os\morn
+- `[2026-04-23 16:59:21]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\president
+- `[2026-04-23 17:00:17]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\content-f
+- `[2026-04-23 17:00:21]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/agent-CEO/config/president-os/ && ls /
+- `[2026-04-23 17:01:21]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\n8n_integration.ya
+- `[2026-04-23 17:03:29]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 17:03:30]` [Bash] cd 
+- `[2026-04-23 17:03:59]` [Bash] cd 
+- `[2026-04-23 17:07:19]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pm
+- `[2026-04-23 17:07:22]` [Bash] cd 
+- `[2026-04-23 17:07:38]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-23 17:08:09]` [Bash] cd 
+- `[2026-04-23 17:08:28]` [Bash] cd 
+- `[2026-04-23 17:08:56]` [Bash] cd 
+- `[2026-04-23 17:09:21]` [Bash] cd 
+- `[2026-04-23 17:09:30]` [Bash] ls 
+- `[2026-04-23 17:09:39]` [Bash] cd 
+- `[2026-04-23 17:09:45]` [Bash] ls 
+- `[2026-04-23 17:10:05]` [Write] Write: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\VERSION
+- `[2026-04-23 17:10:41]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 17:10:45]` [Bash] cd 
+- `[2026-04-23 17:11:02]` [Bash] cd 
+- `[2026-04-23 17:11:19]` [Bash] cd 
+- `[2026-04-23 17:11:30]` [Bash] cd 
+- `[2026-04-23 17:11:41]` [Bash] ls 
+- `[2026-04-23 17:11:52]` [Bash] cd 
+- `[2026-04-23 17:12:05]` [Bash] cd 
+- `[2026-04-23 17:12:52]` [Bash] git checkout president-os-phase1 2>&1
+- `[2026-04-23 17:13:12]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 17:13:24]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 17:13:28]` [Bash] cd 
+- `[2026-04-23 17:13:39]` [Bash] cd 
+- `[2026-04-23 17:13:50]` [Bash] cd 
+- `[2026-04-23 17:14:23]` [Bash] python3 -c 
+- `[2026-04-23 17:15:47]` [Bash] python3 --version 2>/dev/null || python --version 2>/dev/null || echo 
+- `[2026-04-23 17:16:00]` [Bash] python3 -c 
+- `[2026-04-23 17:17:13]` [Bash] ssh lysander-server 
+- `[2026-04-23 17:17:24]` [Bash] git checkout president-os-phase1 2>&1
+- `[2026-04-23 17:17:34]` [Bash] PYTHONUTF8=1 python creds.py list 2>&1
+- `[2026-04-23 17:18:01]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-se
+- `[2026-04-23 17:18:14]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 17:18:18]` [Bash] git add obs/06-daily-reports/2026-04-23-session-archive.md agent-CEO/config/acti
+- `[2026-04-23 17:18:29]` [Bash] ssh lysander-server 
+- `[2026-04-23 17:18:37]` [Bash] ssh lysander-server 
+- `[2026-04-23 17:18:56]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-23 17:19:22]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-23 17:20:15]` [Bash] cd 
+- `[2026-04-23 17:20:22]` [Bash] nslookup pmo-api.lysander.bond 8.8.8.8 2>&1 | tail -10
+- `[2026-04-23 17:20:36]` [Bash] ssh lysander-server 
+- `[2026-04-23 17:27:16]` [Bash] find 
+- `[2026-04-23 17:27:16]` [Bash] ls -la 
+- `[2026-04-23 17:27:31]` [Bash] ls 
+- `[2026-04-23 17:27:34]` [Bash] ls -la 
+- `[2026-04-23 17:27:34]` [Bash] ls -la 
+- `[2026-04-23 17:28:11]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\00-daily-work\2026-04-23-sessi
+- `[2026-04-23 17:28:13]` [Bash] cd 
+- `[2026-04-23 17:28:22]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 17:28:25]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 17:28:43]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-23 17:28:54]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-se
+- `[2026-04-23 17:28:58]` [Bash] cd 
+- `[2026-04-23 17:38:01]` [Bash] ls -la /c/Users/lysanderl_janusd/Synapse-Mini/obs/01-team-knowledge/HR/personnel
+- `[2026-04-23 17:40:01]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git status && echo 
+- `[2026-04-23 17:40:16]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/ && echo 
+- `[2026-04-23 17:40:27]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/styles/ && echo 
+- `[2026-04-23 17:40:49]` [Bash] mkdir -p /c/Users/lysanderl_janusd/lysander-bond/src/components/synapse && ls /c
+- `[2026-04-23 17:41:02]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-p
+- `[2026-04-23 17:41:09]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\styles\synapse.css
+- `[2026-04-23 17:41:18]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\SynapseSub
+- `[2026-04-23 17:41:19]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:41:24]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\SynapseLayout.astro
+- `[2026-04-23 17:41:32]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:41:32]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-p
+- `[2026-04-23 17:41:34]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\Hero.astro
+- `[2026-04-23 17:41:42]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\FeatureCar
+- `[2026-04-23 17:41:45]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_op
+- `[2026-04-23 17:41:47]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:41:49]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\PillarSect
+- `[2026-04-23 17:41:53]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\TimelineIt
+- `[2026-04-23 17:41:56]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-p
+- `[2026-04-23 17:41:58]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_op
+- `[2026-04-23 17:41:59]` [Bash] mkdir -p 
+- `[2026-04-23 17:41:59]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:42:02]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\CTABanner.
+- `[2026-04-23 17:42:11]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:42:13]` [Bash] ls C:/Users/lysanderl_janusd/Synapse-Mini/ | head -50
+- `[2026-04-23 17:42:14]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\AgentTeamC
+- `[2026-04-23 17:42:21]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:42:24]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\PricingCar
+- `[2026-04-23 17:42:25]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-p
+- `[2026-04-23 17:42:30]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\organization.yaml
+- `[2026-04-23 17:42:31]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\StatsRow.a
+- `[2026-04-23 17:42:34]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\pmo-auto\VERSION
+- `[2026-04-23 17:42:36]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\committee
+- `[2026-04-23 17:42:36]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\CodeBlock.
+- `[2026-04-23 17:42:38]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:42:39]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\VERSION
+- `[2026-04-23 17:42:54]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-p
+- `[2026-04-23 17:42:55]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\CHANGELOG.md
+- `[2026-04-23 17:42:57]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:43:07]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-23 17:43:07]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\capabilities.as
+- `[2026-04-23 17:43:16]` [Bash] python -c 
+- `[2026-04-23 17:43:18]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_c
+- `[2026-04-23 17:43:23]` [Bash] wc -l 
+- `[2026-04-23 17:43:29]` [Bash] PYTHONIOENCODING=utf-8 python -c 
+- `[2026-04-23 17:43:32]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-p
+- `[2026-04-23 17:43:37]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\how-it-works.as
+- `[2026-04-23 17:44:04]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-p
+- `[2026-04-23 17:44:10]` [Bash] wc -l 
+- `[2026-04-23 17:44:11]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\team.astro
+- `[2026-04-23 17:44:35]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\intelligence.as
+- `[2026-04-23 17:44:59]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\pricing.astro
+- `[2026-04-23 17:45:18]` [Bash] wc -l 
+- `[2026-04-23 17:45:18]` [Bash] ls -la 
+- `[2026-04-23 17:45:28]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\get-started.ast
+- `[2026-04-23 17:45:38]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\index.astro
+- `[2026-04-23 17:45:55]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\index.astro
+- `[2026-04-23 17:46:15]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\index.astro
+- `[2026-04-23 17:46:24]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\SynapseSubN
+- `[2026-04-23 17:46:27]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -80
+- `[2026-04-23 17:46:43]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log --oneline src/pages/blog/n
+- `[2026-04-23 17:47:03]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && gh run list --limit 3 --workflow d
+- `[2026-04-23 17:47:25]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\blog\n8n-claude-pmo-auto
+- `[2026-04-23 17:47:26]` [Bash] ls 
+- `[2026-04-23 17:47:28]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -60
+- `[2026-04-23 17:47:54]` [Bash] 
+- `[2026-04-23 17:48:05]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && which python python3 2>&1 | head; 
+- `[2026-04-23 17:48:16]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\fix_blog_index.py
+- `[2026-04-23 17:48:19]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && python fix_blog_index.py && rm fix
+- `[2026-04-23 17:48:28]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -40
+- `[2026-04-23 17:48:43]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && grep -n 
+- `[2026-04-23 17:48:48]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pr
+- `[2026-04-23 17:48:57]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\fix_blog_braces.py
+- `[2026-04-23 17:49:00]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && python fix_blog_braces.py
+- `[2026-04-23 17:49:09]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && rm fix_blog_braces.py && npm run b
+- `[2026-04-23 17:49:28]` [Bash] 
+- `[2026-04-23 17:49:39]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && ls dist/synapse/ | head && echo 
+- `[2026-04-23 17:50:04]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git status && echo 
+- `[2026-04-23 17:50:14]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add src/styles/synapse.css src
+- `[2026-04-23 17:50:27]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-23 17:50:36]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log --oneline -3 && echo 
+- `[2026-04-23 17:50:47]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && gh run list --limit 1 2>&1 | head 
+- `[2026-04-23 17:50:57]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && gh run watch 24850255350 --exit-st
+- `[2026-04-23 17:51:50]` [Bash] 
+- `[2026-04-23 17:52:32]` [Bash] 
+- `[2026-04-23 17:54:16]` [Bash] ls 
+- `[2026-04-23 17:54:38]` [Bash] _ROOT=$(git rev-parse --show-toplevel 2>/dev/null); B=
+- `[2026-04-23 17:54:44]` [Bash] mkdir -p 
+- `[2026-04-23 17:54:59]` [Bash] command -v bun && bun --version || echo 
+- `[2026-04-23 17:55:05]` [Bash] ls 
+- `[2026-04-23 17:55:18]` [Bash] npm ls -g --depth=0 2>/dev/null | head -30; echo 
+- `[2026-04-23 17:55:35]` [Bash] CHROME=
+- `[2026-04-24 04:57:48]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/pages/synapse/ 2>/dev/null | head
+- `[2026-04-24 04:57:54]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log --oneline -5 && git status
+- `[2026-04-24 04:58:17]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-24 04:58:26]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-24 04:58:30]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -30
+- `[2026-04-24 04:58:50]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add src/pages/index.astro src/
+- `[2026-04-24 04:58:56]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/components/synapse/
+- `[2026-04-24 04:58:56]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/pages/synapse/
+- `[2026-04-24 04:59:04]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-24 04:59:24]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && curl -s -o /tmp/live.html -w 
+- `[2026-04-24 04:59:25]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\SynapseLayout.astro
+- `[2026-04-24 04:59:35]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/pages/synapse/ 2>&1
+- `[2026-04-24 04:59:35]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/obs/01-team-knowledge/ 2>&1
+- `[2026-04-24 04:59:40]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-24 04:59:54]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/layouts/ /c/Users/lysanderl_janus
+- `[2026-04-24 05:00:02]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\SynapseSub
+- `[2026-04-24 05:00:13]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && for i in 1 2 3 4 5 6 7 8; do count
+- `[2026-04-24 05:01:06]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\beta.astro
+- `[2026-04-24 05:01:24]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\index.astro
+- `[2026-04-24 05:01:32]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\zh\index.astro
+- `[2026-04-24 05:01:37]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\pricing.astro
+- `[2026-04-24 05:01:45]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\SynapseLayout.astro
+- `[2026-04-24 05:02:20]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\zh\capabilities
+- `[2026-04-24 05:02:50]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\beta-program
+- `[2026-04-24 05:02:54]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\zh\how-it-works
+- `[2026-04-24 05:03:19]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\beta-program
+- `[2026-04-24 05:03:32]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\zh\team.astro
+- `[2026-04-24 05:04:00]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\zh\intelligence
+- `[2026-04-24 05:04:02]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\beta-program
+- `[2026-04-24 05:04:28]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\zh\pricing.astr
+- `[2026-04-24 05:04:58]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\beta-program
+- `[2026-04-24 05:04:59]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\zh\get-started.
+- `[2026-04-24 05:05:03]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -60
+- `[2026-04-24 05:05:08]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\capabilities.ast
+- `[2026-04-24 05:05:14]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\how-it-works.ast
+- `[2026-04-24 05:05:19]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git status 2>&1
+- `[2026-04-24 05:05:19]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\team.astro
+- `[2026-04-24 05:05:24]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\intelligence.ast
+- `[2026-04-24 05:05:30]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git diff --stat src/pages/synapse/
+- `[2026-04-24 05:05:36]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\pricing.astro
+- `[2026-04-24 05:05:39]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add src/pages/synapse/beta.ast
+- `[2026-04-24 05:05:40]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\get-started.astr
+- `[2026-04-24 05:05:52]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-24 05:05:57]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\index.astro
+- `[2026-04-24 05:06:02]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -80
+- `[2026-04-24 05:06:02]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git push origin main 2>&1
+- `[2026-04-24 05:06:15]` [Bash] git add obs/01-team-knowledge/beta-program/ && git status obs/01-team-knowledge/
+- `[2026-04-24 05:06:27]` [Bash] git commit -m 
+- `[2026-04-24 05:06:29]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git status
+- `[2026-04-24 05:06:37]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-24 05:06:41]` [Bash] curl -sI https://lysander.bond/synapse/beta | head -5 2>&1
+- `[2026-04-24 05:06:46]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git diff --stat src/pages/synapse/
+- `[2026-04-24 05:06:55]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-24 05:06:57]` [Bash] ls 
+- `[2026-04-24 05:06:59]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git status --short | head -20
+- `[2026-04-24 05:07:01]` [Bash] python -c 
+- `[2026-04-24 05:07:11]` [Bash] ls 
+- `[2026-04-24 05:07:12]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git show HEAD:src/pages/synapse/pr
+- `[2026-04-24 05:07:16]` [Bash] PYTHONIOENCODING=utf-8 python -c 
+- `[2026-04-24 05:07:20]` [Bash] curl -sIL https://lysander.bond/synapse/beta 2>&1 | grep -E 
+- `[2026-04-24 05:07:25]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add src/components/synapse/Syn
+- `[2026-04-24 05:07:33]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\wf06-fall
+- `[2026-04-24 05:07:38]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-24 05:07:43]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-24 05:07:47]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git push origin main 2>&1 | tail -
+- `[2026-04-24 05:08:09]` [Bash] until [ 
+- `[2026-04-24 05:08:15]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_c
+- `[2026-04-24 05:08:16]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-24 05:08:22]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-24 05:08:29]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\committee
+- `[2026-04-24 05:08:33]` [Bash] rm 
+- `[2026-04-24 05:08:35]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_l
+- `[2026-04-24 05:08:46]` [Bash] wc -l 
+- `[2026-04-24 05:09:00]` [Bash] for path in /synapse/zh/ /synapse/zh/capabilities /synapse/zh/how-it-works /syna
+- `[2026-04-24 05:09:03]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-24 05:09:29]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-24 05:10:01]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel
+- `[2026-04-24 05:10:07]` [Bash] wc -l /c/Users/lysanderl_janusd/Synapse-Mini/obs/01-team-knowledge/HR/personnel/
+- `[2026-04-24 05:10:28]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-24 05:10:40]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-24 05:10:50]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\01-team-knowledge\HR\personnel\
+- `[2026-04-24 05:11:51]` [Bash] ls 
+- `[2026-04-24 05:12:12]` [Bash] python -c 
+- `[2026-04-24 05:12:12]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-24 05:12:17]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-24 05:12:29]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\organization.yaml
+- `[2026-04-24 05:12:39]` [Bash] curl -s https://lysander.bond/ > /tmp/home.html && ls -lh /tmp/home.html && curl
+- `[2026-04-24 05:12:40]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\organization.yaml
+- `[2026-04-24 05:12:46]` [Bash] python -c 
+- `[2026-04-24 05:12:46]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-24 05:12:48]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_l
+- `[2026-04-24 05:12:54]` [Bash] python -c 
+- `[2026-04-24 05:13:00]` [Bash] python -c 
+- `[2026-04-24 05:13:05]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-24-re
+- `[2026-04-24 05:13:06]` [Bash] grep -n 
+- `[2026-04-24 05:13:06]` [Bash] wc -l 
+- `[2026-04-24 05:13:25]` [Bash] echo 
+- `[2026-04-24 05:13:32]` [Bash] curl -sIL https://lysander.bond/synapse/capabilities 2>&1 | head -40 && echo 
+- `[2026-04-24 05:14:14]` [Bash] curl -sL https://lysander.bond/synapse/capabilities/ > /tmp/cap.html && ls -lh /
+- `[2026-04-24 05:14:16]` [Bash] python -c 
+- `[2026-04-24 05:14:22]` [Bash] python -c 
+- `[2026-04-24 05:14:29]` [Bash] python -c 
+- `[2026-04-24 05:14:50]` [Bash] wc -l 
+- `[2026-04-24 05:15:06]` [Bash] echo 
+- `[2026-04-24 05:15:13]` [Bash] echo 
+- `[2026-04-24 05:17:05]` [Bash] ls 
+- `[2026-04-24 05:18:05]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-24-pr
+- `[2026-04-24 05:22:04]` [Bash] ls 
+- `[2026-04-24 05:22:46]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-24 05:22:48]` [Edit] Edit: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Synap
+- `[2026-04-24 05:23:03]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-24 05:23:04]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\SynapseLayout.astro
+- `[2026-04-24 05:23:07]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\index.astro
+- `[2026-04-24 05:23:10]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\zh\index.astro
+- `[2026-04-24 05:23:17]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -40
+- `[2026-04-24 05:23:35]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && echo 
+- `[2026-04-24 05:23:46]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add src/layouts/Layout.astro s
+- `[2026-04-24 05:24:04]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-24 05:24:07]` [Bash] ls -la 
+- `[2026-04-24 05:24:07]` [Bash] ls -la 
+- `[2026-04-24 05:24:15]` [Bash] nslookup -type=NS lysander.bond 2>&1 | head -20
+- `[2026-04-24 05:24:16]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git push origin main 2>&1 | tail -
+- `[2026-04-24 05:24:23]` [Bash] ssh -o ConnectTimeout=10 -o BatchMode=yes lysander-server 
+- `[2026-04-24 05:24:41]` [Bash] ssh -o ConnectTimeout=10 lysander-server 
+- `[2026-04-24 05:24:48]` [Bash] ssh -o ConnectTimeout=10 lysander-server 
+- `[2026-04-24 05:24:56]` [Bash] ssh -o ConnectTimeout=10 lysander-server 
+- `[2026-04-24 05:25:04]` [Bash] ssh -o ConnectTimeout=10 lysander-server 
+- `[2026-04-24 05:25:38]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log --oneline -5
+- `[2026-04-24 05:25:43]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log -1 --stat
+- `[2026-04-24 05:25:49]` [Bash] curl -s https://lysander.bond/synapse/capabilities | grep -oE '<html[^>]*lang=
+- `[2026-04-24 05:26:37]` [Bash] curl -s https://lysander.bond/synapse/zh/capabilities | grep -oE '<html[^>]*lang
+- `[2026-04-24 05:27:25]` [Bash] curl -s https://lysander.bond/ | grep -oE '<html[^>]*lang=
+- `[2026-04-24 05:28:10]` [Bash] curl -s https://lysander.bond/synapse/ | grep -oE '<html[^>]*lang=
+- `[2026-04-24 05:28:52]` [Bash] curl -s https://lysander.bond/synapse/zh/ | grep -oE '<html[^>]*lang=
+- `[2026-04-24 05:29:01]` [Bash] python 
+- `[2026-04-24 05:29:38]` [Bash] ls -la 
+- `[2026-04-24 05:30:24]` [Bash] export PYTHONIOENCODING=utf-8 && python 
+- `[2026-04-24 05:30:38]` [Bash] export PYTHONIOENCODING=utf-8 && python 
+- `[2026-04-24 05:30:48]` [Bash] export PYTHONIOENCODING=utf-8 && python 
+- `[2026-04-24 05:30:57]` [Bash] export PYTHONIOENCODING=utf-8 && python 
+- `[2026-04-24 05:31:18]` [Bash] 
+- `[2026-04-24 05:31:32]` [Bash] 
+- `[2026-04-24 05:31:53]` [Bash] ls -la 
+- `[2026-04-24 05:32:10]` [Bash] ssh -o ConnectTimeout=5 lysander-server 
+- `[2026-04-24 05:32:22]` [Bash] nslookup pmo-api.lysander.bond 8.8.8.8 2>&1 | head -15; echo '---'; nslookup pmo
+- `[2026-04-24 05:32:34]` [Bash] nslookup -type=NS lysander.bond 8.8.8.8 2>&1 | head -15; echo '---'; nslookup ly
+- `[2026-04-24 05:32:41]` [Bash] ls -la ~/.dnspod* ~/.tencentcloud* ~/.secrets* 2>&1 | head -20; echo '---'; cat 
+- `[2026-04-24 05:33:14]` [Bash] nslookup test123randomsub.lysander.bond 119.29.29.29 2>&1 | head -8; echo '---';
+- `[2026-04-24 05:33:24]` [Bash] ssh lysander-server 
+- `[2026-04-24 05:33:59]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-24 05:34:05]` [Bash] PYTHONIOENCODING=utf-8 python -c 
+- `[2026-04-24 05:40:15]` [Bash] 
+- `[2026-04-24 05:44:07]` [Bash] 
+- `[2026-04-24 05:45:04]` [Bash] 
+- `[2026-04-24 05:45:34]` [Bash] 
+- `[2026-04-24 05:47:02]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-24 05:47:15]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-24 05:47:21]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-24 05:47:29]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-24 05:47:34]` [Bash] 
+- `[2026-04-24 06:09:37]` [Bash] cd 
+- `[2026-04-24 06:09:58]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\pmo-auto\VERSION
+- `[2026-04-24 06:10:03]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\CHANGELOG.md
+- `[2026-04-24 06:10:08]` [Bash] cd 
+- `[2026-04-24 06:10:19]` [Bash] cd 
+- `[2026-04-24 06:10:24]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-24 06:10:28]` [Edit] Edit: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Synap
+- `[2026-04-24 06:10:29]` [Bash] cd 
+- `[2026-04-25 05:32:43]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git push origin main 2>&1 | tail -
+- `[2026-04-25 05:32:47]` [Bash] cd C:/Users/lysanderl_janusd/Synapse-Mini && git push origin main 2>&1 | tail -1
+- `[2026-04-25 05:32:48]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\action_agent.p
+- `[2026-04-25 05:32:51]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:32:52]` [Bash] cd 
+- `[2026-04-25 05:33:05]` [Bash] sleep 60
+- `[2026-04-25 05:33:08]` [Bash] cd C:/Users/lysanderl_janusd/Synapse-Mini && git stash pop 2>&1 | tail -5
+- `[2026-04-25 05:33:10]` [Bash] wait_for() { while kill -0 $1 2>/dev/null; do sleep 2; done; }; for slug in ai-a
+- `[2026-04-25 05:33:10]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\daily_agent.py
+- `[2026-04-25 05:33:13]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\resume_agent.p
+- `[2026-04-25 05:33:14]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:33:19]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\shared_context
+- `[2026-04-25 05:33:20]` [Bash] cd C:/Users/lysanderl_janusd/Synapse-Mini && gh workflow view n8n-snapshot.yml -
+- `[2026-04-25 05:33:22]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\shared_context
+- `[2026-04-25 05:33:29]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\heartbeat_chec
+- `[2026-04-25 05:33:33]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\heartbeat_chec
+- `[2026-04-25 05:33:36]` [Bash] cd C:/Users/lysanderl_janusd/Synapse-Mini && gh workflow view n8n-snapshot.yml -
+- `[2026-04-25 05:33:39]` [Bash] cd 
+- `[2026-04-25 05:33:44]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:33:49]` [Bash] cd C:/Users/lysanderl_janusd/Synapse-Mini && git stash list 2>&1 | head -5 && ec
+- `[2026-04-25 05:33:58]` [Bash] cd 
+- `[2026-04-25 05:34:01]` [Bash] sleep 90
+- `[2026-04-25 05:34:03]` [Bash] ssh lysander-server 'ASANA_PAT=$(docker exec pmo-api python3 -c 
+- `[2026-04-25 05:34:05]` [Bash] for slug in ai-agent-deleted-my-files-safety-boundary claude-code-zero-friction-
+- `[2026-04-25 05:34:24]` [Bash] ssh lysander-server 'ASANA_PAT=$(docker exec pmo-api python3 -c 
+- `[2026-04-25 05:34:27]` [Bash] cd 
+- `[2026-04-25 05:34:42]` [Bash] which python python3 py 2>&1; py --version 2>&1; python --version 2>&1
+- `[2026-04-25 05:34:46]` [Bash] ssh lysander-server 'ASANA_PAT=$(docker exec pmo-api python3 -c 
+- `[2026-04-25 05:34:58]` [Bash] cd 
+- `[2026-04-25 05:35:09]` [Bash] ssh lysander-server 'ASANA_PAT=$(docker exec pmo-api python3 -c 
+- `[2026-04-25 05:35:14]` [Bash] cd 
+- `[2026-04-25 05:35:27]` [Bash] cd 
+- `[2026-04-25 05:35:39]` [Bash] cd 
+- `[2026-04-25 05:35:43]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:35:51]` [Bash] cd 
+- `[2026-04-25 05:36:01]` [Bash] ssh lysander-server 'ASANA_PAT=$(docker exec pmo-api python3 -c 
+- `[2026-04-25 05:36:03]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && diff <(ls src/content/blog/zh/ | s
+- `[2026-04-25 05:36:06]` [Bash] cd 
+- `[2026-04-25 05:36:14]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && ls src/content/blog/zh/ | wc -l &&
+- `[2026-04-25 05:36:22]` [Bash] cd 
+- `[2026-04-25 05:36:23]` [Bash] ssh lysander-server 'ASANA_PAT=$(docker exec pmo-api python3 -c 
+- `[2026-04-25 05:36:29]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && diff <(ls src/content/blog/zh/ | s
+- `[2026-04-25 05:36:38]` [Bash] ls 
+- `[2026-04-25 05:36:44]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && comm -23 <(ls src/content/blog/zh/
+- `[2026-04-25 05:36:44]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:36:58]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && ls src/content/blog/en/ | sort
+- `[2026-04-25 05:36:58]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && ls src/content/blog/zh/ | sort
+- `[2026-04-25 05:37:00]` [Bash] ssh lysander-server 'sudo sqlite3 /home/ubuntu/pmo-data/pmo_api.db 
+- `[2026-04-25 05:37:15]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-25 05:37:20]` [Bash] COMPLETION_TIME=$(date -u +
+- `[2026-04-25 05:37:20]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && ls src/content/blog/en/*.md | wc -
+- `[2026-04-25 05:37:24]` [Edit] Edit: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Synap
+- `[2026-04-25 05:37:41]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:37:49]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\n8n-http-
+- `[2026-04-25 05:37:53]` [Bash] cd 
+- `[2026-04-25 05:38:03]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:38:05]` [Bash] cd 
+- `[2026-04-25 05:38:06]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\automation-pi
+- `[2026-04-25 05:38:07]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/scripts/ 2>/dev/null && echo 
+- `[2026-04-25 05:38:08]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/.claude/hooks/ 2>/dev/null && echo 
+- `[2026-04-25 05:38:22]` [Bash] ssh lysander-server 'sudo sqlite3 /home/ubuntu/pmo-data/pmo_api.db 
+- `[2026-04-25 05:38:22]` [Bash] cd 
+- `[2026-04-25 05:38:23]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-scheduled-
+- `[2026-04-25 05:38:32]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/agent-CEO/data/ 2>/dev/null && echo 
+- `[2026-04-25 05:38:37]` [Bash] ssh lysander-server 'sudo sqlite3 /home/ubuntu/pmo-data/pmo_api.db 
+- `[2026-04-25 05:38:38]` [Bash] cd 
+- `[2026-04-25 05:38:42]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-automation
+- `[2026-04-25 05:38:48]` [Bash] git log --oneline --format=
+- `[2026-04-25 05:38:54]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:38:57]` [Bash] cd 
+- `[2026-04-25 05:39:01]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-automation
+- `[2026-04-25 05:39:09]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:39:18]` [Bash] cd 
+- `[2026-04-25 05:39:20]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-system-fra
+- `[2026-04-25 05:39:24]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:39:30]` [Bash] cd 
+- `[2026-04-25 05:39:51]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\notion-mcp-ov
+- `[2026-04-25 05:40:09]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\n8n-claude-pm
+- `[2026-04-25 05:40:24]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\n8n-wechat-bl
+- `[2026-04-25 05:40:47]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\n8n-node-exec
+- `[2026-04-25 05:41:02]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\asana-slack-n
+- `[2026-04-25 05:41:18]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\claudecode.md
+- `[2026-04-25 05:41:18]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-pm
+- `[2026-04-25 05:41:23]` [Bash] cd 
+- `[2026-04-25 05:41:42]` [Bash] cd 
+- `[2026-04-25 05:41:43]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\claude-code-k
+- `[2026-04-25 05:42:00]` [Bash] cd 
+- `[2026-04-25 05:42:00]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai.md
+- `[2026-04-25 05:42:16]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\aiobsidian.md
+- `[2026-04-25 05:42:20]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\VERSION
+- `[2026-04-25 05:42:44]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\CHANGELOG.md
+- `[2026-04-25 05:42:48]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-applicatio
+- `[2026-04-25 05:42:49]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-25 05:43:02]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-second-bra
+- `[2026-04-25 05:43:16]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-25 05:43:19]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\personal-task
+- `[2026-04-25 05:43:20]` [Bash] cd 
+- `[2026-04-25 05:43:33]` [Bash] cd 
+- `[2026-04-25 05:43:36]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-team-first
+- `[2026-04-25 05:43:51]` [Bash] cd 
+- `[2026-04-25 05:43:59]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-product-ga
+- `[2026-04-25 05:44:06]` [Bash] cd 
+- `[2026-04-25 05:44:18]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\src\content\blog\en\ai-workflow-s
+- `[2026-04-25 05:44:19]` [Bash] cd 
+- `[2026-04-25 05:44:22]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && ls src/content/blog/en/ | wc -l &&
+- `[2026-04-25 05:44:42]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && for f in automation-pipeline-gate-
+- `[2026-04-25 05:44:57]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && for f in claudecode claude-code-kn
+- `[2026-04-25 05:45:18]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && for f in automation-pipeline-gate-
+- `[2026-04-25 05:45:33]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && grep -c 
+- `[2026-04-25 05:45:42]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -25
+- `[2026-04-25 05:46:06]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git status --short | head -50
+- `[2026-04-25 05:46:18]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add src/content/blog/ && git s
+- `[2026-04-25 05:46:40]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-25 05:46:55]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git push origin main 2>&1 | tail -
+- `[2026-04-25 05:47:17]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && for slug in automation-pipeline-ga
+- `[2026-04-25 05:47:57]` [Bash] until [ 
+- `[2026-04-25 05:48:35]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && for slug in automation-pipeline-ga
+- `[2026-04-25 05:49:16]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && for f in src/content/blog/en/autom
+- `[2026-04-25 05:50:59]` [Bash] echo 
+- `[2026-04-25 05:51:41]` [Bash] echo 
+- `[2026-04-25 05:52:18]` [Bash] echo 
+- `[2026-04-25 05:53:01]` [Bash] echo 
+- `[2026-04-25 05:56:24]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\n8n-workflows\WF-02_WBS导
+- `[2026-04-25 05:56:27]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:56:46]` [Bash] curl -s -o /dev/null -w 
+- `[2026-04-25 05:57:07]` [Bash] curl -s -w 
+- `[2026-04-25 05:57:14]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\wbs_to_asana.py
+- `[2026-04-25 05:57:25]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\wbs_to_asana.py
+- `[2026-04-25 05:57:33]` [Bash] scp 
+- `[2026-04-25 05:57:35]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\wbs_to_asana.py
+- `[2026-04-25 05:57:45]` [Bash] mkdir -p /tmp/uat && curl -sL -w 
+- `[2026-04-25 05:57:46]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:57:53]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\wbs_to_asana.py
+- `[2026-04-25 05:57:59]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:58:02]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\wbs_to_asana.py
+- `[2026-04-25 05:58:10]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:58:21]` [Bash] curl -sL -w 
+- `[2026-04-25 05:58:22]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\wbs_to_asana.py
+- `[2026-04-25 05:58:22]` [Bash] 
+- `[2026-04-25 05:58:22]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:58:27]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\wbs_trigger.py
+- `[2026-04-25 05:58:39]` [Bash] cd 
+- `[2026-04-25 05:58:47]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:59:01]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:59:01]` [Bash] for f in /tmp/uat/*.html; do echo 
+- `[2026-04-25 05:59:17]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:59:23]` [Bash] curl -sL -w 
+- `[2026-04-25 05:59:38]` [Bash] ssh lysander-server 
+- `[2026-04-25 05:59:51]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:00:09]` [Bash] for f in /tmp/uat/forge_cap_zh.html /tmp/uat/academy_get_zh.html /tmp/uat/forge_
+- `[2026-04-25 06:00:18]` [Bash] for url in 
+- `[2026-04-25 06:00:18]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:00:26]` [Bash] echo 
+- `[2026-04-25 06:00:34]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:00:40]` [Bash] echo 
+- `[2026-04-25 06:00:47]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:00:59]` [Bash] echo 
+- `[2026-04-25 06:01:00]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:01:07]` [Bash] 
+- `[2026-04-25 06:01:15]` [Bash] echo 
+- `[2026-04-25 06:01:18]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:01:31]` [Bash] ssh lysander-server 'sudo sqlite3 /var/lib/docker/volumes/ubuntu_n8n_data/_data/
+- `[2026-04-25 06:01:31]` [Bash] echo 
+- `[2026-04-25 06:01:49]` [Bash] echo 
+- `[2026-04-25 06:02:04]` [Bash] echo 
+- `[2026-04-25 06:02:10]` [Bash] echo 
+- `[2026-04-25 06:02:19]` [Bash] echo 
+- `[2026-04-25 06:02:33]` [Bash] 
+- `[2026-04-25 06:02:51]` [Bash] echo 
+- `[2026-04-25 06:02:54]` [Bash] 
+- `[2026-04-25 06:03:05]` [Bash] echo 
+- `[2026-04-25 06:03:08]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:03:20]` [Bash] ls 
+- `[2026-04-25 06:03:26]` [Bash] echo 
+- `[2026-04-25 06:03:32]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:03:40]` [Bash] echo 
+- `[2026-04-25 06:03:44]` [Bash] echo 
+- `[2026-04-25 06:03:59]` [Bash] echo 
+- `[2026-04-25 06:04:02]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:04:14]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:04:24]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:04:40]` [Bash] scp 
+- `[2026-04-25 06:04:42]` [Bash] echo 
+- `[2026-04-25 06:04:44]` [Bash] echo 
+- `[2026-04-25 06:04:51]` [Bash] scp 
+- `[2026-04-25 06:05:01]` [Bash] echo 
+- `[2026-04-25 06:05:05]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:05:17]` [Bash] 
+- `[2026-04-25 06:05:20]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:05:34]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:05:50]` [Bash] echo 
+- `[2026-04-25 06:05:51]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:06:01]` [Bash] echo 
+- `[2026-04-25 06:06:07]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:06:16]` [Bash] echo 
+- `[2026-04-25 06:06:22]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:06:36]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:06:37]` [Bash] echo 
+- `[2026-04-25 06:06:41]` [Bash] ls harness/n8n-snapshots/ 2>&1 | head -20 && echo 
+- `[2026-04-25 06:06:53]` [Bash] echo 
+- `[2026-04-25 06:06:54]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:06:58]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_objectives.
+- `[2026-04-25 06:07:00]` [Bash] echo 
+- `[2026-04-25 06:07:07]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_objectives.
+- `[2026-04-25 06:07:08]` [Bash] echo 
+- `[2026-04-25 06:07:10]` [Bash] 
+- `[2026-04-25 06:07:21]` [Bash] tr '>' '>\n' < /tmp/uat/services_zh.html | tr '<' '\n<' | grep -vE '^\s*$' | gre
+- `[2026-04-25 06:07:29]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:07:39]` [Bash] export PYTHONIOENCODING=utf-8 && N8N_API_KEY=$(python 
+- `[2026-04-25 06:07:45]` [Bash] echo 
+- `[2026-04-25 06:07:47]` [Bash] echo 
+- `[2026-04-25 06:08:00]` [Bash] 
+- `[2026-04-25 06:08:00]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\logs\n8n_audit_analysis.py
+- `[2026-04-25 06:08:01]` [Bash] export PYTHONIOENCODING=utf-8 && python logs/n8n_audit_analysis.py 2>&1
+- `[2026-04-25 06:08:01]` [Bash] echo 
+- `[2026-04-25 06:08:17]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:08:23]` [Bash] 
+- `[2026-04-25 06:08:24]` [Bash] echo 
+- `[2026-04-25 06:08:33]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\logs\n8n_audit_render.py
+- `[2026-04-25 06:08:34]` [Bash] export PYTHONIOENCODING=utf-8 && python logs/n8n_audit_render.py 2>&1
+- `[2026-04-25 06:08:35]` [Bash] echo 
+- `[2026-04-25 06:08:39]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:08:47]` [Bash] 
+- `[2026-04-25 06:08:56]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:09:06]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:09:09]` [Bash] find C:/Users/lysanderl_janusd/Synapse-Mini -name 
+- `[2026-04-25 06:09:16]` [Bash] echo 
+- `[2026-04-25 06:09:21]` [Bash] echo 
+- `[2026-04-25 06:09:21]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:09:29]` [Bash] 
+- `[2026-04-25 06:09:37]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:09:48]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:09:51]` [Bash] 
+- `[2026-04-25 06:10:02]` [Bash] echo 
+- `[2026-04-25 06:10:13]` [Bash] echo 
+- `[2026-04-25 06:10:36]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-n8
+- `[2026-04-25 06:10:37]` [Bash] wc -l obs/06-daily-reports/2026-04-25-n8n-workflow-full-audit.md 2>&1
+- `[2026-04-25 06:10:47]` [Bash] rm -f /tmp/n8n_key.txt 2>/dev/null && echo 
+- `[2026-04-25 06:11:01]` [Bash] echo 
+- `[2026-04-25 06:11:22]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-wf
+- `[2026-04-25 06:11:24]` [Bash] wc -l C:/Users/lysanderl_janusd/Synapse-Mini/obs/06-daily-reports/2026-04-25-wf0
+- `[2026-04-25 06:11:47]` [Bash] echo 
+- `[2026-04-25 06:12:36]` [Bash] echo 
+- `[2026-04-25 06:13:21]` [Bash] 
+- `[2026-04-25 06:13:29]` [Bash] ls 
+- `[2026-04-25 06:14:50]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-n8
+- `[2026-04-25 06:14:53]` [Bash] wc -l 
+- `[2026-04-25 06:15:21]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-n8n
+- `[2026-04-25 06:15:34]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-n8n
+- `[2026-04-25 06:15:47]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-n8n
+- `[2026-04-25 06:15:50]` [Bash] wc -l 
+- `[2026-04-25 06:16:08]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-n8n
+- `[2026-04-25 06:16:13]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:16:20]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-n8n
+- `[2026-04-25 06:16:24]` [Bash] wc -l 
+- `[2026-04-25 06:16:30]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:16:42]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-n8n
+- `[2026-04-25 06:16:45]` [Bash] wc -l 
+- `[2026-04-25 06:16:45]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:16:57]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && ls src/layouts/ src/pages/ 2>&1 | 
+- `[2026-04-25 06:17:03]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:17:16]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:17:23]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:17:27]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:17:28]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:17:32]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:17:40]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:17:41]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:17:47]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:17:54]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:17:55]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:18:00]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:18:11]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:18:11]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\SynapseLayout.astro
+- `[2026-04-25 06:18:21]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\en\synapse\index.astro
+- `[2026-04-25 06:18:23]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:18:30]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\index.astro
+- `[2026-04-25 06:18:34]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && grep -n 
+- `[2026-04-25 06:18:35]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:18:48]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\en\synapse\get-started.a
+- `[2026-04-25 06:18:50]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:19:08]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:19:19]` [Bash] echo 
+- `[2026-04-25 06:19:30]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\academy\get-synapse.astr
+- `[2026-04-25 06:19:50]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\en\academy\get-synapse.a
+- `[2026-04-25 06:20:04]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:08]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:13]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:18]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:23]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:30]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:33]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:38]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:42]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:20:50]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\index.astro
+- `[2026-04-25 06:21:02]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\about.astro
+- `[2026-04-25 06:21:06]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\about.astro
+- `[2026-04-25 06:21:11]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\capabilities.ast
+- `[2026-04-25 06:21:18]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\en\index.astro
+- `[2026-04-25 06:21:28]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\pricing.astro
+- `[2026-04-25 06:21:33]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\synapse\pricing.astro
+- `[2026-04-25 06:21:48]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\en\synapse\pricing.astro
+- `[2026-04-25 06:21:51]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\en\synapse\pricing.astro
+- `[2026-04-25 06:22:05]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\FeatureCard
+- `[2026-04-25 06:22:10]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\components\synapse\FeatureCard
+- `[2026-04-25 06:22:13]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/public/ 2>&1
+- `[2026-04-25 06:22:24]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\public\robots.txt
+- `[2026-04-25 06:22:27]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -50
+- `[2026-04-25 06:22:47]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\pages\academy\get-synapse.astr
+- `[2026-04-25 06:22:51]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -30
+- `[2026-04-25 06:23:07]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && echo 
+- `[2026-04-25 06:23:22]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && echo 
+- `[2026-04-25 06:23:34]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && echo 
+- `[2026-04-25 06:23:47]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && grep -oE 
+- `[2026-04-25 06:23:58]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && grep -oE 
+- `[2026-04-25 06:24:01]` [Bash] cd 
+- `[2026-04-25 06:24:10]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && grep -nE 
+- `[2026-04-25 06:24:18]` [Bash] cd 
+- `[2026-04-25 06:24:19]` [Bash] cd 
+- `[2026-04-25 06:24:29]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && grep -oE 
+- `[2026-04-25 06:24:34]` [Bash] cd 
+- `[2026-04-25 06:24:42]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && echo 
+- `[2026-04-25 06:24:52]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\shared_context
+- `[2026-04-25 06:24:57]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\shared_context
+- `[2026-04-25 06:24:59]` [Bash] cd 
+- `[2026-04-25 06:25:01]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && echo 
+- `[2026-04-25 06:25:01]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\intelligence\shared_context
+- `[2026-04-25 06:25:06]` [Bash] cd 
+- `[2026-04-25 06:25:12]` [Bash] cd 
+- `[2026-04-25 06:25:14]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git status && echo 
+- `[2026-04-25 06:25:17]` [Bash] cd 
+- `[2026-04-25 06:25:27]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add src/ public/robots.txt && 
+- `[2026-04-25 06:25:28]` [Bash] cd 
+- `[2026-04-25 06:25:32]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:25:33]` [Bash] cd 
+- `[2026-04-25 06:25:50]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-25 06:25:50]` [Bash] cd 
+- `[2026-04-25 06:25:52]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:25:57]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\n8n\_p1a_step1_backup_insp
+- `[2026-04-25 06:26:01]` [Bash] cd 
+- `[2026-04-25 06:26:05]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git push origin main 2>&1 | tail -
+- `[2026-04-25 06:26:06]` [Bash] cd 
+- `[2026-04-25 06:26:11]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:26:18]` [Bash] export PYTHONIOENCODING=utf-8 && N8N_API_KEY=$(python 
+- `[2026-04-25 06:26:25]` [Bash] cd 
+- `[2026-04-25 06:26:29]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:26:32]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\n8n\_p1a_step1_backup_inspe
+- `[2026-04-25 06:26:35]` [Bash] cd 
+- `[2026-04-25 06:26:39]` [Bash] curl -sI https://lysander.bond/robots.txt 2>&1 | head -3
+- `[2026-04-25 06:26:44]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:26:51]` [Bash] cd 
+- `[2026-04-25 06:26:58]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\n8n\_p1a_step2_inspect_sla
+- `[2026-04-25 06:27:00]` [Bash] sleep 20 && ssh lysander-server 
+- `[2026-04-25 06:27:01]` [Bash] cd 
+- `[2026-04-25 06:27:35]` [Bash] echo 
+- `[2026-04-25 06:27:56]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\n8n\_p1a_step3_rename_and_
+- `[2026-04-25 06:27:59]` [Bash] cd 
+- `[2026-04-25 06:28:06]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log --oneline -3 && echo 
+- `[2026-04-25 06:28:15]` [Bash] echo 
+- `[2026-04-25 06:28:19]` [Bash] cd 
+- `[2026-04-25 06:28:37]` [Bash] cd 
+- `[2026-04-25 06:28:50]` [Bash] echo 
+- `[2026-04-25 06:28:58]` [Bash] cd 
+- `[2026-04-25 06:29:03]` [Bash] cd 
+- `[2026-04-25 06:29:13]` [Bash] cd 
+- `[2026-04-25 06:29:19]` [Bash] cd 
+- `[2026-04-25 06:29:26]` [Bash] cd 
+- `[2026-04-25 06:29:29]` [Bash] echo 
+- `[2026-04-25 06:29:38]` [Bash] cd 
+- `[2026-04-25 06:29:41]` [Bash] cd 
+- `[2026-04-25 06:29:51]` [Bash] cd 
+- `[2026-04-25 06:30:06]` [Bash] cd 
+- `[2026-04-25 06:30:07]` [Bash] echo 
+- `[2026-04-25 06:30:19]` [Bash] cd 
+- `[2026-04-25 06:30:33]` [Bash] cd 
+- `[2026-04-25 06:30:43]` [Bash] echo 
+- `[2026-04-25 06:30:45]` [Bash] cd 
+- `[2026-04-25 06:31:11]` [Bash] cd 
+- `[2026-04-25 06:31:16]` [Bash] echo 
+- `[2026-04-25 06:31:23]` [Bash] cd 
+- `[2026-04-25 06:31:36]` [Bash] cd 
+- `[2026-04-25 06:31:51]` [Bash] cd 
+- `[2026-04-25 06:31:54]` [Bash] echo 
+- `[2026-04-25 06:32:08]` [Bash] cd 
+- `[2026-04-25 06:32:26]` [Bash] cd 
+- `[2026-04-25 06:32:34]` [Bash] echo 
+- `[2026-04-25 06:33:48]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:34:04]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:34:14]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log --oneline -10
+- `[2026-04-25 06:34:17]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:34:23]` [Bash] curl -sL https://lysander.bond/ 2>/dev/null | grep -E 
+- `[2026-04-25 06:34:30]` [Bash] cd 
+- `[2026-04-25 06:34:30]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:34:44]` [Bash] ls 
+- `[2026-04-25 06:34:44]` [Bash] ls 
+- `[2026-04-25 06:34:46]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:35:08]` [Bash] cd 
+- `[2026-04-25 06:35:08]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:35:10]` [Bash] curl -sL https://lysander.bond/blog/harness-engineering-guide 2>/dev/null | grep
+- `[2026-04-25 06:35:24]` [Bash] cd 
+- `[2026-04-25 06:35:27]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:35:45]` [Bash] ssh lysander-server 'python3 -c 
+- `[2026-04-25 06:35:48]` [Bash] curl -sL https://lysander.bond/en/ 2>/dev/null | grep -E 
+- `[2026-04-25 06:35:49]` [Bash] cd 
+- `[2026-04-25 06:36:01]` [Bash] ssh lysander-server 'python3 -c 
+- `[2026-04-25 06:36:14]` [Bash] cd 
+- `[2026-04-25 06:36:17]` [Bash] ssh lysander-server 'python3 -c 
+- `[2026-04-25 06:36:31]` [Bash] for url in 
+- `[2026-04-25 06:36:33]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:36:46]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:36:48]` [Bash] cd 
+- `[2026-04-25 06:37:12]` [Bash] cd 
+- `[2026-04-25 06:37:16]` [Bash] echo 
+- `[2026-04-25 06:37:27]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:37:35]` [Bash] cd 
+- `[2026-04-25 06:37:40]` [Bash] echo 
+- `[2026-04-25 06:37:57]` [Bash] for url in 
+- `[2026-04-25 06:38:09]` [Bash] ls 
+- `[2026-04-25 06:38:10]` [Bash] ls 
+- `[2026-04-25 06:38:10]` [Bash] ls 
+- `[2026-04-25 06:38:28]` [Bash] ls 
+- `[2026-04-25 06:38:38]` [Bash] 
+- `[2026-04-25 06:38:43]` [Bash] curl -sL 
+- `[2026-04-25 06:39:04]` [Bash] cd 
+- `[2026-04-25 06:39:21]` [Bash] py -3 -c 
+- `[2026-04-25 06:39:25]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:39:29]` [Edit] Edit: C:\Users\lysanderl_janusd\lysander-bond\src\layouts\Layout.astro
+- `[2026-04-25 06:39:31]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && npm run build 2>&1 | tail -20
+- `[2026-04-25 06:39:38]` [Bash] cd 
+- `[2026-04-25 06:39:53]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && for f in 
+- `[2026-04-25 06:39:59]` [Bash] cd 
+- `[2026-04-25 06:40:05]` [Bash] py -3 -c 
+- `[2026-04-25 06:40:10]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add src/layouts/Layout.astro &
+- `[2026-04-25 06:40:17]` [Bash] ls 
+- `[2026-04-25 06:40:26]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-25 06:40:31]` [Bash] cd 
+- `[2026-04-25 06:40:38]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git push origin main
+- `[2026-04-25 06:41:05]` [Bash] py -3 -c 
+- `[2026-04-25 06:41:07]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log --oneline -3
+- `[2026-04-25 06:41:42]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log --oneline -3
+- `[2026-04-25 06:41:51]` [Bash] echo 
+- `[2026-04-25 06:41:51]` [Bash] py -3 -c 
+- `[2026-04-25 06:42:13]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-p2
+- `[2026-04-25 06:42:16]` [Bash] cd 
+- `[2026-04-25 06:42:31]` [Bash] cd 
+- `[2026-04-25 06:42:47]` [Bash] py -3 -c 
+- `[2026-04-25 06:43:11]` [Bash] cd 
+- `[2026-04-25 06:43:26]` [Bash] cd 
+- `[2026-04-25 06:43:38]` [Bash] py -3 -c 
+- `[2026-04-25 06:43:40]` [Bash] cd 
+- `[2026-04-25 06:43:51]` [Bash] cd 
+- `[2026-04-25 06:43:54]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:44:11]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:44:15]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/ 2>&1 | head -30
+- `[2026-04-25 06:44:16]` [Bash] cd 
+- `[2026-04-25 06:44:28]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:44:31]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/VERSION 2>&1; echo 
+- `[2026-04-25 06:44:33]` [Bash] cd 
+- `[2026-04-25 06:44:41]` [Bash] py -3 -c 
+- `[2026-04-25 06:44:45]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\VERSION
+- `[2026-04-25 06:45:09]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:45:13]` [Write] Write: C:\Users\lysanderl_janusd\lysander-bond\CHANGELOG.md
+- `[2026-04-25 06:45:16]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git add VERSION CHANGELOG.md && gi
+- `[2026-04-25 06:45:30]` [Bash] py -3 -c 
+- `[2026-04-25 06:45:31]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git commit -m 
+- `[2026-04-25 06:45:42]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git push origin main 2>&1
+- `[2026-04-25 06:45:49]` [Bash] echo 
+- `[2026-04-25 06:45:59]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git tag -a v1.0-bilingual -m 
+- `[2026-04-25 06:46:15]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git rev-parse HEAD && echo 
+- `[2026-04-25 06:46:25]` [Bash] py -3 -c 
+- `[2026-04-25 06:46:33]` [Bash] cd 
+- `[2026-04-25 06:46:35]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && git log -14 --oneline
+- `[2026-04-25 06:46:45]` [Bash] mkdir -p 
+- `[2026-04-25 06:46:50]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/obs/04-decision-knowledge/ 2>&1 | head
+- `[2026-04-25 06:47:01]` [Bash] 
+- `[2026-04-25 06:47:07]` [Bash] ls 
+- `[2026-04-25 06:47:17]` [Bash] 
+- `[2026-04-25 06:47:30]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\claude_code_collector.py
+- `[2026-04-25 06:47:34]` [Bash] 
+- `[2026-04-25 06:47:39]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\2026-04-
+- `[2026-04-25 06:47:45]` [Bash] git add obs/04-decision-knowledge/2026-04-25-v1-bilingual-release-package.md && 
+- `[2026-04-25 06:47:56]` [Bash] 
+- `[2026-04-25 06:48:00]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && echo 
+- `[2026-04-25 06:48:05]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\notion_daily_sync.py
+- `[2026-04-25 06:48:15]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\codex_log_append.py
+- `[2026-04-25 06:48:15]` [Bash] 
+- `[2026-04-25 06:48:18]` [Bash] py -3 
+- `[2026-04-25 06:48:34]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\codex_log_append.py
+- `[2026-04-25 06:48:37]` [Bash] py -3 
+- `[2026-04-25 06:48:51]` [Bash] ls 
+- `[2026-04-25 06:49:04]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\n8n-workf
+- `[2026-04-25 06:49:06]` [Bash] cd 
+- `[2026-04-25 06:49:18]` [Bash] 
+- `[2026-04-25 06:49:58]` [Bash] cd 
+- `[2026-04-25 06:50:12]` [Bash] cd 
+- `[2026-04-25 06:50:14]` [Bash] cd /c/Users/lysanderl_janusd/lysander-bond && echo 
+- `[2026-04-25 06:50:29]` [Bash] cd 
+- `[2026-04-25 06:50:33]` [Bash] echo 
+- `[2026-04-25 06:50:50]` [Bash] cd 
+- `[2026-04-25 06:51:03]` [Bash] cd 
+- `[2026-04-25 06:51:18]` [Bash] 
+- `[2026-04-25 06:51:26]` [Bash] echo 
+- `[2026-04-25 06:51:49]` [Bash] py -3 -c 
+- `[2026-04-25 06:52:13]` [Bash] echo 
+- `[2026-04-25 06:52:30]` [Bash] py -3 -c 
+- `[2026-04-25 06:53:21]` [Bash] py -3 -m pip install pycryptodome --quiet 2>&1 | tail -5
+- `[2026-04-25 06:53:30]` [Bash] export PYTHONIOENCODING=utf-8 && cd 
+- `[2026-04-25 06:53:45]` [Bash] cd 
+- `[2026-04-25 06:54:03]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\VERSION
+- `[2026-04-25 06:54:14]` [Bash] py -3 -c 
+- `[2026-04-25 06:54:28]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\CHANGELOG.md
+- `[2026-04-25 06:54:50]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_objectives.
+- `[2026-04-25 06:55:04]` [Bash] py -3 -c 
+- `[2026-04-25 06:55:45]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-ob
+- `[2026-04-25 06:55:51]` [Bash] cd 
+- `[2026-04-25 06:56:00]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:56:09]` [Bash] cd 
+- `[2026-04-25 06:56:10]` [Bash] py -3 -c 
+- `[2026-04-25 06:56:18]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:56:25]` [Bash] cd 
+- `[2026-04-25 06:56:32]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:56:46]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:57:00]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:57:06]` [Bash] py -3 -c 
+- `[2026-04-25 06:57:13]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:57:25]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:57:39]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:57:54]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:57:55]` [Bash] py -3 -c 
+- `[2026-04-25 06:58:11]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:58:23]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:58:36]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:58:50]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:58:52]` [Bash] py -3 -c 
+- `[2026-04-25 06:59:03]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:59:17]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:59:32]` [Bash] ssh lysander-server 
+- `[2026-04-25 06:59:39]` [Bash] py -3 -c 
+- `[2026-04-25 06:59:47]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:00:05]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:00:19]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:00:31]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:00:45]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:00:45]` [Bash] py -3 -c 
+- `[2026-04-25 07:00:57]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:01:11]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:01:28]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:01:46]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:01:52]` [Bash] py -3 -c 
+- `[2026-04-25 07:01:59]` [Bash] cat 
+- `[2026-04-25 07:02:22]` [Edit] Edit: C:\Users\lysanderl_janusd\PMO-AI Auto\PMO-AI Auto\pmo_api\main.py
+- `[2026-04-25 07:02:25]` [Bash] scp 
+- `[2026-04-25 07:02:47]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:03:04]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:03:20]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:03:34]` [Bash] sleep 10 && ssh lysander-server 
+- `[2026-04-25 07:04:21]` [Bash] echo 
+- `[2026-04-25 07:07:13]` [Bash] py -3 -c 
+- `[2026-04-25 07:08:29]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\_backfill_milestones.py
+- `[2026-04-25 07:08:31]` [Bash] cd 
+- `[2026-04-25 07:10:35]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:10:55]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:11:15]` [Bash] echo 
+- `[2026-04-25 07:11:32]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\notion_hub_config
+- `[2026-04-25 07:19:30]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:19:51]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:20:09]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:20:31]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:20:47]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:21:05]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:31:16]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:31:30]` [Bash] cat 
+- `[2026-04-25 07:31:45]` [Bash] until ! ssh lysander-server 
+- `[2026-04-25 07:31:55]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:32:10]` [Bash] cat 
+- `[2026-04-25 07:32:23]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:32:39]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:32:53]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:33:09]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:33:25]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:33:41]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:33:59]` [Bash] 
+- `[2026-04-25 07:34:13]` [Bash] ssh lysander-server 
+- `[2026-04-25 07:34:38]` [Bash] ls 
+- `[2026-04-25 07:34:48]` [Bash] cat 
+- `[2026-04-25 07:35:02]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\pmo-auto\VERSION
+- `[2026-04-25 07:35:16]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\CHANGELOG.md
+- `[2026-04-25 07:35:22]` [Bash] head -20 
+- `[2026-04-25 07:35:35]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-25 07:35:44]` [Bash] grep -n 'REQ-012' 
+- `[2026-04-25 07:36:01]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\requiremen
+- `[2026-04-25 07:36:04]` [Bash] ls 
+- `[2026-04-25 07:36:43]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-25-pm
+- `[2026-04-25 07:36:47]` [Bash] cd 
+- `[2026-04-25 07:36:54]` [Bash] cd 
+- `[2026-04-25 07:37:06]` [Bash] cd 
+- `[2026-04-25 07:37:17]` [Bash] cd 
+- `[2026-04-25 07:37:34]` [Bash] cd 
+- `[2026-04-25 07:37:45]` [Bash] cd 
+- `[2026-04-25 07:37:57]` [Bash] cd 
+- `[2026-04-25 07:38:04]` [Bash] ssh lysander-server 
+- `[2026-04-26 05:22:57]` [Bash] claude config list 2>/dev/null || claude whoami 2>/dev/null || claude auth statu
+- `[2026-04-26 05:43:27]` [Bash] ls 
+- `[2026-04-26 05:43:27]` [Bash] ls 
+- `[2026-04-26 05:44:33]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\00-daily-work\2026-04-25-sessi
+- `[2026-04-26 05:44:51]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-26 05:44:58]` [Edit] Edit: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Synap
+- `[2026-04-26 05:45:12]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-26 05:45:15]` [Bash] cd 
+- `[2026-04-26 05:45:26]` [Bash] cd 
+- `[2026-04-26 05:45:46]` [Bash] cd 
+- `[2026-04-26 05:45:59]` [Bash] cd 
+- `[2026-04-26 05:50:50]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/scripts/ 2>/dev/null || echo 
+- `[2026-04-26 05:51:42]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\notion_showcase_update.py
+- `[2026-04-26 05:51:45]` [Bash] py -3 scripts/notion_showcase_update.py 2>&1
+- `[2026-04-26 05:52:37]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\notion_showcase_update.py
+- `[2026-04-26 05:52:40]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\notion_showcase_update.py
+- `[2026-04-26 05:52:44]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\notion_showcase_update.py
+- `[2026-04-26 05:52:55]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\notion_showcase_update.py
+- `[2026-04-26 05:55:01]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\active_tasks.yaml
+- `[2026-04-26 05:56:01]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\config\notion_hub_config.
+- `[2026-04-26 05:56:05]` [Bash] git status && ls scripts/notion_showcase_update.py 2>/dev/null && echo 
+- `[2026-04-26 05:56:16]` [Bash] git add scripts/notion_showcase_update.py agent-CEO/config/notion_hub_config.yam
+- `[2026-04-26 05:56:32]` [Bash] git commit -m 
+- `[2026-04-26 05:57:12]` [Bash] git status && git log --oneline -4
+- `[2026-04-26 06:08:36]` [Bash] curl -s -X GET 
+- `[2026-04-26 06:09:15]` [Bash] curl -s -X GET 
+- `[2026-04-26 06:11:41]` [Bash] cd 
+- `[2026-04-26 06:13:51]` [Bash] cd 
+- `[2026-04-26 06:14:02]` [Bash] ls -la 
+- `[2026-04-26 06:14:13]` [Bash] cd 
+- `[2026-04-26 06:14:20]` [Bash] for f in 
+- `[2026-04-26 06:14:25]` [Bash] cd 
+- `[2026-04-26 06:14:34]` [Bash] gh workflow list --repo lysanderl-glitch/synapse-ops --all 2>&1
+- `[2026-04-26 06:14:35]` [Bash] cd 
+- `[2026-04-26 06:14:35]` [Bash] cd 
+- `[2026-04-26 06:14:35]` [Bash] cd 
+- `[2026-04-26 06:14:35]` [Bash] cd 
+- `[2026-04-26 06:14:54]` [Bash] 
+- `[2026-04-26 06:14:58]` [Bash] ls 
+- `[2026-04-26 06:15:07]` [Bash] gh api repos/lysanderl-glitch/lysander-bond/commits --paginate -F per_page=15 -q
+- `[2026-04-26 06:15:12]` [Bash] echo 
+- `[2026-04-26 06:15:16]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:15:27]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:15:33]` [Bash] 
+- `[2026-04-26 06:15:37]` [Bash] cd 
+- `[2026-04-26 06:15:51]` [Bash] cd 
+- `[2026-04-26 06:15:52]` [Bash] 
+- `[2026-04-26 06:15:58]` [Bash] cd 
+- `[2026-04-26 06:16:05]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:16:12]` [Bash] cd 
+- `[2026-04-26 06:16:17]` [Bash] echo 
+- `[2026-04-26 06:16:22]` [Bash] cd 
+- `[2026-04-26 06:16:26]` [Bash] grep -nE 
+- `[2026-04-26 06:16:29]` [Bash] cd 
+- `[2026-04-26 06:16:35]` [Bash] cd 
+- `[2026-04-26 06:16:41]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:16:42]` [Bash] gh run view 24924636231 --repo lysanderl-glitch/synapse-ops --log 2>&1 | grep -i
+- `[2026-04-26 06:16:52]` [Bash] ls 
+- `[2026-04-26 06:16:58]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:17:06]` [Bash] echo 
+- `[2026-04-26 06:17:08]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:17:08]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/pages/*.astro 2>/dev/null && echo
+- `[2026-04-26 06:17:20]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:17:23]` [Bash] ls /c/Users/lysanderl_janusd/lysander-bond/src/content/blog/zh/ 2>/dev/null && e
+- `[2026-04-26 06:17:28]` [Bash] cd 
+- `[2026-04-26 06:17:45]` [Bash] cd 
+- `[2026-04-26 06:17:51]` [Bash] ls 
+- `[2026-04-26 06:17:53]` [Bash] cd 
+- `[2026-04-26 06:18:02]` [Bash] cd 
+- `[2026-04-26 06:18:02]` [Bash] cd 
+- `[2026-04-26 06:18:10]` [Bash] head -60 /c/Users/lysanderl_janusd/lysander-bond/src/pages/academy/team.astro &&
+- `[2026-04-26 06:18:19]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-26-cr
+- `[2026-04-26 06:18:21]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:18:24]` [Bash] wc -l 
+- `[2026-04-26 06:18:27]` [Bash] echo 
+- `[2026-04-26 06:18:34]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:18:45]` [Bash] echo 
+- `[2026-04-26 06:18:45]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:18:59]` [Bash] gh repo view lysanderl-glitch/synapse --json name,visibility,description,license
+- `[2026-04-26 06:19:00]` [Bash] export PYTHONIOENCODING=utf-8 && powershell -Command 
+- `[2026-04-26 06:19:02]` [Bash] echo 
+- `[2026-04-26 06:19:12]` [Bash] ls -la /c/Users/lysanderl_janusd/synapse-core/ 2>&1 | head -40
+- `[2026-04-26 06:19:13]` [Bash] cd 
+- `[2026-04-26 06:19:13]` [Bash] cd 
+- `[2026-04-26 06:19:13]` [Bash] cd 
+- `[2026-04-26 06:19:25]` [Bash] echo 
+- `[2026-04-26 06:19:30]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && cat README.md
+- `[2026-04-26 06:19:31]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && cat synapse.yaml synapse-instance.y
+- `[2026-04-26 06:19:32]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && ls modules/ presets/ docs/ scripts/
+- `[2026-04-26 06:19:37]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-26 06:19:37]` [Bash] cd 
+- `[2026-04-26 06:19:38]` [Bash] cd 
+- `[2026-04-26 06:19:47]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\prd-v200-p
+- `[2026-04-26 06:19:52]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && cat CLAUDE.md 2>&1 | head -80
+- `[2026-04-26 06:19:53]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && ls modules/harness_ops/ modules/str
+- `[2026-04-26 06:19:54]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && grep -ril 
+- `[2026-04-26 06:20:03]` [Edit] Edit: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Synap
+- `[2026-04-26 06:20:08]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && ls modules/harness_ops/agents/ modu
+- `[2026-04-26 06:20:10]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && grep -l 
+- `[2026-04-26 06:20:20]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && find modules -name 
+- `[2026-04-26 06:20:31]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && cat modules/strategy/agents/ai_tech
+- `[2026-04-26 06:20:33]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && ls modules/strategy/agents/ modules
+- `[2026-04-26 06:20:33]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && cat docs/public/_manifest.yaml 2>&1
+- `[2026-04-26 06:20:50]` [Bash] cd /c/Users/lysanderl_janusd && ls lysander-bond/ 2>&1 | head && grep -l 
+- `[2026-04-26 06:20:51]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && cat docs/public/onboarding-steps.ya
+- `[2026-04-26 06:20:53]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-26-ta
+- `[2026-04-26 06:20:55]` [Bash] cd 
+- `[2026-04-26 06:21:04]` [Bash] cd /c/Users/lysanderl_janusd/synapse-core && grep -ri 
+- `[2026-04-26 06:21:06]` [Bash] cd /c/Users/lysanderl_janusd && grep -ri 
+- `[2026-04-26 06:24:07]` [Bash] ls 
+- `[2026-04-26 06:26:07]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\2026-04-
+- `[2026-04-26 06:26:11]` [Bash] wc -w 
+- `[2026-04-26 06:26:28]` [Bash] git add 
+- `[2026-04-26 06:26:43]` [Bash] find /c/Users/lysanderl_janusd/Synapse-Mini -name 
+- `[2026-04-26 06:29:24]` [Bash] cd 
+- `[2026-04-26 06:29:46]` [Write] Write: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Syna
+- `[2026-04-26 06:29:49]` [Edit] Edit: C:\Users\lysanderl_janusd\.claude\projects\C--Users-lysanderl-janusd-Synap
+- `[2026-04-26 06:29:52]` [Bash] wc -l 
+- `[2026-04-26 06:29:54]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_li
+- `[2026-04-26 06:29:54]` [Bash] cd 
+- `[2026-04-26 06:29:55]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-24-req
+- `[2026-04-26 06:29:57]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\wf06-fallb
+- `[2026-04-26 06:29:59]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pro
+- `[2026-04-26 06:30:00]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_op
+- `[2026-04-26 06:30:02]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pmo
+- `[2026-04-26 06:30:11]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\.github\workflows\heartbeat-check.y
+- `[2026-04-26 06:30:11]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\committee_
+- `[2026-04-26 06:30:13]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\committee_
+- `[2026-04-26 06:30:14]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\02-product-knowledge\product_op
+- `[2026-04-26 06:30:16]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pro
+- `[2026-04-26 06:30:16]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pmo
+- `[2026-04-26 06:30:19]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\.github\workflows\intel-daily.yml
+- `[2026-04-26 06:30:19]` [Bash] powershell -Command 
+- `[2026-04-26 06:30:23]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\06-daily-reports\2026-04-23-pro
+- `[2026-04-26 06:30:28]` [Bash] cd 
+- `[2026-04-26 06:30:31]` [Bash] cd 
+- `[2026-04-26 06:30:42]` [Bash] cd 
+- `[2026-04-26 06:30:49]` [Bash] cd 
+- `[2026-04-26 06:30:55]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\product-d
+- `[2026-04-26 06:31:00]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\obs\03-process-knowledge\index.md
+- `[2026-04-26 06:31:04]` [Bash] cd 
+- `[2026-04-26 06:31:18]` [Bash] cd 
+- `[2026-04-26 06:31:29]` [Bash] cd 
+- `[2026-04-26 06:31:46]` [Bash] cd 
+- `[2026-04-26 06:31:57]` [Bash] cd 
+- `[2026-04-26 06:32:05]` [Bash] ls 
+- `[2026-04-26 06:32:06]` [Bash] curl -s -X POST 
+- `[2026-04-26 06:32:08]` [Bash] ls /c/Users/lysanderl_janusd/Synapse-Mini/scripts/ 2>/dev/null && echo 
+- `[2026-04-26 06:32:17]` [Bash] cd 
+- `[2026-04-26 06:32:29]` [Bash] cd 
+- `[2026-04-26 06:32:37]` [Bash] cd 
+- `[2026-04-26 06:32:47]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\asset_counter.py
+- `[2026-04-26 06:32:50]` [Bash] cd 
+- `[2026-04-26 06:32:50]` [Bash] py -3 scripts/asset_counter.py
+- `[2026-04-26 06:33:04]` [Bash] cd 
+- `[2026-04-26 06:33:04]` [Bash] curl -s -X POST 
+- `[2026-04-26 06:33:09]` [Bash] curl -s -o /tmp/notion_patch_resp.json -w 
+- `[2026-04-26 06:33:16]` [Bash] cd 
+- `[2026-04-26 06:33:36]` [Bash] cd 
+- `[2026-04-27 05:30:46]` [Bash] git stash pop 2>&1 | tail -10
+- `[2026-04-27 05:30:51]` [Bash] cd 
+- `[2026-04-27 05:31:02]` [Bash] git stash drop 2>&1; git status --short | head -10; echo 
+- `[2026-04-27 05:31:02]` [Bash] cd 
+- `[2026-04-27 05:31:15]` [Bash] cd 
+- `[2026-04-27 05:31:20]` [Bash] grep -n 
+- `[2026-04-27 05:31:25]` [Bash] cd 
+- `[2026-04-27 05:31:36]` [Bash] git status --short 2>&1 | head -50
+- `[2026-04-27 05:31:47]` [Bash] powershell.exe -Command 
+- `[2026-04-27 05:31:49]` [Bash] git stash list 2>&1
+- `[2026-04-27 05:31:52]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\obs\04-decision-knowledge\strategi
+- `[2026-04-27 05:31:56]` [Bash] git add obs/04-decision-knowledge/strategic-alignment/SAR-2026-W18.md && git sta
+- `[2026-04-27 05:32:02]` [Bash] cd 
+- `[2026-04-27 05:32:06]` [Bash] git status --short 2>&1 | head -60; echo 
+- `[2026-04-27 05:32:19]` [Bash] cd 
+- `[2026-04-27 05:32:19]` [Bash] git commit -m 
+- `[2026-04-27 05:32:22]` [Bash] git stash list 2>&1; echo 
+- `[2026-04-27 05:32:39]` [Bash] cat .git/hooks/pre-commit 2>/dev/null | head -40
+- `[2026-04-27 05:32:39]` [Bash] cd 
+- `[2026-04-27 05:32:43]` [Bash] git stash apply 9821eab9 2>&1 | tail -10; echo 
+- `[2026-04-27 05:32:52]` [Bash] python scripts/frontmatter_lint.py --help 2>&1 | head -20
+- `[2026-04-27 05:33:03]` [Bash] git status 2>&1 | head -40
+- `[2026-04-27 05:33:06]` [Bash] cd 
+- `[2026-04-27 05:33:15]` [Bash] git commit --no-verify -m 
+- `[2026-04-27 05:33:23]` [Bash] cd 
+- `[2026-04-27 05:33:29]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\frontmatter_lint.py
+- `[2026-04-27 05:33:31]` [Bash] git show --stat HEAD | head -20
+- `[2026-04-27 05:33:37]` [Bash] cd 
+- `[2026-04-27 05:33:46]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\frontmatter_lint.py
+- `[2026-04-27 05:33:46]` [Bash] git diff-tree --no-commit-id --name-only -r HEAD
+- `[2026-04-27 05:33:53]` [Bash] cd 
+- `[2026-04-27 05:33:58]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\check_decision_log.py
+- `[2026-04-27 05:34:01]` [Bash] git status --short | head -20
+- `[2026-04-27 05:34:10]` [Bash] cd 
+- `[2026-04-27 05:34:12]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\dispatch_auditor.py
+- `[2026-04-27 05:34:16]` [Bash] git reset --soft HEAD~1 && git status --short | head -10 && echo 
+- `[2026-04-27 05:34:26]` [Edit] Edit: C:\Users\lysanderl_janusd\Synapse-Mini\agent-CEO\dispatch_auditor.py
+- `[2026-04-27 05:34:26]` [Bash] cd 
+- `[2026-04-27 05:34:33]` [Bash] git reset HEAD .claude/scheduling/weekly-audit-schedule-instructions.md scripts/
+- `[2026-04-27 05:34:42]` [Bash] cd 
+- `[2026-04-27 05:34:55]` [Bash] cd 
+- `[2026-04-27 05:34:55]` [Write] Write: C:\Users\lysanderl_janusd\Synapse-Mini\scripts\install-git-hooks.sh
+- `[2026-04-27 05:34:59]` [Bash] bash scripts/install-git-hooks.sh 2>&1 | tail -10
+- `[2026-04-27 05:35:01]` [Bash] git commit --no-verify -m 
+- `[2026-04-27 05:35:11]` [Bash] cd 
+- `[2026-04-27 05:35:19]` [Bash] git show --stat HEAD
+- `[2026-04-27 05:35:20]` [Bash] echo 
+- `[2026-04-27 05:35:26]` [Bash] cd 
+- `[2026-04-27 05:35:40]` [Bash] python -X utf8 agent-CEO/dispatch_weekly_audit.py 2>&1 | tail -10
+- `[2026-04-27 05:35:41]` [Bash] git reset --soft HEAD~1 && git reset HEAD . && git diff --cached --name-only && 
+- `[2026-04-27 05:35:42]` [Bash] cd 
+
+## Audit Mechanism
+
+- **Audit log**: `logs/ceo-guard-audit.log`
+- **Violation patterns**: direct Bash/Edit/Write in Lysander main dialogue
+- **Compliance rule**: All execution operations must go through Agent/Skill dispatch to team members
+
+## Fact-SSOT Drift
+
+Cross-checks fact references in obs/ + CLAUDE.md against canonical SSOT.
+Baseline: ~184 drift items (2026-04 snapshot). Track week-over-week trend.
+
+```
+=== Fact SSOT Audit ===
+SSOT: C:\Users\lysanderl_janusd\synapse-core\docs\public\synapse-stats.yaml
+Expected: 53 agents / 13 modules
+Drift count: 192
+
+Details (first 20):
+
+--- stderr ---
+Traceback (most recent call last):
+  File "C:\Users\lysanderl_janusd\Synapse-Mini\scripts\audit_facts.py", line 118, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\lysanderl_janusd\Synapse-Mini\scripts\audit_facts.py", line 112, in main
+    print(f"  [{d['repo']}] {d['file']}: '{d['value']}' "
+  File "C:\Users\lysanderl_janusd\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u4e2a' in position 35: character maps to <undefined>
+```
+
+---
+*Auto-generated by dispatch_auditor.py - CEO-GUARD Weekly Audit*

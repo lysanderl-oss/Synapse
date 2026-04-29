@@ -1,0 +1,43 @@
+# Synapse v3.0 — Instance Configuration
+# Edit this file to customize your instance, then run: python tools/generator.py
+
+identity:
+  ceo_name: Lysander
+  president_name: 刘子杨
+  organization_name: Synapse-PJ
+
+preset: smb  # startup | smb | tech_team | content_creator | enterprise
+
+modules:
+  core:
+    - graphify
+    - hr
+    - harness_ops
+    - butler
+    - rd
+    - obs
+    - content_ops
+    - pdg
+    - growth
+    - ai_ml
+    - specialist
+  optional:
+    # Uncomment to enable domain-specific modules:
+    # - opt_janus   # Synapse-PJ project delivery team (6 agents)
+    # - opt_stock   # Stock trading system team (5 agents)
+
+features:
+  spe: true           # Synapse Personal Engine (/capture, /plan-day, /time-block, /weekly-review, /dispatch)
+  automation: true    # Daily n8n event chain (6am/8am/10am Dubai)
+  ceo_guard: true     # Blocking CEO Guard (PreToolUse hook)
+
+ceo_guard:
+  mode: blocking      # blocking | advisory
+  override: false     # Set to true ONLY for emergency bypass (logged to audit/)
+  blocked_tools:
+    - Edit
+    - Write
+    - Bash
+    - WebSearch
+    - WebFetch
+    - MultiEdit

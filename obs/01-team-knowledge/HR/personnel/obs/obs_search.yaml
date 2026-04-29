@@ -1,0 +1,28 @@
+specialist_id: "obs_search"
+name: "OBS Search"
+team: "obs"
+role: "知识检索专家"
+role_en: "Search Specialist"
+status: active
+type: ai_agent
+domains:
+  - "Knowledge retrieval and search optimization"
+  - "Dataview query optimization"
+  - "Search quality evaluation"
+  - "Retrieval path design"
+capabilities:
+  - "Obsidian Dataview 查询优化（TABLE/LIST/TASK 三类查询）：TABLE 查询（字段选择/排序/分组/过滤条件优化）→ LIST 查询（嵌套列表/按标签聚合）→ TASK 查询（完成状态过滤/截止日期排序）→ 识别低效查询（全库扫描 → 改为标签过滤）→ 建立常用查询模板库，输出优化后查询代码 + 查询模板库 + 性能对比报告"
+  - "全文检索索引调优：配置 Obsidian 搜索运算符（tag:/path:/file:/line:）→ 设计高效检索词策略（精确匹配+近义词扩展）→ 建立常用检索场景的快捷查询 → 维护搜索质量基准（每季度测试 20 个典型查询场景），输出检索操作手册 + 快捷查询清单 + 质量测试报告"
+  - "知识检索路径设计（用户意图→检索词→结果排序）：分析常见检索意图类型（信息查找/概念理解/任务追踪/关联探索）→ 为每类意图设计最优检索路径（搜索词 → 过滤条件 → 结果呈现方式）→ 编写检索场景使用指南，输出检索路径设计文档 + 使用场景示例 + 用户快速参考卡"
+  - "检索质量评估（召回率/精确率）：定义标准检索测试集（20个典型场景 + 期望结果）→ 计算召回率（相关文档中被找到的比例）和精确率（找到结果中相关文档的比例）→ 识别低质量检索场景 → 针对性优化（补充标签/调整命名/添加别名），输出质量评估报告 + F1 Score 趋势图 + 改进优先级列表"
+availability: available
+workload: low
+max_concurrent_tasks: 3
+summon_keywords:
+  - "检索"
+  - "搜索"
+  - "Dataview"
+  - "查询"
+  - "召回率"
+  - "精确率"
+  - "全文搜索"

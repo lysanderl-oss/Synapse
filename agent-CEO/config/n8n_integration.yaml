@@ -1,0 +1,277 @@
+# n8n 集成配置
+# Synapse v3.0 — 迁移自 ai-team-system v1.0，保留全部 live trigger IDs
+# 更新: 2026-04-17
+# 变更: 版本升级至3.0.0，新增85/100 QA门禁webhook，团队名称更新至v3.0
+
+version: "3.0.0"
+
+# n8n Webhook 配置
+n8n:
+  base_url: "http://localhost:5678"
+  cloud_base_url: "https://n8n.lysander.bond"
+  api_key: ""  # 如有API Key则填写
+  # Webhook 激活说明：
+  # n8n 的 test webhook（如 /webhook/xxx）在首次调用前返回 404，这是正常行为。
+  # 激活方式：手动 POST 一次到该 URL，或在 n8n UI 中点击 "Test workflow"
+  # 激活后 webhook 会持续监听，生产 webhook 路径为 /webhook/xxx（无 -test 后缀）
+  # 健康检查：配置末尾的 health_check 段落可帮助监控 webhook 可用性
+
+# 博客/微信发布链路为总裁个人专属，不在此配置
+# 相关 SOP 见 obs/personal/blog-wechat-publish-sop.md
+
+# ============================================================================
+# Webhook 安全配置（P0-A2 SEC-P0-1 — HMAC-SHA256 签名认证）
+# 所有 webhook 请求必须包含 X-Synapse-Signature 和 X-Synapse-Timestamp Header
+# ============================================================================
+webhook_security:
+  hmac_secret: "MrMkZxFn0npAz7TtaONo-BN-4UUyLo7WhElYkvYKqy8"
+  timestamp_tolerance_seconds: 300
+  sign_header: "X-Synapse-Signature"
+  timestamp_header: "X-Synapse-Timestamp"
+
+# ============================================================================
+# 执行链自动化触发规则（v3.0 更新）
+# ============================================================================
+execution_chain_triggers:
+
+  # 情报管线触发
+  daily_intelligence:
+    description: "每日情报日报完成后，触发行动管线"
+    trigger_event: "intelligence_report_generated"
+    action: "trigger_action_pipeline"
+    webhook_url: "https://n8n.lysander.bond/webhook/intelligence-action"
+    enabled: true
+
+  # 行动管线触发
+  action_completed:
+    description: "行动管线执行完成后，通知总裁"
+    trigger_event: "action_report_generated"
+    action: "notify_president"
+    webhook_url: "https://n8n.lysander.bond/webhook/action-notify"
+    notify_channels: ["slack"]
+    enabled: true
+
+  # 代码变更触发QA（v3.0 — 阈值更新为85/100）
+  code_change_qa:
+    description: "当Harness Ops提交代码变更时，自动触发QA审查（threshold: 85/100）"
+    trigger_event: "git_push"
+    condition: "files_match: agent-CEO/**/*.py OR CLAUDE.md OR agent-CEO/config/*.yaml"
+    action: "trigger_qa_review"
+    webhook_url: "https://n8n.lysander.bond/webhook/qa-auto-review"
+    qa_pass_threshold: 85
+    enabled: true
+
+  # v3.0 新增：85/100 QA门禁 webhook
+  qa_gate_85:
+    description: "QA评分>=85/100时自动放行交付，<85时阻止并通知integration_qa"
+    trigger_event: "qa_score_computed"
+    action: "evaluate_qa_gate"
+    webhook_url: "https://n8n.lysander.bond/webhook/qa-gate-85"
+    pass_threshold: 85
+    on_pass:
+      action: "approve_delivery"
+      notify_channels: []
+    on_fail:
+      action: "block_delivery"
+      notify_channels: ["slack"]
+      assigned_to: "integration_qa"
+    enabled: true
+
+  # 每日复盘 + 博客生成管线
+  daily_retro_blog:
+    description: "每日23:00 Dubai自动执行复盘+博客生成"
+    trigger_event: "cron"
+    schedule: "0 19 * * *"  # UTC 19:00 = Dubai 23:00
+    action: "run_retro_and_blog"
+    pipeline:
+      - step: retro
+        skill: "/retro session"
+        output: "obs/06-daily-reports/YYYY-MM-DD-daily-retro.html"
+      - step: blog
+        skill: "/daily-blog auto"
+        output: "obs/05-industry-knowledge/blog/YYYY-MM-DD-*.md"
+      - step: generate_html
+        command: "python scripts/generate-article.py {blog_md_path}"
+        output: "obs/generated-articles/YYYY-MM-DD-*.html"
+      - step: notify
+        action: "notify_president"
+        channels: ["slack"]
+    enabled: true
+
+  # 任务状态变更通知
+  task_status_change:
+    description: "active_tasks.yaml中任务状态变更时通知"
+    trigger_event: "task_status_updated"
+    condition: "status changed to: completed OR blocked"
+    action: "notify_slack"
+    webhook_url: "https://n8n.lysander.bond/webhook/task-status"
+    notify_channels: ["slack"]
+    enabled: true
+
+# ============================================================================
+# 决策链触发规则（v3.0 — L2更正为专家评审）
+# ⚠️ T1-1 FIX：决策链 webhook URL 从 localhost 改为外部可访问地址
+#    localhost:5678 仅适用于 Claude Code 所在机器的本地 n8n 实例
+#    生产环境（远程Agent/n8n cloud）必须使用 https://n8n.lysander.bond
+# ============================================================================
+decision_triggers:
+
+  # L1自动执行：直接触发n8n
+  - decision_level: L1
+    action: "trigger_n8n"
+    webhook_url: "https://n8n.lysander.bond/webhook/butler-execute"
+
+  # L2专家评审：触发n8n，召集专家，同时通知
+  - decision_level: L2
+    action: "trigger_expert_review"
+    webhook_url: "https://n8n.lysander.bond/webhook/expert-review"
+    notify_channels: ["slack"]
+
+  # L3 Lysander决策：基于L2专家建议，Lysander最终决策后执行
+  - decision_level: L3
+    action: "lysander_decide_then_execute"
+    webhook_url: "https://n8n.lysander.bond/webhook/lysander-approve"
+    notify_channels: ["slack"]
+
+  # L4总裁决策：暂停，等待确认
+  - decision_level: L4
+    action: "wait_president_confirm"
+    notify_channels: ["slack"]
+    wait_timeout: 86400  # 24小时超时
+
+# ============================================================================
+# 任务类型到n8n工作流映射
+# ============================================================================
+workflow_mapping:
+  # 情报管线
+  "每日情报日报":
+    workflow: "daily-intelligence"
+    description: "每日AI技术情报生成"
+    schedule: "0 23 * * * (UTC) = 3am Dubai"
+
+  "情报行动管线":
+    workflow: "intelligence-action"
+    description: "情报建议评估→执行→报告"
+    schedule: "0 0 * * * (UTC) = 4am Dubai"
+
+  "任务自动恢复":
+    workflow: "task-auto-resume"
+    description: "检查并恢复未完成任务"
+    schedule: "0 2 * * * (UTC) = 6am Dubai"
+
+  # 业务流程
+  "新项目需求分析":
+    workflow: "delivery-project-start"
+    description: "新项目启动流程"
+
+  "IoT施工启动":
+    workflow: "iot-construction-start"
+    description: "IoT施工启动流程"
+
+  "数字化建模验收":
+    workflow: "digital-modeling-review"
+    description: "数字化建模验收流程"
+
+  "PMO体系建设":
+    workflow: "pmo-establishment"
+    description: "PMO体系建设流程"
+
+  "UAT测试":
+    workflow: "uat-testing"
+    description: "UAT测试执行流程"
+
+  "IoT数据交付":
+    workflow: "iot-data-delivery"
+    description: "IoT数据交付流程"
+
+# ============================================================================
+# 通知配置
+# ============================================================================
+notifications:
+  slack:
+    enabled: true
+    # 通过 MCP Connector 直接发送
+
+  wechat:
+    enabled: true
+    # 通过 n8n webhook 发送
+
+# ============================================================================
+# 自动化编排：事件链（Event Chain）
+# 当一个事件完成后，自动触发下一个
+# ============================================================================
+event_chains:
+  daily_pipeline:
+    description: "每日自动化全流程"
+    chain:
+      # 注意：以下 trigger IDs 为生产环境 live 值，来自 ai-team-system v1.0，请勿修改
+      - event: "6:00am Dubai - 任务自动恢复Agent启动"
+        trigger: "trig_01RJJoy4v8TLj2HyHRnABKJb"
+      - event: "3:00am Dubai - 情报日报Agent启动"
+        trigger: "trig_01Lp7Q1Nn36JQAw4FEEJmKQX"
+      - event: "4:00am Dubai - 行动管线Agent启动"
+        trigger: "trig_017vgQox9JUcwvnx43ucLRPd"
+      - event: "行动管线完成 → Slack通知总裁"
+        trigger: "webhook: action-notify"
+
+# ============================================================================
+# SPE 定时 Agent（个人生产力引擎）
+# ============================================================================
+scheduled_agents:
+
+  # SPE 日历同步 Agent
+  calendar_sync_agent:
+    description: "每日早晨读取日历+任务，生成今日规划，Slack推送"
+    trigger_event: "cron"
+    schedule: "15 2 * * *"  # UTC 2:15 = Dubai 6:15am
+    prompt_file: "agent-CEO/config/calendar-sync-prompt.md"
+    enabled: true
+    requires_mcp:
+      - google_calendar
+      - slack
+
+  # SPE 日终复盘 Agent
+  daily_review_agent:
+    description: "每日对比计划vs实际，生成复盘摘要"
+    trigger_event: "cron"
+    schedule: "10 18 * * *"  # UTC 18:10 = Dubai 22:10
+    prompt_file: "agent-CEO/config/daily-review-prompt.md"
+    enabled: true
+    requires_mcp:
+      - google_calendar
+
+# 执行记录 - 路径可通过环境变量自定义
+execution_log_dir: "${N8N_LOGS_DIR:-./logs/n8n_executions}"
+
+# ============================================================================
+# T1-1 新增：Webhook 健康检查配置
+# ============================================================================
+# 说明：n8n webhook 在未激活状态下（从未被调用过）返回 404。
+# 激活方法：手动 POST 一次到目标 URL，或在 n8n UI 点击 "Test workflow"。
+# health_check 每小时自动探测一次，成功率统计用于判断 webhook 可用性。
+health_check:
+  enabled: true
+  interval_minutes: 60
+  timeout_seconds: 10
+  expected_status: 200  # n8n 激活 webhook 会返回 200 或 402（需要认证）
+  # 404 = webhook 未激活，需要手动激活
+  # 0   = 网络不可达，n8n 实例可能离线
+  critical_urls:
+    # 决策链核心 webhook（404 = 事件链尾端失效，Slack 通知断链）
+    - "https://n8n.lysander.bond/webhook/action-notify"
+    - "https://n8n.lysander.bond/webhook/butler-execute"
+    - "https://n8n.lysander.bond/webhook/expert-review"
+    - "https://n8n.lysander.bond/webhook/lysander-approve"
+  warning_urls:
+    # 情报管线 webhook（已记录的 404 源）
+    - "https://n8n.lysander.bond/webhook/intelligence-action"
+    - "https://n8n.lysander.bond/webhook/qa-auto-review"
+    - "https://n8n.lysander.bond/webhook/qa-gate-85"
+    - "https://n8n.lysander.bond/webhook/task-status"
+  on_critical_failure:
+    action: "slack_notify"
+    message: "⚠️ n8n 核心 webhook 不可用，事件链可能降级运行"
+    assign_to: "harness_ops"
+  on_warning_failure:
+    action: "log_only"
+    # 情报管线降级不影响核心决策链，仅记录日志

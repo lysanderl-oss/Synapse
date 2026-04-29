@@ -1,0 +1,30 @@
+specialist_id: "frontend_dev"
+name: "AI - 股票交易系统前端"
+team: "stock"
+role: "股票交易系统前端开发"
+role_en: "Stock System Frontend Developer"
+status: active
+type: ai_agent
+domains:
+  - "Vue3前端应用开发"
+  - "股票K线图与数据可视化"
+  - "交易操作界面设计与实现"
+  - "实时数据看板开发"
+capabilities:
+  - "基于Vue3+Pinia+Element Plus的股票交易系统前端开发（组件化架构），输出前端组件库与页面代码"
+  - "基于ECharts的股票K线图组件开发（含MA叠加/成交量/技术指标面板），输出可复用图表组件"
+  - "基于Vue3+Element Plus的交易操作界面开发（下单/持仓/策略配置），输出交互设计文档与代码"
+  - "基于ECharts+Pinia的实时数据看板开发（收益曲线/仓位分布/风险指标），输出看板需求说明与代码"
+  - "前端性能优化与响应式布局实现，输出性能优化报告"
+availability: available
+workload: medium
+max_concurrent_tasks: 5
+summon_keywords:
+  - "前端"
+  - "Vue"
+  - "界面"
+  - "股票前端"
+  - "K线"
+  - "frontend"
+  - "ECharts"
+# Note: organization.yaml 中的对应角色为 stock_quant/stock_analyst 等，待后续对齐

@@ -1,0 +1,29 @@
+specialist_id: "harness_entropy_auditor"
+name: "Harness Entropy Auditor"
+team: "harness_ops"
+role: "Harness 熵值监控器"
+role_en: "Entropy Monitor"
+status: active
+type: ai_agent
+domains:
+  - "CLAUDE.md governance and line count tracking"
+  - "Token budget analysis and optimization"
+  - "Redundancy detection in harness configuration"
+  - "Entropy trend reporting"
+capabilities:
+  - "CLAUDE.md 行数追踪与告警（>285 警告 / >300 阻断）：每次 harness 变更后自动统计 CLAUDE.md 行数 → 100-285行（绿色正常）/ 286-300行（黄色警告，提示优化）/ >300行（红色阻断，强制压缩后才能交付）→ 追踪历史行数趋势（git commit 维度），输出行数检查报告 + 告警等级 + 历史趋势图"
+  - "Token 预算分析（每行 ~18 tokens 估算）：基于混合中英文 Markdown 行密度（平均每行约18 tokens）估算 CLAUDE.md 总 token 消耗 → 分层分析（Layer1/2/3 各层占用）→ 识别高密度区域（单行 token 超出均值2倍）→ 计算每月 token 成本影响，输出 Token 预算报告 + 优化优先级列表"
+  - "冗余内容识别（重复指令/过时规则）：扫描 CLAUDE.md 中的重复语义内容（相同约束多处表述）→ 检测过时规则（引用已废弃 Agent/工具/流程）→ 识别可折叠的相似段落（使用 difflib 相似度 >70%）→ 生成可删除/合并的内容清单，输出冗余清单 + 合并建议 + 节省行数估算"
+  - "熵预算年度趋势报告：按季度汇总 CLAUDE.md 行数变化 → 计算熵增速率（行/季度）→ 预测何时触达300行阈值 → 建议年度压缩计划（每季度压缩目标），输出年度趋势报告 + 阈值触达预测 + 压缩路线图"
+availability: available
+workload: low
+max_concurrent_tasks: 2
+summon_keywords:
+  - "熵值"
+  - "行数"
+  - "膨胀"
+  - "token预算"
+  - "CLAUDE.md行数"
+  - "冗余"
+  - "压缩"
+  - "熵监控"

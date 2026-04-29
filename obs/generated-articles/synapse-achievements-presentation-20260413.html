@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synapse Achievements — Janus Digital 2026.04</title>
+<style>
+/* ── Design Tokens ── */
+:root {
+  --bg-primary: #0a0e27;
+  --bg-secondary: #0f1535;
+  --bg-card: rgba(255,255,255,0.04);
+  --bg-card-hover: rgba(255,255,255,0.07);
+  --glass-border: rgba(255,255,255,0.08);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.7);
+  --text-muted: rgba(255,255,255,0.45);
+  --accent-blue: #667eea;
+  --accent-purple: #764ba2;
+  --accent-cyan: #00d2ff;
+  --accent-teal: #3a7bd5;
+  --accent-orange: #f093fb;
+  --accent-rose: #f5576c;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --gradient-s1: linear-gradient(135deg, #667eea, #764ba2);
+  --gradient-s2: linear-gradient(135deg, #00d2ff, #3a7bd5);
+  --gradient-s3: linear-gradient(135deg, #f093fb, #f5576c);
+  --nav-height: 56px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "SF Pro Display", "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Navigation ── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-height);
+  background: rgba(10, 14, 39, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+.nav-logo {
+  font-size: 16px; font-weight: 700;
+  background: var(--gradient-s1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.nav-links { display: flex; gap: 4px; list-style: none; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500;
+  padding: 6px 14px; border-radius: 8px; transition: all 0.3s; white-space: nowrap;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+/* ── Language Switcher ── */
+.lang-switcher {
+  display: flex; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border);
+  border-radius: 20px; overflow: hidden; font-size: 12px;
+}
+.lang-btn {
+  padding: 5px 12px; border: none; background: none; color: var(--text-muted);
+  cursor: pointer; font-weight: 600; transition: all 0.3s; font-family: inherit;
+}
+.lang-btn.active { background: rgba(102,126,234,0.3); color: var(--text-primary); }
+.lang-btn:hover:not(.active) { color: var(--text-secondary); }
+
+/* ── Language Toggle ── */
+[data-lang="en"] { display: none; }
+body.lang-en [data-lang="zh"] { display: none; }
+body.lang-en [data-lang="en"] { display: block; }
+body.lang-en span[data-lang="en"], body.lang-en a[data-lang="en"] { display: inline; }
+body.lang-en span[data-lang="zh"], body.lang-en a[data-lang="zh"] { display: none; }
+span[data-lang="zh"] { display: inline; }
+span[data-lang="en"] { display: none; }
+body.lang-en .future-item[data-lang="en"] { display: flex; }
+body.lang-en .future-item[data-lang="zh"] { display: none; }
+.future-item[data-lang="en"] { display: none; }
+.future-item[data-lang="zh"] { display: flex; }
+body.lang-en .stat-card[data-lang="en"] { display: flex; }
+body.lang-en .stat-card[data-lang="zh"] { display: none; }
+.stat-card[data-lang="en"] { display: none; }
+.stat-card[data-lang="zh"] { display: flex; }
+
+/* ── Slide (Full-page section) ── */
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--nav-height) + 24px) 48px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Hero Slide ── */
+.slide-hero { text-align: center; }
+.slide-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(102,126,234,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(118,75,162,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,210,255,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; max-width: 960px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--accent-amber); margin-bottom: 28px; padding: 7px 18px;
+  border: 1px solid rgba(245,158,11,0.3); border-radius: 24px;
+  background: rgba(245,158,11,0.06);
+}
+.hero-title {
+  font-size: clamp(32px, 5vw, 60px); font-weight: 800;
+  line-height: 1.15; margin-bottom: 16px; letter-spacing: -1px;
+}
+.gradient-text {
+  background: linear-gradient(135deg, #667eea, #764ba2, #00d2ff);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-subtitle {
+  font-size: clamp(15px, 2vw, 19px); color: var(--text-secondary);
+  margin-bottom: 48px; font-weight: 400;
+}
+.hero-stats { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+.stat-card {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 28px 36px; background: var(--bg-card); border: 1px solid var(--glass-border);
+  border-radius: 20px; backdrop-filter: blur(12px); min-width: 160px;
+}
+.stat-number {
+  font-size: 52px; font-weight: 800; line-height: 1; margin-bottom: 6px;
+  background: var(--gradient-s1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-number.cyan { background: var(--gradient-s2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-number.purple { background: var(--gradient-s3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-label {
+  font-size: 13px; color: var(--text-muted); font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* ── Section Overview Slide ── */
+.slide-overview { text-align: center; }
+.overview-content { position: relative; z-index: 1; max-width: 1000px; width: 100%; }
+.overview-number {
+  font-size: 12px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.overview-number.s1 { color: #667eea; }
+.overview-number.s2 { color: #00d2ff; }
+.overview-number.s3 { color: #f093fb; }
+.overview-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+.overview-subtitle { font-size: 16px; color: var(--text-muted); margin-bottom: 48px; }
+.overview-cards { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+.overview-card {
+  flex: 1; min-width: 220px; max-width: 300px;
+  padding: 32px 24px; background: var(--bg-card); border: 1px solid var(--glass-border);
+  border-radius: 16px; backdrop-filter: blur(12px); text-align: center;
+  transition: all 0.3s; cursor: default;
+}
+.overview-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); }
+.oc-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+.oc-icon.s1 { background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2)); }
+.oc-icon.s2 { background: linear-gradient(135deg, rgba(0,210,255,0.2), rgba(58,123,213,0.2)); }
+.oc-icon.s3 { background: linear-gradient(135deg, rgba(240,147,251,0.2), rgba(245,87,108,0.2)); }
+.oc-icon svg { width: 24px; height: 24px; }
+.oc-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.oc-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+/* ── Achievement Slide ── */
+.slide-achievement { }
+.ach-content { position: relative; z-index: 1; max-width: 1000px; width: 100%; }
+.ach-top { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+.ach-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ach-icon.s1 { background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2)); }
+.ach-icon.s2 { background: linear-gradient(135deg, rgba(0,210,255,0.2), rgba(58,123,213,0.2)); }
+.ach-icon.s3 { background: linear-gradient(135deg, rgba(240,147,251,0.2), rgba(245,87,108,0.2)); }
+.ach-icon svg { width: 26px; height: 26px; }
+.ach-titles {}
+.ach-title { font-size: clamp(22px, 3vw, 32px); font-weight: 800; letter-spacing: -0.5px; }
+.ach-title-en { font-size: 14px; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+
+/* Context box */
+.ach-context {
+  margin: 20px 0; padding: 16px 20px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+  border-radius: 12px;
+}
+.ach-context-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.ach-context-label.s1 { color: #667eea; }
+.ach-context-label.s2 { color: #00d2ff; }
+.ach-context-label.s3 { color: #f093fb; }
+.ach-context p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+/* Metrics row */
+.ach-metrics { display: flex; gap: 16px; margin: 20px 0; flex-wrap: wrap; }
+.ach-metric {
+  flex: 1; min-width: 120px; text-align: center;
+  padding: 16px 12px; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 14px;
+}
+.ach-metric-value { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 4px; }
+.ach-metric-value.s1 { background: var(--gradient-s1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.ach-metric-value.s2 { background: var(--gradient-s2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.ach-metric-value.s3 { background: var(--gradient-s3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.ach-metric-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+/* Before/After */
+.ach-ba { display: flex; gap: 16px; margin: 20px 0; }
+.ach-ba-box {
+  flex: 1; padding: 16px 20px;
+  border-radius: 12px; font-size: 13px; line-height: 1.6;
+}
+.ach-ba-before { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); }
+.ach-ba-after { background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.15); }
+.ach-ba-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.ach-ba-before .ach-ba-label { color: var(--text-muted); }
+.ach-ba-after .ach-ba-label { color: var(--accent-emerald); }
+.ach-ba-box ul { list-style: none; padding: 0; }
+.ach-ba-box li { color: var(--text-secondary); padding: 2px 0; }
+.ach-ba-box li::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+.ach-ba-before li::before { background: var(--text-muted); }
+.ach-ba-after li::before { background: var(--accent-emerald); }
+
+/* Design Decision + Insight */
+.ach-bottom { display: flex; gap: 16px; margin-top: 16px; }
+.ach-decision {
+  flex: 1.2; padding: 14px 18px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+  border-radius: 12px;
+}
+.ach-decision-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; color: var(--text-muted); }
+.ach-decision p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.ach-insight {
+  flex: 1; padding: 14px 18px;
+  border-radius: 12px; font-size: 13px; line-height: 1.5;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.ach-insight.s1 { background: rgba(102,126,234,0.08); border-left: 3px solid #667eea; }
+.ach-insight.s2 { background: rgba(0,210,255,0.08); border-left: 3px solid #00d2ff; }
+.ach-insight.s3 { background: rgba(240,147,251,0.08); border-left: 3px solid #f093fb; }
+.ach-insight-icon { flex-shrink: 0; margin-top: 1px; }
+.ach-insight-icon svg { width: 16px; height: 16px; }
+.ach-insight-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+.ach-insight.s1 .ach-insight-label { color: #667eea; }
+.ach-insight.s2 .ach-insight-label { color: #00d2ff; }
+.ach-insight.s3 .ach-insight-label { color: #f093fb; }
+.ach-insight p { color: var(--text-secondary); }
+
+/* ── Future / Thank You Slide ── */
+.slide-future { text-align: center; }
+.future-content { position: relative; z-index: 1; max-width: 900px; width: 100%; }
+.future-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+.future-subtitle { font-size: 16px; color: var(--text-muted); margin-bottom: 48px; }
+.future-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
+.future-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 24px; background: var(--bg-card); border: 1px solid var(--glass-border);
+  border-radius: 16px; backdrop-filter: blur(12px); transition: all 0.3s;
+}
+.future-item:hover { background: var(--bg-card-hover); transform: translateY(-2px); }
+.fi-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.fi-icon svg { width: 22px; height: 22px; }
+.fi-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.fi-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+.thank-you { margin-top: 48px; }
+.thank-you p { font-size: 14px; color: var(--text-muted); }
+.thank-you .brand {
+  font-size: 18px; font-weight: 700; margin-top: 8px;
+  background: var(--gradient-s1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .slide { padding: calc(var(--nav-height) + 16px) 20px 20px; }
+  .hero-stats { gap: 12px; }
+  .stat-card { padding: 20px 24px; min-width: 120px; }
+  .stat-number { font-size: 40px; }
+  .overview-cards { flex-direction: column; align-items: center; }
+  .overview-card { max-width: 100%; }
+  .ach-ba { flex-direction: column; }
+  .ach-bottom { flex-direction: column; }
+  .ach-metrics { gap: 8px; }
+  .ach-metric { min-width: 80px; padding: 12px 8px; }
+  .ach-metric-value { font-size: 22px; }
+  .future-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .stat-card { min-width: 100px; padding: 16px 20px; }
+  .stat-number { font-size: 32px; }
+}
+
+/* ── Print ── */
+@media print {
+  html { scroll-snap-type: none; }
+  :root {
+    --bg-primary: #ffffff; --bg-secondary: #f8f9fa; --bg-card: #ffffff;
+    --glass-border: #e0e0e0; --text-primary: #1a1a1a; --text-secondary: #555; --text-muted: #888;
+  }
+  body { background: #fff; color: #1a1a1a; }
+  .nav { display: none; }
+  .slide { min-height: auto; padding: 32px; page-break-after: always; }
+  .slide-hero { background: #f0f4ff !important; }
+  .gradient-text { -webkit-text-fill-color: #667eea; }
+  .stat-number, .ach-metric-value { -webkit-text-fill-color: #667eea; }
+  .ach-insight { background: #f0f4ff !important; }
+}
+
+/* ── Scroll Reveal ── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Count Animation ── */
+@keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- ════════ Navigation ════════ -->
+<nav class="nav">
+  <div class="nav-logo">Synapse</div>
+  <ul class="nav-links">
+    <li><a href="#sec1" data-lang="zh">体系架构</a><a href="#sec1" data-lang="en">Architecture</a></li>
+    <li><a href="#sec2" data-lang="zh">个人效率</a><a href="#sec2" data-lang="en">Productivity</a></li>
+    <li><a href="#sec3" data-lang="zh">智能运营</a><a href="#sec3" data-lang="en">Operations</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-target="zh" onclick="switchLang('zh')">中文</button>
+      <button class="lang-btn" data-target="en" onclick="switchLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════ PAGE 1: Hero ════════ -->
+<section class="slide slide-hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span data-lang="zh">JANUS DIGITAL &middot; AI 协作运营体系</span>
+      <span data-lang="en">JANUS DIGITAL &middot; AI COLLABORATIVE OPERATING SYSTEM</span>
+    </div>
+    <h1 class="hero-title">
+      <span data-lang="zh"><span class="gradient-text">Synapse</span> &mdash; AI协作运营体系</span>
+      <span data-lang="en"><span class="gradient-text">Synapse</span> &mdash; AI Collaborative Operating System</span>
+    </h1>
+    <p class="hero-subtitle">
+      <span data-lang="zh">从0到1构建44人AI团队的实践之路</span>
+      <span data-lang="en">Building a 44-Agent AI Team from Scratch</span>
+    </p>
+    <div class="hero-stats">
+      <div class="stat-card" data-lang="zh">
+        <div class="stat-number" data-count="44">0</div>
+        <div class="stat-label">Agents</div>
+      </div>
+      <div class="stat-card" data-lang="zh">
+        <div class="stat-number cyan" data-count="12">0</div>
+        <div class="stat-label">Teams</div>
+      </div>
+      <div class="stat-card" data-lang="zh">
+        <div class="stat-number purple" data-count="5">0</div>
+        <div class="stat-label">Layers</div>
+      </div>
+      <div class="stat-card" data-lang="en">
+        <div class="stat-number" data-count="44">0</div>
+        <div class="stat-label">Agents</div>
+      </div>
+      <div class="stat-card" data-lang="en">
+        <div class="stat-number cyan" data-count="12">0</div>
+        <div class="stat-label">Teams</div>
+      </div>
+      <div class="stat-card" data-lang="en">
+        <div class="stat-number purple" data-count="5">0</div>
+        <div class="stat-label">Layers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 2: Section 1 Overview ════════ -->
+<section class="slide slide-overview" id="sec1">
+  <div class="overview-content reveal">
+    <div class="overview-number s1">
+      <span data-lang="zh">01 &mdash; 体系架构与组织管理</span>
+      <span data-lang="en">01 &mdash; SYSTEM ARCHITECTURE &amp; ORGANIZATION</span>
+    </div>
+    <h2 class="overview-title">
+      <span data-lang="zh">体系架构与组织管理</span>
+      <span data-lang="en">System Architecture &amp; Organization</span>
+    </h2>
+    <p class="overview-subtitle">
+      <span data-lang="zh">从零搭建完整的AI管理层 -- 组织、决策、人事三位一体</span>
+      <span data-lang="en">Building a complete AI management layer from scratch -- organization, decisions, and HR</span>
+    </p>
+    <div class="overview-cards">
+      <!-- Card 1 -->
+      <div class="overview-card">
+        <div class="oc-icon s1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><line x1="22" y1="8.5" x2="12" y2="15.5"/><line x1="2" y1="8.5" x2="12" y2="15.5"/>
+          </svg>
+        </div>
+        <div class="oc-title">
+          <span data-lang="zh">Synapse体系从0到1</span>
+          <span data-lang="en">Synapse System from Scratch</span>
+        </div>
+        <div class="oc-desc">
+          <span data-lang="zh">44 Agents / 12 Teams / 5 Layers</span>
+          <span data-lang="en">44 Agents / 12 Teams / 5 Layers</span>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="overview-card">
+        <div class="oc-icon s1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#764ba2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="oc-title">
+          <span data-lang="zh">四级决策体系</span>
+          <span data-lang="en">4-Tier Decision Framework</span>
+        </div>
+        <div class="oc-desc">
+          <span data-lang="zh">95%决策AI自主完成</span>
+          <span data-lang="en">95% decisions made autonomously by AI</span>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="overview-card">
+        <div class="oc-icon s1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="oc-title">
+          <span data-lang="zh">HR Agent管理制度</span>
+          <span data-lang="en">HR Agent Management</span>
+        </div>
+        <div class="oc-desc">
+          <span data-lang="zh">53张角色卡 / 5维评分 / 90分合格线</span>
+          <span data-lang="en">53 Role Cards / 5-Dim Scoring / 90pt Line</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 3: Achievement 1-1 Synapse System ════════ -->
+<section class="slide slide-achievement" id="ach-1-1">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><line x1="22" y1="8.5" x2="12" y2="15.5"/><line x1="2" y1="8.5" x2="12" y2="15.5"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">Synapse体系从0到1构建</span>
+          <span data-lang="en">Synapse System: Built from Scratch</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">Building the Complete AI Collaborative Architecture</span>
+          <span data-lang="en">44 Agents, 12 Teams, 5 Layers -- Zero to One</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s1">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">AI能力分散在各个独立对话中，无法形成组织记忆和协作闭环。每次对话从零开始，知识随会话消失，跨任务协作完全不可能。</span>
+        <span data-lang="en">AI capabilities were scattered across isolated conversations with no organizational memory or collaboration loop. Each conversation started from zero, knowledge vanished with the session, and cross-task collaboration was impossible.</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s1" data-count="44">0</div><div class="ach-metric-label">Agents</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s1" data-count="12">0</div><div class="ach-metric-label">Teams</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s1" data-count="5">0</div><div class="ach-metric-label">Layers</div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">每次对话从零开始</span><span data-lang="en">Each conversation starts from zero</span></li>
+          <li><span data-lang="zh">知识随会话消失</span><span data-lang="en">Knowledge vanishes with the session</span></li>
+          <li><span data-lang="zh">无法跨任务协作</span><span data-lang="en">No cross-task collaboration</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">五层架构持续运转</span><span data-lang="en">5-layer architecture runs continuously</span></li>
+          <li><span data-lang="zh">知识永久沉淀在OBS</span><span data-lang="en">Knowledge permanently stored in OBS</span></li>
+          <li><span data-lang="zh">44人团队7x24协作</span><span data-lang="en">44-agent team collaborates 24/7</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">选择 Harness Engineering（Agent = Model + Harness）而非传统 Prompt Engineering，因为 Harness 可版本控制、可审计、可进化。</span>
+          <span data-lang="en">Chose Harness Engineering (Agent = Model + Harness) over traditional Prompt Engineering -- Harness is version-controlled, auditable, and evolvable.</span>
+        </p>
+      </div>
+      <div class="ach-insight s1">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">AI团队的价值不在单个Agent的能力，在于体系化的协作架构。</span>
+            <span data-lang="en">The value of an AI team lies not in individual agent capability, but in systematic collaborative architecture.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 4: Achievement 1-2 Decision Framework ════════ -->
+<section class="slide slide-achievement" id="ach-1-2">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#764ba2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">四级决策体系设计</span>
+          <span data-lang="en">4-Tier Decision Framework</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">Autonomous Decision-Making at Scale</span>
+          <span data-lang="en">From Auto-Execution to President-Level, Zero False Escalations</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s1">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">AI团队所有决策都需要人工确认，形成瓶颈。专业问题让非专业者决策效率低，总裁成为全团队的决策瓶颈。</span>
+        <span data-lang="en">Every AI team decision required human confirmation, creating bottlenecks. Non-experts making professional decisions led to poor efficiency, and the president became the bottleneck for all decisions.</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s1" data-count="4">0</div><div class="ach-metric-label">Levels</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s1">0</div><div class="ach-metric-label"><span data-lang="zh">False Esc.</span><span data-lang="en">False Esc.</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s1">100%</div><div class="ach-metric-label">Traceable</div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">所有决策上报总裁</span><span data-lang="en">All decisions escalated to president</span></li>
+          <li><span data-lang="zh">总裁成为瓶颈</span><span data-lang="en">President became the bottleneck</span></li>
+          <li><span data-lang="zh">专业问题凭直觉判断</span><span data-lang="en">Professional issues decided by intuition</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">95%决策AI专家自主完成</span><span data-lang="en">95% decisions made autonomously by AI experts</span></li>
+          <li><span data-lang="zh">仅法律/重大财务上报</span><span data-lang="en">Only legal/major financial matters escalated</span></li>
+          <li><span data-lang="zh">全链路可追溯</span><span data-lang="en">Full traceability across decision chain</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">让专家决策专业问题，而非让管理者猜测 -- 参考军事指挥的"任务式指挥"思想（Auftragstaktik）。</span>
+          <span data-lang="en">Let experts decide professional issues instead of managers guessing -- inspired by military "mission-type tactics" (Auftragstaktik).</span>
+        </p>
+      </div>
+      <div class="ach-insight s1">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">最好的管理不是审批一切，而是设计好规则后充分授权。</span>
+            <span data-lang="en">The best management is not approving everything, but designing good rules and then fully delegating.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 5: Achievement 1-3 HR System ════════ -->
+<section class="slide slide-achievement" id="ach-1-3">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">HR Agent管理制度</span>
+          <span data-lang="en">HR Agent Management System</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">Structured Role Cards &amp; Performance Auditing</span>
+          <span data-lang="en">53 Role Cards, 5-Dimension Scoring, 90-Point Pass Line</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s1">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">Agent随意新增，能力描述模糊（如"项目管理"），无法评估质量，团队膨胀但能力不清。</span>
+        <span data-lang="en">Agents were added arbitrarily with vague capability descriptions (e.g. "project management"), making quality assessment impossible -- team grew but capabilities remained unclear.</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s1" data-count="53">0</div><div class="ach-metric-label"><span data-lang="zh">Role Cards</span><span data-lang="en">Role Cards</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s1">5-Dim</div><div class="ach-metric-label">Scoring</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s1">90pt</div><div class="ach-metric-label"><span data-lang="zh">Pass Line</span><span data-lang="en">Pass Line</span></div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">Agent想加就加，无审批</span><span data-lang="en">Agents added at will, no approval</span></li>
+          <li><span data-lang="zh">能力写"项目管理"就算完</span><span data-lang="en">Capability as vague as "project management"</span></li>
+          <li><span data-lang="zh">无法审计质量</span><span data-lang="en">No quality auditing possible</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">强制Schema + A/B/C分级</span><span data-lang="en">Mandatory Schema + A/B/C grading</span></li>
+          <li><span data-lang="zh">定期评审 + 入职审批</span><span data-lang="en">Periodic review + onboarding approval</span></li>
+          <li><span data-lang="zh">能力精确到方法论级别</span><span data-lang="en">Capabilities specified to methodology level</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">借鉴人力资源管理的JD标准，要求能力描述具体到方法论框架，杜绝模糊描述。</span>
+          <span data-lang="en">Applied human HR job description standards -- requiring capabilities specified down to methodology and framework level, eliminating vague descriptions.</span>
+        </p>
+      </div>
+      <div class="ach-insight s1">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">AI Agent的能力边界越清晰，协作效率越高 -- 这与人类团队管理的原理完全一致。</span>
+            <span data-lang="en">The clearer an AI Agent's capability boundaries, the higher the collaboration efficiency -- identical to human team management principles.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 6: Section 2 Overview ════════ -->
+<section class="slide slide-overview" id="sec2">
+  <div class="overview-content reveal">
+    <div class="overview-number s2">
+      <span data-lang="zh">02 &mdash; 个人效率与智能服务</span>
+      <span data-lang="en">02 &mdash; PERSONAL PRODUCTIVITY &amp; SMART SERVICES</span>
+    </div>
+    <h2 class="overview-title">
+      <span data-lang="zh">个人效率与智能服务</span>
+      <span data-lang="en">Personal Productivity &amp; Smart Services</span>
+    </h2>
+    <p class="overview-subtitle">
+      <span data-lang="zh">让AI融入个人工作流 -- 从任务捕获到信息推送的全闭环</span>
+      <span data-lang="en">Integrating AI into personal workflow -- full loop from task capture to information delivery</span>
+    </p>
+    <div class="overview-cards">
+      <div class="overview-card">
+        <div class="oc-icon s2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/>
+          </svg>
+        </div>
+        <div class="oc-title">
+          <span data-lang="zh">SPE个人效率引擎</span>
+          <span data-lang="en">SPE Personal Engine</span>
+        </div>
+        <div class="oc-desc">
+          <span data-lang="zh">4命令 / 4数据源 / 1统一入口</span>
+          <span data-lang="en">4 Commands / 4 Data Sources / 1 Unified Inbox</span>
+        </div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-icon s2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3a7bd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="oc-title">
+          <span data-lang="zh">PBS总裁简报服务</span>
+          <span data-lang="en">PBS President Briefing</span>
+        </div>
+        <div class="oc-desc">
+          <span data-lang="zh">每天3次 / 4通道反馈 / 风格自学习</span>
+          <span data-lang="en">3x Daily / 4-Channel Feedback / Auto Style Learning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 7: Achievement 2-1 SPE Engine ════════ -->
+<section class="slide slide-achievement" id="ach-2-1">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">SPE个人效率引擎 v1.0</span>
+          <span data-lang="en">SPE Personal Productivity Engine v1.0</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">Synapse Personal Engine -- 4 Commands, Unified Inbox</span>
+          <span data-lang="en">4 Data Sources, 4 Commands, Zero Learning Curve</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s2">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">总裁的个人任务散落在多个平台（日历/Slack/笔记/口头），无统一入口，容易遗漏。每天花时间整合多源信息。</span>
+        <span data-lang="en">The president's tasks were scattered across multiple platforms (Calendar/Slack/Notes/Verbal) with no unified entry point, leading to frequent oversights and daily time spent consolidating information.</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s2" data-count="4">0</div><div class="ach-metric-label">Commands</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s2" data-count="4">0</div><div class="ach-metric-label"><span data-lang="zh">Data Sources</span><span data-lang="en">Data Sources</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s2">1</div><div class="ach-metric-label"><span data-lang="zh">Unified Inbox</span><span data-lang="en">Unified Inbox</span></div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">任务散落在Calendar、Slack、笔记、脑中</span><span data-lang="en">Tasks scattered in Calendar, Slack, Notes, Memory</span></li>
+          <li><span data-lang="zh">每天花时间手动整合</span><span data-lang="en">Daily manual consolidation</span></li>
+          <li><span data-lang="zh">容易遗漏关键事项</span><span data-lang="en">Critical items easily overlooked</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">/capture 一键捕获</span><span data-lang="en">/capture for instant task capture</span></li>
+          <li><span data-lang="zh">/plan-day 四源自动整合</span><span data-lang="en">/plan-day auto-integrates 4 sources</span></li>
+          <li><span data-lang="zh">/time-block + /weekly-review 闭环</span><span data-lang="en">/time-block + /weekly-review for full loop</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">不做重型App，而是在AI对话流中嵌入轻量命令 -- 零学习成本，即刻上手。</span>
+          <span data-lang="en">Instead of building a heavy app, embedded lightweight commands in the AI conversation flow -- zero learning curve, instant adoption.</span>
+        </p>
+      </div>
+      <div class="ach-insight s2">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">最好的效率工具不是新增一个App，而是让AI融入已有的工作流。</span>
+            <span data-lang="en">The best productivity tool is not a new app, but AI integrated into existing workflows.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 8: Achievement 2-2 PBS Briefing ════════ -->
+<section class="slide slide-achievement" id="ach-2-2">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3a7bd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">PBS总裁简报服务体系</span>
+          <span data-lang="en">PBS President Briefing Service</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">Adaptive Briefing with Auto Style Learning</span>
+          <span data-lang="en">3x Daily Push, 4-Channel Feedback, Style Self-Learning</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s2">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">总裁需要了解每天团队做了什么、产生了什么价值，但无法跟踪所有执行细节。需要主动询问才能了解进度，信息碎片化。</span>
+        <span data-lang="en">The president needed to know what the team accomplished daily but couldn't track all execution details. Information was fragmented and required active inquiry to learn about progress.</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s2">3x</div><div class="ach-metric-label"><span data-lang="zh">Daily Push</span><span data-lang="en">Daily Push</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s2" data-count="4">0</div><div class="ach-metric-label"><span data-lang="zh">Feedback Ch.</span><span data-lang="en">Feedback Ch.</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s2">Auto</div><div class="ach-metric-label"><span data-lang="zh">Style Learn</span><span data-lang="en">Style Learn</span></div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">需主动询问才知进度</span><span data-lang="en">Had to actively ask for updates</span></li>
+          <li><span data-lang="zh">信息碎片化</span><span data-lang="en">Information fragmented</span></li>
+          <li><span data-lang="zh">无法快速获取全局视图</span><span data-lang="en">No quick global view available</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">每天3次定时推送结构化简报</span><span data-lang="en">3x daily structured briefing push</span></li>
+          <li><span data-lang="zh">三层递进阅读（10秒/1分/5分）</span><span data-lang="en">3-layer progressive reading (10s/1m/5m)</span></li>
+          <li><span data-lang="zh">通过反馈自动学习风格偏好</span><span data-lang="en">Auto-learns style preferences via feedback</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">三层递进阅读设计（BLUF 10秒 -> 要点1分钟 -> 详情5分钟），适配总裁不同的时间粒度。</span>
+          <span data-lang="en">Three-layer progressive reading (BLUF 10s -> Bullets 1m -> Detail 5m), adapting to different time budgets.</span>
+        </p>
+      </div>
+      <div class="ach-insight s2">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">信息服务的核心不是"给更多信息"，而是"在对的时间给对的密度"。</span>
+            <span data-lang="en">The core of information service is not "more information" but "right density at the right time."</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 9: Section 3 Overview ════════ -->
+<section class="slide slide-overview" id="sec3">
+  <div class="overview-content reveal">
+    <div class="overview-number s3">
+      <span data-lang="zh">03 &mdash; 智能运营与质量保障</span>
+      <span data-lang="en">03 &mdash; INTELLIGENT OPERATIONS &amp; QUALITY</span>
+    </div>
+    <h2 class="overview-title">
+      <span data-lang="zh">智能运营与质量保障</span>
+      <span data-lang="en">Intelligent Operations &amp; Quality</span>
+    </h2>
+    <p class="overview-subtitle">
+      <span data-lang="zh">从情报发现到执行落地，从防护机制到质量门禁 -- 让体系自己运转</span>
+      <span data-lang="en">From intelligence discovery to execution, from guardrails to quality gates -- making the system self-operating</span>
+    </p>
+    <div class="overview-cards">
+      <div class="overview-card">
+        <div class="oc-icon s3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f093fb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="oc-title">
+          <span data-lang="zh">情报闭环管线</span>
+          <span data-lang="en">Intelligence Pipeline</span>
+        </div>
+        <div class="oc-desc">
+          <span data-lang="zh">24/7自主运行 / 4专家评审</span>
+          <span data-lang="en">24/7 Autonomous / 4-Expert Review</span>
+        </div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-icon s3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f5576c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="oc-title">
+          <span data-lang="zh">CEO Guard防护</span>
+          <span data-lang="en">CEO Guard Shield</span>
+        </div>
+        <div class="oc-desc">
+          <span data-lang="zh">3层防护 / Pre+Post Hooks</span>
+          <span data-lang="en">3-Layer Shield / Pre+Post Hooks</span>
+        </div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-icon s3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f093fb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <div class="oc-title">
+          <span data-lang="zh">QA框架 + 故障修复</span>
+          <span data-lang="en">QA Framework + Incident Fix</span>
+        </div>
+        <div class="oc-desc">
+          <span data-lang="zh">6维评分 / 14h故障零复发</span>
+          <span data-lang="en">6-Dim Score / 14h Incident, Zero Recurrence</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 10: Achievement 3-1 Intelligence Pipeline ════════ -->
+<section class="slide slide-achievement" id="ach-3-1">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f093fb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">每日AI情报闭环管线</span>
+          <span data-lang="en">Daily AI Intelligence Pipeline</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">From Discovery to Action -- Fully Autonomous</span>
+          <span data-lang="en">Discover, Evaluate, Execute, Report -- Complete Loop</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s3">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">AI行业日新月异，人工追踪效率低且容易遗漏。看到好文章也无法转化为行动，从"知道"到"做到"之间存在巨大鸿沟。</span>
+        <span data-lang="en">The AI industry evolves rapidly. Manual tracking was inefficient with frequent oversights. Even good articles couldn't be converted into action -- a huge gap between "knowing" and "doing."</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s3">24/7</div><div class="ach-metric-label">Autonomous</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s3">Daily</div><div class="ach-metric-label">Reports</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s3" data-count="4">0</div><div class="ach-metric-label"><span data-lang="zh">Expert Review</span><span data-lang="en">Expert Review</span></div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">靠人工刷新闻/公众号</span><span data-lang="en">Manual news browsing</span></li>
+          <li><span data-lang="zh">信息碎片化，好想法看完就忘</span><span data-lang="en">Fragmented info, good ideas forgotten</span></li>
+          <li><span data-lang="zh">知道但做不到</span><span data-lang="en">Knowing without doing</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">自动搜索 -> 筛选 -> 评估</span><span data-lang="en">Auto search -> filter -> evaluate</span></li>
+          <li><span data-lang="zh">4专家评估 -> 决策审批</span><span data-lang="en">4-expert review -> decision approval</span></li>
+          <li><span data-lang="zh">执行落地 -> 成果报告全闭环</span><span data-lang="en">Execute -> report, complete loop</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">不做信息聚合器（那只是RSS），而是做"发现 -> 评估 -> 执行 -> 报告"的完整闭环。</span>
+          <span data-lang="en">Not an information aggregator (that's just RSS), but a complete "discover -> evaluate -> execute -> report" loop.</span>
+        </p>
+      </div>
+      <div class="ach-insight s3">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">情报的价值不在发现，在于转化为行动 -- 从"知道"到"做到"的闭环才是关键。</span>
+            <span data-lang="en">The value of intelligence is not in discovery, but in conversion to action -- the "knowing to doing" loop is key.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 11: Achievement 3-2 CEO Guard ════════ -->
+<section class="slide slide-achievement" id="ach-3-2">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f5576c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">CEO Guard执行链防护</span>
+          <span data-lang="en">CEO Guard Execution Shield</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">3-Layer Technical Enforcement for AI Governance</span>
+          <span data-lang="en">From Policy to Hooks to Audit -- Three-Layer Protection</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s3">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">AI CEO（Lysander）会不自觉地跳过派单直接执行，违背"CEO管理不执行"的核心原则。贴标签冒充团队执行是常见的绕过模式。</span>
+        <span data-lang="en">The AI CEO (Lysander) would unconsciously skip dispatching and execute directly, violating the core "CEO manages, doesn't execute" principle. Label-faking to impersonate team execution was a common bypass pattern.</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s3" data-count="3">0</div><div class="ach-metric-label"><span data-lang="zh">Layer Shield</span><span data-lang="en">Layer Shield</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s3">Pre+Post</div><div class="ach-metric-label">Hooks</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s3">Full</div><div class="ach-metric-label"><span data-lang="zh">Audit Trail</span><span data-lang="en">Audit Trail</span></div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">Lysander经常直接执行任务</span><span data-lang="en">Lysander frequently executed tasks directly</span></li>
+          <li><span data-lang="zh">贴"团队执行"标签冒充派单</span><span data-lang="en">Faked "team execution" labels</span></li>
+          <li><span data-lang="zh">无技术手段防止绕过</span><span data-lang="en">No technical means to prevent bypass</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">P0约束声明（制度层）</span><span data-lang="en">P0 constraint declaration (policy layer)</span></li>
+          <li><span data-lang="zh">PreToolUse Hook实时拦截（技术层）</span><span data-lang="en">PreToolUse Hook real-time interception (tech)</span></li>
+          <li><span data-lang="zh">PostToolUse审计日志（审计层）</span><span data-lang="en">PostToolUse audit log (audit layer)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">不靠自律（Prompt约束容易被绕过），而是靠技术强制（Hook拦截），类似企业内控的"不相容职务分离"。</span>
+          <span data-lang="en">Relied on technical enforcement (Hook interception) instead of self-discipline (Prompt constraints easily bypassed) -- similar to corporate "segregation of incompatible duties."</span>
+        </p>
+      </div>
+      <div class="ach-insight s3">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">AI治理不能只靠Prompt说"你不要做"，需要技术层面的强制约束 -- 与人类组织的内控原理相同。</span>
+            <span data-lang="en">AI governance can't rely on Prompts saying "don't do it" -- it needs technical enforcement, identical to human organizational internal controls.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 12: Achievement 3-3 QA Framework ════════ -->
+<section class="slide slide-achievement" id="ach-3-3">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f093fb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">QA框架升级（6维度评分）</span>
+          <span data-lang="en">QA Framework Upgrade (6-Dimension Scoring)</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">Mandatory Quality Gate with Auto Scoring</span>
+          <span data-lang="en">6 Dimensions, 4.2 Pass Line, Mandatory Gate</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s3">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">任务完成后缺乏系统化的质量检查，质量依赖执行者的自觉性。偶尔跳过Review，标准不统一。</span>
+        <span data-lang="en">No systematic quality checks after task completion. Quality depended on executor's conscientiousness, reviews were occasionally skipped, and standards were inconsistent.</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s3" data-count="6">0</div><div class="ach-metric-label">Dimensions</div></div>
+      <div class="ach-metric"><div class="ach-metric-value s3">4.2</div><div class="ach-metric-label"><span data-lang="zh">Pass Line</span><span data-lang="en">Pass Line</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s3">GATE</div><div class="ach-metric-label"><span data-lang="zh">Mandatory</span><span data-lang="en">Mandatory</span></div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">质量检查靠人工Review</span><span data-lang="en">Quality checks via manual review</span></li>
+          <li><span data-lang="zh">标准不统一</span><span data-lang="en">Inconsistent standards</span></li>
+          <li><span data-lang="zh">偶尔跳过检查</span><span data-lang="en">Reviews occasionally skipped</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">6维度自动评分（满分6.0）</span><span data-lang="en">6-dimension auto scoring (max 6.0)</span></li>
+          <li><span data-lang="zh">强制test_scenarios字段</span><span data-lang="en">Mandatory test_scenarios field</span></li>
+          <li><span data-lang="zh">GATE守卫阻止未审查变更</span><span data-lang="en">GATE blocks unreviewed changes</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">质量门禁必须是强制的（不能跳过），且是自动化的（不依赖人工记得去做）。</span>
+          <span data-lang="en">Quality gates must be mandatory (can't be skipped) and automated (not relying on humans remembering to do it).</span>
+        </p>
+      </div>
+      <div class="ach-insight s3">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">质量不是"检查出来的"，而是"设计进流程的" -- 把Gate放在必经之路上。</span>
+            <span data-lang="en">Quality is not "inspected in" but "designed into the process" -- place the gate on the critical path.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 13: Achievement 3-4 Pipeline Incident Fix ════════ -->
+<section class="slide slide-achievement" id="ach-3-4">
+  <div class="ach-content reveal">
+    <div class="ach-top">
+      <div class="ach-icon s3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f5576c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <div class="ach-titles">
+        <div class="ach-title">
+          <span data-lang="zh">情报管线故障修复</span>
+          <span data-lang="en">Intelligence Pipeline Incident Fix</span>
+        </div>
+        <div class="ach-title-en">
+          <span data-lang="zh">14-Hour Silent Failure -- Root Cause &amp; Prevention</span>
+          <span data-lang="en">14hr Silent Failure, Hardcoded Key Root Cause, Zero Recurrence</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-context">
+      <div class="ach-context-label s3">
+        <span data-lang="zh">背景与挑战 / Context</span>
+        <span data-lang="en">Context &amp; Challenge</span>
+      </div>
+      <p>
+        <span data-lang="zh">情报日报突然停止生成14小时，但没有任何告警，直到人工发现。根因是API Key硬编码在脚本中被GitHub Push Protection拦截。</span>
+        <span data-lang="en">The intelligence daily report silently stopped generating for 14 hours with no alerts until manual discovery. Root cause: hardcoded API key in script blocked by GitHub Push Protection.</span>
+      </p>
+    </div>
+
+    <div class="ach-metrics">
+      <div class="ach-metric"><div class="ach-metric-value s3">14hr</div><div class="ach-metric-label"><span data-lang="zh">Silent Fail</span><span data-lang="en">Silent Fail</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s3">Root</div><div class="ach-metric-label"><span data-lang="zh">Hardcoded Key</span><span data-lang="en">Hardcoded Key</span></div></div>
+      <div class="ach-metric"><div class="ach-metric-value s3">0</div><div class="ach-metric-label"><span data-lang="zh">Recurrence</span><span data-lang="en">Recurrence</span></div></div>
+    </div>
+
+    <div class="ach-ba">
+      <div class="ach-ba-box ach-ba-before">
+        <div class="ach-ba-label">Before</div>
+        <ul>
+          <li><span data-lang="zh">API Key硬编码在脚本中</span><span data-lang="en">API Key hardcoded in scripts</span></li>
+          <li><span data-lang="zh">GitHub Push Protection拦截</span><span data-lang="en">Blocked by GitHub Push Protection</span></li>
+          <li><span data-lang="zh">Obsidian推送静默失败14小时</span><span data-lang="en">OBS push silently failed for 14 hours</span></li>
+        </ul>
+      </div>
+      <div class="ach-ba-box ach-ba-after">
+        <div class="ach-ba-label">After</div>
+        <ul>
+          <li><span data-lang="zh">API Key替换为环境变量</span><span data-lang="en">API Key replaced with env variables</span></li>
+          <li><span data-lang="zh">Git历史清除 + 推送恢复</span><span data-lang="en">Git history cleaned + push restored</span></li>
+          <li><span data-lang="zh">远程Agent Prompt更新依赖步骤</span><span data-lang="en">Remote Agent Prompt updated with deps</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ach-bottom">
+      <div class="ach-decision">
+        <div class="ach-decision-label">
+          <span data-lang="zh">关键设计决策 / Key Decision</span>
+          <span data-lang="en">Key Design Decision</span>
+        </div>
+        <p>
+          <span data-lang="zh">不只是修bug，而是找到根因（硬编码凭证）并建立防止复发的机制（环境变量 + 凭证管理体系）。</span>
+          <span data-lang="en">Not just fixing the bug, but finding root cause (hardcoded credentials) and establishing prevention mechanisms (env variables + credential management).</span>
+        </p>
+      </div>
+      <div class="ach-insight s3">
+        <div>
+          <div class="ach-insight-label">
+            <span data-lang="zh">洞察 / Insight</span>
+            <span data-lang="en">Insight</span>
+          </div>
+          <p>
+            <span data-lang="zh">静默失败比显式报错更危险 -- 系统的可观测性和告警必须是Day 1就设计的。</span>
+            <span data-lang="en">Silent failure is more dangerous than explicit errors -- system observability and alerting must be designed from Day 1.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PAGE 14: Future / Thank You ════════ -->
+<section class="slide slide-future" id="future">
+  <div class="future-content reveal">
+    <h2 class="future-title">
+      <span data-lang="zh">展望 / What's Next</span>
+      <span data-lang="en">What's Next</span>
+    </h2>
+    <p class="future-subtitle">
+      <span data-lang="zh">Synapse 体系的四个演进方向</span>
+      <span data-lang="en">Four evolution directions for the Synapse system</span>
+    </p>
+    <div class="future-grid">
+      <!-- ZH items -->
+      <div class="future-item" data-lang="zh">
+        <div class="fi-icon" style="background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div>
+          <div class="fi-title">体系产品化</div>
+          <div class="fi-desc">将Synapse打包为可复用的AI团队操作系统</div>
+        </div>
+      </div>
+      <div class="future-item" data-lang="zh">
+        <div class="fi-icon" style="background: linear-gradient(135deg, rgba(0,210,255,0.2), rgba(58,123,213,0.2));">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="fi-title">自治能力升级</div>
+          <div class="fi-desc">从人工触发到事件驱动的全自动编排</div>
+        </div>
+      </div>
+      <div class="future-item" data-lang="zh">
+        <div class="fi-icon" style="background: linear-gradient(135deg, rgba(240,147,251,0.2), rgba(245,87,108,0.2));">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f093fb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="fi-title">知识资产变现</div>
+          <div class="fi-desc">将OBS知识库转化为可对外输出的方法论</div>
+        </div>
+      </div>
+      <div class="future-item" data-lang="zh">
+        <div class="fi-icon" style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(52,211,153,0.2));">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div>
+          <div class="fi-title">客户赋能实践</div>
+          <div class="fi-desc">将AI团队能力应用于客户项目交付</div>
+        </div>
+      </div>
+      <!-- EN items -->
+      <div class="future-item" data-lang="en">
+        <div class="fi-icon" style="background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div>
+          <div class="fi-title">System Productization</div>
+          <div class="fi-desc">Package Synapse as a reusable AI team operating system</div>
+        </div>
+      </div>
+      <div class="future-item" data-lang="en">
+        <div class="fi-icon" style="background: linear-gradient(135deg, rgba(0,210,255,0.2), rgba(58,123,213,0.2));">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="fi-title">Autonomy Upgrade</div>
+          <div class="fi-desc">From manual triggers to event-driven fully autonomous orchestration</div>
+        </div>
+      </div>
+      <div class="future-item" data-lang="en">
+        <div class="fi-icon" style="background: linear-gradient(135deg, rgba(240,147,251,0.2), rgba(245,87,108,0.2));">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f093fb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="fi-title">Knowledge Monetization</div>
+          <div class="fi-desc">Transform OBS knowledge base into exportable methodologies</div>
+        </div>
+      </div>
+      <div class="future-item" data-lang="en">
+        <div class="fi-icon" style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(52,211,153,0.2));">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div>
+          <div class="fi-title">Client Enablement</div>
+          <div class="fi-desc">Apply AI team capabilities to client project delivery</div>
+        </div>
+      </div>
+    </div>
+    <div class="thank-you">
+      <p>
+        <span data-lang="zh">Janus Digital &middot; Synapse AI Operating System</span>
+        <span data-lang="en">Janus Digital &middot; Synapse AI Operating System</span>
+      </p>
+      <div class="brand">
+        <span data-lang="zh">谢谢 / Thank You</span>
+        <span data-lang="en">Thank You</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ JavaScript ════════ -->
+<script>
+// ── Language Switcher ──
+function switchLang(lang) {
+  document.body.classList.toggle('lang-en', lang === 'en');
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-target') === lang);
+  });
+  // Re-trigger count animations for visible elements
+  runCountAnimations();
+}
+
+// ── Count Animation ──
+function animateCount(el) {
+  var target = parseInt(el.getAttribute('data-count'));
+  if (isNaN(target)) return;
+  var duration = 1200;
+  var start = 0;
+  var startTime = null;
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    var progress = Math.min((timestamp - startTime) / duration, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      el.textContent = target;
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+function runCountAnimations() {
+  document.querySelectorAll('[data-count]').forEach(function(el) {
+    // Only animate visible elements
+    var rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      // Check if parent is not hidden by lang toggle
+      var parent = el.closest('[data-lang]');
+      if (parent) {
+        var style = window.getComputedStyle(parent);
+        if (style.display === 'none') return;
+      }
+      animateCount(el);
+    }
+  });
+}
+
+// ── Scroll Reveal ──
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Trigger count animations inside revealed element
+      entry.target.querySelectorAll('[data-count]').forEach(function(el) {
+        var parent = el.closest('[data-lang]');
+        if (parent) {
+          var style = window.getComputedStyle(parent);
+          if (style.display === 'none') return;
+        }
+        animateCount(el);
+      });
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(function(el) {
+  observer.observe(el);
+});
+
+// ── Nav active state ──
+var navLinks = document.querySelectorAll('.nav-links a');
+var sections = document.querySelectorAll('.slide[id^="sec"]');
+var navObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      var id = entry.target.id;
+      navLinks.forEach(function(link) {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(function(sec) { navObserver.observe(sec); });
+
+// ── Initial count animation for hero ──
+window.addEventListener('load', function() {
+  setTimeout(runCountAnimations, 300);
+});
+</script>
+
+</body>
+</html>

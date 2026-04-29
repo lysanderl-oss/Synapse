@@ -1,0 +1,11 @@
+1.0.0
+# Synapse Core Version
+# See CHANGELOG for release notes: https://github.com/lysanderl-glitch/synapse/blob/main/CHANGELOG.md
+#
+# Subsystem versions:
+#   - pmo-auto: 2.0.3 (2026-04-24) — WF-05 OOM 修复
+#   - infra: 1.0.7 (2026-04-26) — 情报管线全自动闭环（OBJ-INTEL-LOOP-CLOSURE shipped）
+#   - infra: 1.0.6 (2026-04-26) — 博客管线云端化（OBJ-BLOG-PIPELINE-CLOUD）
+#   - infra: 1.0.5 (2026-04-25) — n8n workflow 全量梳理（OBJ-N8N-WORKFLOW-AUDIT）
+#   - infra: 1.0.4 (2026-04-25) — n8n WF-09 治理升级（snapshot + raw JSON 模板风险沉淀）
+#   - infra: 1.0.3 (2026-04-25) — WF-09 全链路修复（HMAC 500/recipient/UTF-8）

@@ -1,0 +1,37 @@
+name: Intelligence Pipeline Heartbeat Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'  # UTC 09:00 = Dubai 13:00（容纳 intel-action 漂移）
+
+permissions:
+  contents: read  # 只读，不提交
+
+concurrency:
+  group: heartbeat
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run heartbeat check
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+          PYTHONIOENCODING: utf-8
+        run: |
+          python scripts/intelligence/heartbeat_check.py

@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synapse Digital Twin Collaboration Platform v0.3.0 — Internal Sharing</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:        #0a0e1a;
+    --bg-card:   #0f1525;
+    --bg-card2:  #111827;
+    --border:    #1e2d4a;
+    --border-2:  #1f3460;
+    --blue:      #60a5fa;
+    --blue-dim:  rgba(96,165,250,0.15);
+    --blue-glow: rgba(96,165,250,0.08);
+    --green:     #34d399;
+    --green-dim: rgba(52,211,153,0.12);
+    --amber:     #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --purple:    #a78bfa;
+    --purple-dim:rgba(167,139,250,0.12);
+    --text:      #e2e8f0;
+    --text-muted:#8ba3c1;
+    --text-dim:  #4a6080;
+    --radius:    12px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ===== SLIDE WRAPPER ===== */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px 40px 80px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .slide-inner {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ===== FADE-IN ANIMATION ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ===== NAV DOT BAR ===== */
+  .nav-dots {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-2);
+    cursor: pointer;
+    transition: background 0.25s, transform 0.25s;
+  }
+  .nav-dot.active { background: var(--blue); transform: scale(1.4); }
+  .nav-dot:hover  { background: var(--blue); }
+
+  /* ===== FOOTER BAR ===== */
+  .slide-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* ===== SLIDE 1 — COVER ===== */
+  #s1 {
+    background: linear-gradient(145deg, #0d1a34 0%, #0a0e1a 40%, #12082a 80%, #0a0e1a 100%);
+    text-align: center;
+  }
+  #s1::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(96,165,250,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue-dim);
+    border: 1px solid rgba(96,165,250,0.3);
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+  }
+  .cover-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
+  .cover-title {
+    font-size: clamp(28px, 4.5vw, 58px);
+    font-weight: 900;
+    color: #f0f6ff;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .cover-subtitle-zh {
+    font-size: clamp(14px, 2vw, 22px);
+    color: var(--blue);
+    font-weight: 600;
+    margin-bottom: 32px;
+  }
+  .cover-badges {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .badge {
+    padding: 5px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .badge-version {
+    background: rgba(96,165,250,0.2);
+    border: 1px solid rgba(96,165,250,0.4);
+    color: var(--blue);
+  }
+  .badge-date {
+    background: rgba(52,211,153,0.12);
+    border: 1px solid rgba(52,211,153,0.3);
+    color: var(--green);
+  }
+  .badge-internal {
+    background: rgba(251,191,36,0.1);
+    border: 1px solid rgba(251,191,36,0.3);
+    color: var(--amber);
+  }
+
+  /* ===== SLIDE HEADER ===== */
+  .slide-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .slide-title {
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: 800;
+    color: #f0f6ff;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .slide-title-en {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 36px;
+  }
+  .divider {
+    height: 2px;
+    width: 48px;
+    background: linear-gradient(90deg, var(--blue), transparent);
+    margin: 16px 0 36px;
+    border-radius: 2px;
+  }
+
+  /* ===== SLIDE 2 — PROBLEM ===== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .problem-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .problem-col.today { border-top: 3px solid #ef4444; }
+  .problem-col.target { border-top: 3px solid var(--green); }
+  .col-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .col-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .col-icon.red   { background: rgba(239,68,68,0.15); }
+  .col-icon.green { background: var(--green-dim); }
+  .col-label-zh { font-size: 16px; font-weight: 700; color: #f0f6ff; }
+  .col-label-en { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+  .problem-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .problem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .problem-item .icon { font-size: 16px; flex-shrink: 0; line-height: 1.5; }
+  .problem-item .text-zh { color: var(--text); }
+  .problem-item .text-en { font-size: 11px; color: var(--text-muted); }
+
+  /* Before/After Arrow */
+  .ba-arrow {
+    display: none; /* hidden on desktop, shown if needed */
+  }
+
+  /* ===== SLIDE 3 — VISION ===== */
+  .vision-statement {
+    background: linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.06) 100%);
+    border: 1px solid rgba(96,165,250,0.2);
+    border-radius: var(--radius);
+    padding: 28px 36px;
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .vision-statement .zh {
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 800;
+    color: #f0f6ff;
+  }
+  .vision-statement .en {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .pillar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 22px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .pillar-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+  .pillar-card.p1 { border-top: 3px solid var(--blue); }
+  .pillar-card.p2 { border-top: 3px solid var(--green); }
+  .pillar-card.p3 { border-top: 3px solid var(--purple); }
+  .pillar-emoji { font-size: 32px; margin-bottom: 14px; }
+  .pillar-title-zh { font-size: 17px; font-weight: 700; color: #f0f6ff; margin-bottom: 4px; }
+  .pillar-title-en { font-size: 11px; color: var(--text-muted); margin-bottom: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+  .pillar-desc { font-size: 13px; color: #94a3b8; line-height: 1.6; }
+
+  /* ===== SLIDE 4 — DEMO FLOW ===== */
+  .flow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    justify-content: center;
+  }
+  .flow-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    min-width: 140px;
+    text-align: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .flow-box.boss   { border-color: rgba(96,165,250,0.5);   background: rgba(96,165,250,0.07); }
+  .flow-box.agent  { border-color: rgba(96,165,250,0.3);   background: rgba(96,165,250,0.05); }
+  .flow-box.pm     { border-color: rgba(52,211,153,0.4);   background: rgba(52,211,153,0.06); }
+  .flow-box.done   { border-color: rgba(52,211,153,0.6);   background: rgba(52,211,153,0.1); }
+  .flow-box.task   { border-color: var(--border);          background: var(--bg-card2); min-width: 110px; }
+  .flow-box .fb-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .flow-box.boss   .fb-label { color: var(--blue); }
+  .flow-box.agent  .fb-label { color: var(--blue); }
+  .flow-box.pm     .fb-label { color: var(--green); }
+  .flow-box.done   .fb-label { color: var(--green); }
+  .flow-box.task   .fb-label { color: var(--text-muted); }
+  .flow-box .fb-name { font-size: 14px; font-weight: 600; color: #f0f6ff; }
+  .flow-box .fb-sub  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .flow-box .fb-lang { font-size: 10px; margin-top: 4px; padding: 2px 6px; border-radius: 4px; display: inline-block; font-weight: 600; }
+  .lang-en { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .lang-zh { background: rgba(52,211,153,0.12); color: var(--green); }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    flex-shrink: 0;
+    color: var(--text-dim);
+    font-size: 20px;
+    position: relative;
+  }
+  .flow-arrow::after {
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--border-2), transparent 80%);
+    left: 6px;
+  }
+  .flow-arrow span { position: relative; z-index: 1; color: var(--blue); font-size: 16px; }
+
+  .flow-down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    color: var(--blue);
+    font-size: 18px;
+  }
+
+  .tasks-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 4px 0;
+  }
+
+  /* ===== SLIDE 5 — ARCHITECTURE ===== */
+  .arch-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .arch-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .arch-col.existed { border-top: 3px solid var(--text-dim); }
+  .arch-col.added   { border-top: 3px solid var(--blue); }
+  .arch-col-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .arch-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+  .arch-badge.old { background: rgba(74,96,128,0.3); color: var(--text-muted); border: 1px solid rgba(74,96,128,0.4); }
+  .arch-badge.new { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+  .arch-col-title { font-size: 15px; font-weight: 700; color: #f0f6ff; }
+  .arch-col-sub   { font-size: 11px; color: var(--text-muted); }
+  .arch-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+  }
+  .arch-item:last-child { margin-bottom: 0; }
+  .arch-item.old { background: rgba(30,40,60,0.5); border-color: rgba(74,96,128,0.2); }
+  .arch-item.new { background: rgba(96,165,250,0.05); border-color: rgba(96,165,250,0.15); }
+  .arch-item-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
+  .arch-item-name { font-size: 13px; font-weight: 600; color: #e2e8f0; }
+  .arch-item-desc { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+  .arch-stat-row {
+    display: flex;
+    gap: 16px;
+  }
+  .arch-stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    text-align: center;
+    flex: 1;
+  }
+  .arch-stat-num { font-size: 28px; font-weight: 900; color: var(--blue); line-height: 1.1; }
+  .arch-stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ===== SLIDE 6 — DEMO ===== */
+  .demo-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .demo-icon {
+    font-size: 72px;
+    line-height: 1;
+    margin-bottom: 16px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .demo-headline {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    color: #f0f6ff;
+    text-align: center;
+  }
+  .demo-sub { font-size: 14px; color: var(--text-muted); text-align: center; margin-top: 8px; }
+
+  .checklist {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .checklist-title { font-size: 13px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(30,45,74,0.5);
+  }
+  .checklist-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .check-box {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border-2);
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .checklist-item-text { font-size: 14px; color: var(--text); line-height: 1.45; }
+  .checklist-item-sub  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ===== SLIDE 7 — ROADMAP ===== */
+  .roadmap-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .roadmap-col.current { border-top: 3px solid var(--blue); }
+  .roadmap-col.next    { border-top: 3px solid var(--green); }
+  .roadmap-col.future  { border-top: 3px solid var(--purple); }
+  .roadmap-version {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .roadmap-col.current .roadmap-version { color: var(--blue); }
+  .roadmap-col.next    .roadmap-version { color: var(--green); }
+  .roadmap-col.future  .roadmap-version { color: var(--purple); }
+  .roadmap-title { font-size: 17px; font-weight: 700; color: #f0f6ff; margin-bottom: 4px; }
+  .roadmap-sub   { font-size: 11px; color: var(--text-muted); margin-bottom: 18px; }
+  .roadmap-divider { height: 1px; background: var(--border); margin-bottom: 16px; }
+  .roadmap-feature {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+    line-height: 1.45;
+  }
+  .roadmap-feature:last-child { margin-bottom: 0; }
+  .rf-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .roadmap-col.current .rf-dot { background: var(--blue); }
+  .roadmap-col.next    .rf-dot { background: var(--green); }
+  .roadmap-col.future  .rf-dot { background: var(--purple); }
+
+  /* ===== SLIDE 8 — Q&A ===== */
+  #s8 { text-align: center; }
+  .qa-hero {
+    font-size: clamp(56px, 10vw, 110px);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+  .qa-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 44px; }
+  .qa-prompts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    text-align: left;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .qa-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    transition: border-color 0.25s;
+  }
+  .qa-card:hover { border-color: var(--blue); }
+  .qa-card-num { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; margin-bottom: 10px; }
+  .qa-card-q   { font-size: 14px; font-weight: 600; color: #f0f6ff; line-height: 1.5; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .slide { padding: 48px 20px 72px; }
+    .two-col, .arch-two-col, .three-col, .qa-prompts { grid-template-columns: 1fr; }
+    .nav-dots { display: none; }
+    .tasks-row { flex-wrap: wrap; }
+    .arch-stat-row { flex-wrap: wrap; }
+    .arch-stat { min-width: calc(50% - 8px); }
+  }
+
+  /* ===== PRINT STYLES ===== */
+  @media print {
+    .nav-dots { display: none; }
+    .slide { min-height: auto; page-break-after: always; padding: 40px 32px; }
+    .slide:last-of-type { page-break-after: auto; }
+    .fade-in { opacity: 1; transform: none; }
+    body { background: #fff; color: #111; }
+    .cover-tag, .badge, .arch-badge, .roadmap-version { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .slide-footer { position: static; margin-top: 20px; }
+    #s1 { background: #0a0e1a; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots" aria-label="Slide navigation">
+  <div class="nav-dot active" data-target="s1" title="Cover"></div>
+  <div class="nav-dot" data-target="s2" title="Problem"></div>
+  <div class="nav-dot" data-target="s3" title="Vision"></div>
+  <div class="nav-dot" data-target="s4" title="Demo Scenario"></div>
+  <div class="nav-dot" data-target="s5" title="Architecture"></div>
+  <div class="nav-dot" data-target="s6" title="Live Demo"></div>
+  <div class="nav-dot" data-target="s7" title="Roadmap"></div>
+  <div class="nav-dot" data-target="s8" title="Q&A"></div>
+</nav>
+
+<!-- ===================== SLIDE 1 — COVER ===================== -->
+<section class="slide" id="s1">
+  <div class="slide-inner" style="position:relative;z-index:1;">
+    <div class="fade-in" style="display:flex;flex-direction:column;align-items:center;gap:0;">
+      <div class="cover-tag"><span class="cover-dot"></span> Internal Sharing · 内部分享</div>
+      <h1 class="cover-title">Synapse Digital Twin<br>Collaboration Platform</h1>
+      <p class="cover-subtitle-zh">数字孪生协作平台 — MVP 演示</p>
+      <div class="cover-badges">
+        <span class="badge badge-version">v0.3.0 MVP</span>
+        <span class="badge badge-date">2026-04-29</span>
+        <span class="badge badge-internal">Internal Only · 内部</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Synapse Digital Twin Platform v0.3.0 · Internal · 2026-04-29</div>
+</section>
+
+<!-- ===================== SLIDE 2 — PROBLEM ===================== -->
+<section class="slide" id="s2">
+  <div class="slide-inner">
+    <div class="fade-in">
+      <div class="slide-num">02 / 08</div>
+      <h2 class="slide-title">我们在解决什么问题</h2>
+      <p class="slide-title-en">The Problem We're Solving</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="two-col fade-in">
+      <!-- LEFT: TODAY -->
+      <div class="problem-col today">
+        <div class="col-header">
+          <div class="col-icon red">😩</div>
+          <div>
+            <div class="col-label-zh">今天的协作方式</div>
+            <div class="col-label-en">Today's Reality</div>
+          </div>
+        </div>
+        <ul class="problem-list">
+          <li class="problem-item">
+            <span class="icon">🔀</span>
+            <div>
+              <div class="text-zh">每人用不同工具</div>
+              <div class="text-en">Everyone on different tools</div>
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="icon">🗂️</span>
+            <div>
+              <div class="text-zh">信息分散，无法追溯</div>
+              <div class="text-en">Scattered information, no traceability</div>
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="icon">🌐</span>
+            <div>
+              <div class="text-zh">语言壁垒消耗精力</div>
+              <div class="text-en">Language barriers drain energy</div>
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="icon">⏳</span>
+            <div>
+              <div class="text-zh">等待审批，串行阻塞</div>
+              <div class="text-en">Waiting for approvals, serial blocking</div>
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="icon">📉</span>
+            <div>
+              <div class="text-zh">跨团队协作效率低</div>
+              <div class="text-en">Low cross-team collaboration efficiency</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: TARGET -->
+      <div class="problem-col target">
+        <div class="col-header">
+          <div class="col-icon green">🚀</div>
+          <div>
+            <div class="col-label-zh">我们要的</div>
+            <div class="col-label-en">The Target State</div>
+          </div>
+        </div>
+        <ul class="problem-list">
+          <li class="problem-item">
+            <span class="icon">🪞</span>
+            <div>
+              <div class="text-zh">每人有专属 AI 镜像</div>
+              <div class="text-en">Everyone has a personal AI twin</div>
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="icon">🤖</span>
+            <div>
+              <div class="text-zh">Agent 间自动拆解任务、传递结果</div>
+              <div class="text-en">Agents decompose &amp; route automatically</div>
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="icon">🔤</span>
+            <div>
+              <div class="text-zh">语言透明，无感切换</div>
+              <div class="text-en">Language-transparent, zero-friction</div>
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="icon">⚡</span>
+            <div>
+              <div class="text-zh">异步审批，不阻塞工作流</div>
+              <div class="text-en">Async approvals, non-blocking workflow</div>
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="icon">📈</span>
+            <div>
+              <div class="text-zh">极高效率，专注高价值工作</div>
+              <div class="text-en">10x efficiency, focus on high-value work</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Synapse Digital Twin Platform v0.3.0 · Internal · 2026-04-29</div>
+</section>
+
+<!-- ===================== SLIDE 3 — VISION ===================== -->
+<section class="slide" id="s3">
+  <div class="slide-inner">
+    <div class="fade-in">
+      <div class="slide-num">03 / 08</div>
+      <h2 class="slide-title">产品愿景</h2>
+      <p class="slide-title-en">Product Vision</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="vision-statement fade-in">
+      <div class="zh">"每个人都有一个了解自己的 AI 镜像"</div>
+      <div class="en">Everyone deserves an AI twin that truly understands them</div>
+    </div>
+
+    <div class="three-col fade-in">
+      <div class="pillar-card p1">
+        <div class="pillar-emoji">🪞</div>
+        <div class="pillar-title-zh">个人镜像</div>
+        <div class="pillar-title-en">Personal Twin</div>
+        <div class="pillar-desc">Agent 了解你的角色、偏好语言和工作方式，代表你在协作网络中行动。知道你习惯英文沟通还是中文沟通，知道什么需要你亲自决策。</div>
+      </div>
+      <div class="pillar-card p2">
+        <div class="pillar-emoji">🤝</div>
+        <div class="pillar-title-zh">Agent 协作</div>
+        <div class="pillar-title-en">Agent Collaboration</div>
+        <div class="pillar-desc">Agent 之间自动拆解任务、传递结果、发起审批。老板的一句话，变成多团队并行的协作流程，无需人工中转。</div>
+      </div>
+      <div class="pillar-card p3">
+        <div class="pillar-emoji">🌐</div>
+        <div class="pillar-title-zh">语言透明</div>
+        <div class="pillar-title-en">Language Transparent</div>
+        <div class="pillar-desc">老板说英文 → PM 收到中文 → 老板看到英文结果。语言不再是壁垒，每个人用自己最自然的语言工作。</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Synapse Digital Twin Platform v0.3.0 · Internal · 2026-04-29</div>
+</section>
+
+<!-- ===================== SLIDE 4 — DEMO SCENARIO ===================== -->
+<section class="slide" id="s4">
+  <div class="slide-inner">
+    <div class="fade-in">
+      <div class="slide-num">04 / 08</div>
+      <h2 class="slide-title">核心场景演示</h2>
+      <p class="slide-title-en">Demo Scenario — Meeting Organization</p>
+      <div class="divider"></div>
+    </div>
+
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;" class="fade-in">
+      <div style="text-align:center;font-size:13px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;">
+        会议组织场景 / Meeting Organization Flow
+      </div>
+
+      <!-- Row 1: Boss -->
+      <div class="flow-container">
+        <div class="flow-row">
+          <div class="flow-box boss">
+            <div class="fb-label">Step 1</div>
+            <div class="fb-name">老板</div>
+            <div class="fb-sub">Boss</div>
+            <div class="fb-lang lang-en">EN</div>
+          </div>
+          <div class="flow-arrow"><span>→</span></div>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.2);border-radius:8px;padding:10px 14px;min-width:200px;">
+            <div style="font-size:10px;font-weight:700;color:var(--blue);letter-spacing:1px;margin-bottom:4px;">SLACK DM 💬</div>
+            <div style="font-size:13px;color:#e2e8f0;font-style:italic;">"Organize Q2 kick-off meeting for next Friday"</div>
+          </div>
+          <div class="flow-arrow"><span>→</span></div>
+          <div class="flow-box agent">
+            <div class="fb-label">Step 2</div>
+            <div class="fb-name">Boss Agent</div>
+            <div class="fb-sub">任务拆解</div>
+          </div>
+        </div>
+
+        <div class="flow-down">↓</div>
+
+        <!-- Row 2: Task decomposition -->
+        <div class="tasks-row">
+          <div class="flow-box task">
+            <div class="fb-label">子任务</div>
+            <div class="fb-name" style="font-size:12px;">PM 任务</div>
+            <div class="fb-sub">议程 &amp; 邀请</div>
+          </div>
+          <div class="flow-box task">
+            <div class="fb-label">子任务</div>
+            <div class="fb-name" style="font-size:12px;">行政任务</div>
+            <div class="fb-sub">会议室预订</div>
+          </div>
+          <div class="flow-box task">
+            <div class="fb-label">子任务</div>
+            <div class="fb-name" style="font-size:12px;">IT 任务</div>
+            <div class="fb-sub">视频系统配置</div>
+          </div>
+        </div>
+
+        <div class="flow-down">↓</div>
+
+        <!-- Row 3: PM Agent -->
+        <div class="flow-row">
+          <div class="flow-box pm">
+            <div class="fb-label">Step 3</div>
+            <div class="fb-name">PM Agent</div>
+            <div class="fb-sub">生成中文草稿</div>
+            <div class="fb-lang lang-zh">ZH</div>
+          </div>
+          <div class="flow-arrow"><span>→</span></div>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:8px;padding:10px 14px;min-width:200px;">
+            <div style="font-size:10px;font-weight:700;color:var(--green);letter-spacing:1px;margin-bottom:4px;">SLACK DM 💬</div>
+            <div style="font-size:13px;color:#e2e8f0;">会议草稿已生成<br><span style="font-size:11px;color:var(--text-muted);">附 [✅ 批准] 按钮</span></div>
+          </div>
+          <div class="flow-arrow"><span>→</span></div>
+          <div class="flow-box pm">
+            <div class="fb-label">Step 4</div>
+            <div class="fb-name">PM 审批</div>
+            <div class="fb-sub">点击 ✅ 批准</div>
+          </div>
+        </div>
+
+        <div class="flow-down">↓</div>
+
+        <!-- Row 4: Result -->
+        <div class="flow-row">
+          <div class="flow-box done">
+            <div class="fb-label">Step 5 ✅</div>
+            <div class="fb-name">老板收到结果</div>
+            <div class="fb-sub">英文报告 · 原始 thread</div>
+            <div class="fb-lang lang-en">EN</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Synapse Digital Twin Platform v0.3.0 · Internal · 2026-04-29</div>
+</section>
+
+<!-- ===================== SLIDE 5 — ARCHITECTURE ===================== -->
+<section class="slide" id="s5">
+  <div class="slide-inner">
+    <div class="fade-in">
+      <div class="slide-num">05 / 08</div>
+      <h2 class="slide-title">技术架构</h2>
+      <p class="slide-title-en">Technical Architecture</p>
+      <div class="divider"></div>
+    </div>
+
+    <div style="background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.15);border-radius:8px;padding:12px 20px;margin-bottom:24px;font-size:13px;color:var(--text-muted);" class="fade-in">
+      建在现有 v0.2.1 地基上，激活了已有类型层 — Built on the v0.2.1 foundation, activating the existing type layer
+    </div>
+
+    <div class="arch-two-col fade-in">
+      <!-- LEFT: EXISTED -->
+      <div class="arch-col existed">
+        <div class="arch-col-header">
+          <span class="arch-badge old">v0.2.1 已有</span>
+          <div>
+            <div class="arch-col-title">已有地基</div>
+            <div class="arch-col-sub">Existing Foundation</div>
+          </div>
+        </div>
+        <div class="arch-item old">
+          <span class="arch-item-icon">🗂️</span>
+          <div>
+            <div class="arch-item-name">Case FSM</div>
+            <div class="arch-item-desc">案例状态机 · Finite State Machine</div>
+          </div>
+        </div>
+        <div class="arch-item old">
+          <span class="arch-item-icon">🤖</span>
+          <div>
+            <div class="arch-item-name">PMAgent</div>
+            <div class="arch-item-desc">PM 智能体核心 · PM Agent Core</div>
+          </div>
+        </div>
+        <div class="arch-item old">
+          <span class="arch-item-icon">🔍</span>
+          <div>
+            <div class="arch-item-name">IntakeClassifier</div>
+            <div class="arch-item-desc">请求分类器 · Request Classifier</div>
+          </div>
+        </div>
+        <div class="arch-item old">
+          <span class="arch-item-icon">💬</span>
+          <div>
+            <div class="arch-item-name">Slack Bot</div>
+            <div class="arch-item-desc">Slack 通知 &amp; 交互层 · Notification layer</div>
+          </div>
+        </div>
+        <div class="arch-item old">
+          <span class="arch-item-icon">✅</span>
+          <div>
+            <div class="arch-item-name">273 Tests</div>
+            <div class="arch-item-desc">完整测试套件 · Full test suite</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: NEW -->
+      <div class="arch-col added">
+        <div class="arch-col-header">
+          <span class="arch-badge new">v0.3.0 新增</span>
+          <div>
+            <div class="arch-col-title">新增组件</div>
+            <div class="arch-col-sub">New in This Release</div>
+          </div>
+        </div>
+        <div class="arch-item new">
+          <span class="arch-item-icon">👤</span>
+          <div>
+            <div class="arch-item-name">UserService</div>
+            <div class="arch-item-desc">人员注册表 · User registry with language prefs</div>
+          </div>
+        </div>
+        <div class="arch-item new">
+          <span class="arch-item-icon">👔</span>
+          <div>
+            <div class="arch-item-name">BossAgent</div>
+            <div class="arch-item-desc">任务分解引擎 · Task decomposition engine</div>
+          </div>
+        </div>
+        <div class="arch-item new">
+          <span class="arch-item-icon">🔀</span>
+          <div>
+            <div class="arch-item-name">HandoffService</div>
+            <div class="arch-item-desc">Agent 路由 · Inter-agent routing &amp; handoff</div>
+          </div>
+        </div>
+        <div class="arch-item new">
+          <span class="arch-item-icon">⚡</span>
+          <div>
+            <div class="arch-item-name">ApprovalService</div>
+            <div class="arch-item-desc">审批引擎 · Async approval engine with Slack actions</div>
+          </div>
+        </div>
+        <div class="arch-item new">
+          <span class="arch-item-icon">🌐</span>
+          <div>
+            <div class="arch-item-name">Language Router</div>
+            <div class="arch-item-desc">双语翻译层 · EN/ZH automatic translation layer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-stat-row fade-in">
+      <div class="arch-stat">
+        <div class="arch-stat-num">273+</div>
+        <div class="arch-stat-lbl">Unit Tests · 单元测试</div>
+      </div>
+      <div class="arch-stat">
+        <div class="arch-stat-num">4</div>
+        <div class="arch-stat-lbl">New Services · 新服务</div>
+      </div>
+      <div class="arch-stat">
+        <div class="arch-stat-num">E2E</div>
+        <div class="arch-stat-lbl">2-User End-to-End · 端到端</div>
+      </div>
+      <div class="arch-stat">
+        <div class="arch-stat-num">EN/ZH</div>
+        <div class="arch-stat-lbl">Bilingual · 双语支持</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Synapse Digital Twin Platform v0.3.0 · Internal · 2026-04-29</div>
+</section>
+
+<!-- ===================== SLIDE 6 — LIVE DEMO ===================== -->
+<section class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="fade-in">
+      <div class="slide-num">06 / 08</div>
+    </div>
+
+    <div class="demo-hero fade-in">
+      <div class="demo-icon">💻</div>
+      <div class="demo-headline">Live Demo</div>
+      <div class="demo-sub">实时演示 · 请跟着步骤走</div>
+    </div>
+
+    <div class="checklist fade-in">
+      <div class="checklist-title">Demo Script Checklist · 演示步骤</div>
+
+      <div class="checklist-item">
+        <div class="check-box"></div>
+        <div>
+          <div class="checklist-item-text">Boss sends meeting organization request in English</div>
+          <div class="checklist-item-sub">老板通过 Slack 用英文发送会议组织请求</div>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-box"></div>
+        <div>
+          <div class="checklist-item-text">BossAgent decomposes task → routes to PM</div>
+          <div class="checklist-item-sub">BossAgent 自动拆解任务 → 路由至 PM Agent</div>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-box"></div>
+        <div>
+          <div class="checklist-item-text">PM receives Chinese draft with Approve button in DM</div>
+          <div class="checklist-item-sub">PM 在 Slack DM 收到中文草稿 + [✅ 批准] 按钮</div>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-box"></div>
+        <div>
+          <div class="checklist-item-text">PM clicks Approve</div>
+          <div class="checklist-item-sub">PM 点击批准按钮，审批完成</div>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-box"></div>
+        <div>
+          <div class="checklist-item-text">Boss receives English result in original thread</div>
+          <div class="checklist-item-sub">老板在原始 thread 收到英文结果报告 ✅</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Synapse Digital Twin Platform v0.3.0 · Internal · 2026-04-29</div>
+</section>
+
+<!-- ===================== SLIDE 7 — ROADMAP ===================== -->
+<section class="slide" id="s7">
+  <div class="slide-inner">
+    <div class="fade-in">
+      <div class="slide-num">07 / 08</div>
+      <h2 class="slide-title">路线图</h2>
+      <p class="slide-title-en">Product Roadmap</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="three-col fade-in">
+      <!-- v0.3.x -->
+      <div class="roadmap-col current">
+        <div class="roadmap-version">v0.3.x</div>
+        <div class="roadmap-title">MVP 验证</div>
+        <div class="roadmap-sub">MVP Validation · 当前阶段 · Now</div>
+        <div class="roadmap-divider"></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>会议组织场景端到端<br><span style="font-size:11px;color:var(--text-dim);">Meeting org E2E scenario</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>2 用户角色 (Boss + PM)<br><span style="font-size:11px;color:var(--text-dim);">2-user E2E (Boss + PM)</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>EN / ZH 双语支持<br><span style="font-size:11px;color:var(--text-dim);">EN/ZH bilingual support</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>Slack 异步审批<br><span style="font-size:11px;color:var(--text-dim);">Async Slack approval flow</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>Bug 修复 &amp; 稳定性<br><span style="font-size:11px;color:var(--text-dim);">Stability &amp; bug fixes</span></div></div>
+      </div>
+
+      <!-- v0.4.0 -->
+      <div class="roadmap-col next">
+        <div class="roadmap-version">v0.4.0</div>
+        <div class="roadmap-title">角色扩展</div>
+        <div class="roadmap-sub">Role Expansion · 下一阶段 · Next</div>
+        <div class="roadmap-divider"></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>更多角色 Agent<br><span style="font-size:11px;color:var(--text-dim);">HR / Finance / Admin agents</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>个人记忆服务<br><span style="font-size:11px;color:var(--text-dim);">Personal memory service</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>多语言完整支持<br><span style="font-size:11px;color:var(--text-dim);">Full EN / ZH / RU support</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>跨场景任务流<br><span style="font-size:11px;color:var(--text-dim);">Multi-scenario task flows</span></div></div>
+      </div>
+
+      <!-- v0.5.0 -->
+      <div class="roadmap-col future">
+        <div class="roadmap-version">v0.5.0</div>
+        <div class="roadmap-title">全公司部署</div>
+        <div class="roadmap-sub">Company-wide Rollout · 未来 · Future</div>
+        <div class="roadmap-divider"></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>Web Dashboard<br><span style="font-size:11px;color:var(--text-dim);">Full web management UI</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>全公司部署<br><span style="font-size:11px;color:var(--text-dim);">Company-wide deployment</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>外部客户场景<br><span style="font-size:11px;color:var(--text-dim);">External client scenarios</span></div></div>
+        <div class="roadmap-feature"><div class="rf-dot"></div><div>Analytics &amp; 洞察<br><span style="font-size:11px;color:var(--text-dim);">Usage analytics &amp; insights</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Synapse Digital Twin Platform v0.3.0 · Internal · 2026-04-29</div>
+</section>
+
+<!-- ===================== SLIDE 8 — Q&A ===================== -->
+<section class="slide" id="s8">
+  <div class="slide-inner">
+    <div class="fade-in">
+      <div class="slide-num">08 / 08</div>
+    </div>
+    <div class="fade-in">
+      <div class="qa-hero">Q&A</div>
+      <div class="qa-sub">开放讨论 · Open Discussion</div>
+    </div>
+    <div class="qa-prompts fade-in">
+      <div class="qa-card">
+        <div class="qa-card-num">PROMPT 01</div>
+        <div class="qa-card-q">你的岗位最需要哪种 AI 镜像能力？<br><span style="font-size:12px;color:var(--text-muted);font-weight:400;">What AI twin capability matters most for your role?</span></div>
+      </div>
+      <div class="qa-card">
+        <div class="qa-card-num">PROMPT 02</div>
+        <div class="qa-card-q">哪个跨团队协作场景最让你头疼？<br><span style="font-size:12px;color:var(--text-muted);font-weight:400;">Which cross-team collaboration pain point hurts most?</span></div>
+      </div>
+      <div class="qa-card">
+        <div class="qa-card-num">PROMPT 03</div>
+        <div class="qa-card-q">对个人记忆功能有什么期待？<br><span style="font-size:12px;color:var(--text-muted);font-weight:400;">What do you expect from the personal memory feature?</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">Synapse Digital Twin Platform v0.3.0 · Internal · 2026-04-29</div>
+</section>
+
+<!-- ===================== VANILLA JS: FADE-IN + NAV DOTS ===================== -->
+<script>
+(function() {
+  // Fade-in on scroll via IntersectionObserver
+  var els = document.querySelectorAll('.fade-in');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el) { io.observe(el); });
+
+  // Nav dot active state
+  var slides = document.querySelectorAll('.slide');
+  var dots   = document.querySelectorAll('.nav-dot');
+  var sio = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting && e.intersectionRatio > 0.4) {
+        var id = e.target.id;
+        dots.forEach(function(d) { d.classList.remove('active'); });
+        var active = document.querySelector('[data-target="' + id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  slides.forEach(function(s) { sio.observe(s); });
+
+  // Nav dot click scroll
+  dots.forEach(function(d) {
+    d.addEventListener('click', function() {
+      var t = document.getElementById(d.dataset.target);
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+</body>
+</html>

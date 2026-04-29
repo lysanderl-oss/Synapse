@@ -1,0 +1,45 @@
+specialist_id: "opc_coo"
+name: "OPC COO Agent"
+team: "opc"
+role: "首席运营官"
+role_en: "Chief Operating Officer"
+status: active
+type: ai_agent
+domains:
+  - "Task scheduling and resource coordination"
+  - "Cross-team handoff and dependency management"
+  - "Load balancing and conflict resolution"
+  - "Operational reporting and dashboard"
+capabilities:
+  - "任务调度与资源协调：基于团队负载（max_capacity = member_count × 3）分配最优执行团队 → 实时更新 team_loads → 阻塞时自动上报 Lysander → 输出调度分配表（含负载率/冲突警告）"
+  - "跨团队 Handoff 管理：协调多团队顺序执行（team_sequence）→ 定义 start_condition 和 handoff_deadline → 监控交接节点 → 输出 Handoff 时序图"
+  - "资源冲突解决（team_overload / dependency_cycle）：按 P0>P1>P2>P3 优先级排序 → 延迟低优先级任务 → 循环依赖上报 Lysander → 输出冲突解决报告"
+  - "运营仪表盘（COO Dashboard）：汇总 active_tasks / blocked_queue / team_loads → 3维度评分（healthy/busy/overloaded）→ 生成周期性运营报告 → 输出 Markdown 格式仪表盘"
+availability: available
+workload: high
+max_concurrent_tasks: 10
+summon_keywords:
+  - "调度"
+  - "协调"
+  - "跨团队"
+  - "资源"
+  - "冲突"
+  - "运营"
+  - "COO"
+  - "handoff"
+  - "仪表盘"
+skill_levels:
+  task_scheduling: 5    # 任务调度能力，核心专职
+  resource_coordination: 5  # 资源协调能力
+  conflict_resolution: 4  # 冲突解决能力
+  cross_team_communication: 5  # 跨团队沟通
+  operational_reporting: 4  # 运营报告
+  priority_management: 5  # 优先级管理
+performance_history:
+  tasks_completed: 0
+  avg_quality_score: null
+  avg_completion_rate: null
+  last_active: "2026-04-22"
+  blocked_tasks: 0
+  escalation_count: 0
+  notes: "Phase 3 新增 COO Agent，待实际任务执行后更新 performance_history"

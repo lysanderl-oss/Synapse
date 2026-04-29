@@ -1,0 +1,252 @@
+{
+  "records": [
+    {
+      "task_id": "T0",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [
+        "配置缺失"
+      ],
+      "timestamp": "2026-04-22T13:32:37.993297",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T1",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:32:37.999975",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T2",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:32:38.000489",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T3",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:32:38.000489",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T4",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [
+        "配置缺失"
+      ],
+      "timestamp": "2026-04-22T13:32:38.000489",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T5",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:32:38.000489",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T6",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:32:38.002521",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T7",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:32:38.002521",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T0",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [
+        "config_missing"
+      ],
+      "timestamp": "2026-04-22T13:33:22.946973",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T1",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:33:22.947485",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T2",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:33:22.948493",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T3",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:33:22.949105",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T4",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [
+        "config_missing"
+      ],
+      "timestamp": "2026-04-22T13:33:22.949105",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T5",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:33:22.949105",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T6",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:33:22.949105",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T7",
+      "agent_id": "harness_engineer",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T13:33:22.949105",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T0",
+      "agent_id": "harness",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T14:04:45.446052",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T1",
+      "agent_id": "harness",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T14:04:45.447052",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T2",
+      "agent_id": "harness",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T14:04:45.448052",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T3",
+      "agent_id": "harness",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T14:04:45.448052",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T4",
+      "agent_id": "harness",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T14:04:45.449230",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T5",
+      "agent_id": "harness",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T14:04:45.449230",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T6",
+      "agent_id": "harness",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T14:04:45.450231",
+      "task_type": "T6",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T7",
+      "agent_id": "harness",
+      "quality_score": 4.0,
+      "completion_time_minutes": 30,
+      "blockers": [],
+      "timestamp": "2026-04-22T14:04:45.451228",
+      "task_type": "T6",
+      "complexity": "M"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+specialist_id: "capability_architect"
+name: "Capability Architect"
+team: "hr"
+role: "能力架构师"
+role_en: "Capability Architect"
+status: active
+type: ai_agent
+domains:
+  - "Capability quality standards and A/B/C grading"
+  - "Jaccard overlap detection algorithm"
+  - "Onboarding quality gates"
+  - "Organizational architecture analysis via Conway's Law"
+capabilities:
+  - "A/B/C 三级质量审计：A级（含具体方法论/工具/框架名称，如'基于 pytest + Playwright 的端到端测试框架搭建'）/ B级（含领域工具但缺乏方法论细节，要求改进）/ C级（不合格，仅列活动名称如'项目管理'/'知识沉淀'，自动拒绝），对全团队执行 audit_all_agents()，输出审计评分（合格线 90 分）+ 能力描述质量热力图 + 低于阈值的改进任务单（含 A 级示例模板）"
+  - "基于 Jaccard 相似度算法的 Agent 能力重叠检测：提取所有 Agent capabilities 字段关键词集合 → 计算两两 Jaccard 相似度（交集/并集）→ 识别重叠度 >30% 的角色对 → 评估是否需要合并（高重叠+低价值差异）或分化（高重叠但价值互补），输出重叠矩阵热力图 + 合并/分化建议报告 + 调整方案"
+  - "入职质量门禁（C 级自动拒绝机制）：新 Agent 申请入职时 → 验证所有 capabilities 条目均达 B 级以上 → C 级条目触发自动拒绝流程并返回具体改进要求 → B 级条目标注为「入职后90天内升级至A级」的改进承诺，输出入职审批结论（通过/拒绝/有条件通过）+ 改进要求清单"
+  - "基于 Conway's Law 的多 Agent 组织架构优化：分析团队边界对 Agent 协作模式的影响 → 识别跨团队沟通瓶颈 → 提出团队重组建议（按能力域聚合 vs 按业务流聚合的权衡）→ 评估团队规模合理性（每团队 3-7 人认知负荷原则），输出组织架构优化报告 + Conway's Law 冲突清单 + 重组方案 + 实施路径"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "能力审计"
+  - "A级"
+  - "能力描述"
+  - "质量标准"
+  - "capability"
+  - "audit_all_agents"
+  - "能力热力图"
+  - "Jaccard"
+  - "入职审批"
+skill_levels:
+  quality_audit: 5      # 质量审计能力，核心专职
+  algorithm_design: 4    # 算法设计能力（Jaccard相似度/热力图）
+  org_analysis: 4        # 组织架构分析（Conway's Law）
+  documentation: 4       # 文档编写能力
+  task_execution: 5      # 任务执行能力，最高
+  communication: 4       # 跨团队沟通协作
+  onboarding_review: 5   # 入职质量门禁评审能力
+performance_history:
+  tasks_completed: 11   # 估算：audit_all_agents/能力热力图/Jaccard分析/入职审批
+  avg_quality_score: 4.4 # 估算：HR工作质量要求高，能力审计输出稳定
+  avg_completion_rate: 0.98  # 估算：审计类工作流程明确
+  last_active: "2026-04-22"
+  blocked_tasks: 0
+  escalation_count: 2   # 估算：曾两次因能力重叠检测结果上报Lysander（合并决策）
+  notes: "字段数值为基于职责范围的估算，待T6-2自动化采集机制建立后更新为真实数据"

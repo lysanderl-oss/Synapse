@@ -1,0 +1,11 @@
+2.4.0
+# PMO Auto subsystem version
+# v2.4.0 (2026-04-26): V2.4 GA — Webhook覆盖数据修正 + WF-09告警修复 (BUG-V24-001/002/003/004)
+# v2.3.0 (2026-04-25): V2.3 GA — WF-02 DNS修复 + WBS assignee全角色映射修复 (BUG-0425-001/002)
+# v2.2.0 (2026-04-24): V2.2 GA — Webhook监控面板 + WF-09自动告警 + git部署升级 (REQ-013/014/006)
+# v2.1.0 (2026-04-24): V2.1 GA — REQ-002(L3/L4覆盖率统计) + REQ-004(WF-06幂等去重修复) + REQ-012(WBS全链路E2E验证通过)
+# v2.0.3 (2026-04-24): WF-05 OOM 修复 — n8n runner 堆内存 4096MB (REQ-012-D-01)
+# v2.0.2 (skipped): 预留给 REQ-012-TC-01 方法论升级（无代码变更，未独立打 tag）
+# v2.0.1 (2026-04-24): SSL 补丁 — pmo-api.lysander.bond HTTPS 上线 (REQ-010)
+# v2.0.0-ga (2026-04-23): 正式发布 GA
+# See CHANGELOG for release notes

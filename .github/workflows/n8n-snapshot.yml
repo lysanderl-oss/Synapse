@@ -1,0 +1,91 @@
+name: n8n Workflow Snapshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 1 * * *'  # UTC 01:00 = Dubai 05:00（避开情报管线时段）
+
+permissions:
+  contents: write
+
+concurrency:
+  group: n8n-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run snapshot exporter
+        env:
+          N8N_API_KEY: ${{ secrets.N8N_API_KEY }}
+          PYTHONIOENCODING: utf-8
+        run: |
+          MAX_ATTEMPTS=3
+          RETRY_WAIT=60
+          ATTEMPT=1
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            echo "[Retry] Attempt $ATTEMPT/$MAX_ATTEMPTS"
+            if python scripts/n8n/export_workflows.py; then
+              echo "[Retry] Success on attempt $ATTEMPT"
+              break
+            fi
+            ATTEMPT=$((ATTEMPT + 1))
+            if [ $ATTEMPT -le $MAX_ATTEMPTS ]; then
+              echo "[Retry] Wait $RETRY_WAIT s"
+              sleep $RETRY_WAIT
+            fi
+          done
+
+      - name: Commit snapshots if changed
+        run: |
+          git config user.name "synapse-snapshot-bot"
+          git config user.email "noreply@anthropic.com"
+
+          if [[ -z $(git status --porcelain harness/n8n-snapshots/) ]]; then
+            echo "[Snapshot] No changes detected"
+            exit 0
+          fi
+
+          git add harness/n8n-snapshots/
+          git commit -m "chore(n8n): daily workflow snapshot $(date -u +%Y-%m-%d)"
+
+          # Retry push（防并发）
+          MAX_PUSH=3
+          for i in $(seq 1 $MAX_PUSH); do
+            if git push origin main; then
+              echo "[Push] Success on attempt $i"
+              exit 0
+            fi
+            echo "[Push] Attempt $i failed, pulling..."
+            git pull --rebase origin main
+            sleep 5
+          done
+          echo "[Push] All attempts failed"
+          exit 1
+
+      - name: Notify failure via Slack
+        if: failure()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping"
+            exit 0
+          fi
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d '{"text":"⚠️ n8n-snapshot 管线失败 — n8n workflow snapshot failed","run_url":"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}'

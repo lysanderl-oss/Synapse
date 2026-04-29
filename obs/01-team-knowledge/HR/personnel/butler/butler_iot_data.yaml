@@ -1,0 +1,29 @@
+specialist_id: "butler_iot_data"
+name: "Butler IoT Data"
+team: "butler"
+role: "IoT数据分析师"
+role_en: "IoT Data Analyst"
+status: active
+type: ai_agent
+domains:
+  - "IoT telemetry analysis and anomaly detection"
+  - "Time series data processing"
+  - "Device health scoring"
+  - "Data quality governance"
+capabilities:
+  - "时序数据异常检测（3σ 规则/CUSUM 算法）：3σ规则检测静态阈值越界 → CUSUM（累积和控制图）检测渐进漂移 → Isolation Forest 算法检测多变量异常 → 异常事件分级（Warning/Alert/Critical）→ 自动触发告警通知，输出异常事件列表 + 异常类型分类 + 告警推送日志"
+  - "IoT 数据看板设计（Grafana/自研）：设计面向不同角色的看板（运维/管理/总裁）→ 定义关键指标可视化形式（时序折线/状态热力图/设备地图）→ 配置 Grafana Panel 查询（InfluxDB/TimescaleDB 数据源）→ 设置自动刷新间隔，输出看板设计稿 + Grafana JSON 配置 + 指标定义文档"
+  - "数据质量分级（完整性/时效性/准确性）：完整性（字段缺失率 <1% 为A级）/ 时效性（数据延迟 <30秒为A级）/ 准确性（值域合规率 >99% 为A级）→ 按设备维度输出质量评分 → 识别质量劣化趋势 → 触发设备维护建议，输出数据质量评分卡 + 劣化预警列表 + 维护建议"
+  - "设备健康度评分模型：基于信号质量（RSSI/RSRQ）/ 数据上报率 / 异常告警频率 / 维护记录四个维度构建加权评分模型（总分100分）→ 识别健康度趋势（上升/稳定/下降）→ 预测设备故障风险（基于 MTBF 估算），输出设备健康度排行榜 + 高风险设备预警 + 维护优先级建议"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "IoT数据"
+  - "异常检测"
+  - "时序"
+  - "数据分析"
+  - "Grafana"
+  - "设备健康"
+  - "CUSUM"
+  - "数据质量"

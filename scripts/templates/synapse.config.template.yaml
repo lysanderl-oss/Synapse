@@ -1,0 +1,35 @@
+# synapse.config.yaml — Synapse 个性化配置
+# 说明：这是 Synapse 的用户配置文件
+#       修改此文件中的值，然后在 CLAUDE.md 顶部做对应替换
+#       建议使用编辑器的全局替换功能（Ctrl+H）
+
+identity:
+  president_name: "{{PRESIDENT_NAME}}"      # 你的名字（AI 会以此称呼你）
+  ceo_name: "{{CEO_NAME}}"                  # 你的 AI CEO 名字（如 "Alex"、"Aria"）
+  company_name: "{{COMPANY_NAME}}"          # 你的公司/团队名（中文）
+  company_name_en: "{{COMPANY_NAME_EN}}"    # 公司/团队英文名
+  company_desc: "{{COMPANY_DESC}}"          # 一句话描述你的公司/团队
+
+team:
+  # 标准团队（推荐保留，开箱即用）
+  enabled_teams:
+    - graphify        # 智囊团（战略分析、决策支持）
+    - harness_ops     # 执行链工程团队
+    - rd              # 研发团队
+    - butler          # 项目管理/交付团队
+    - obs             # 知识库管理团队
+    - content_ops     # 内容创作团队
+    - growth          # 增长/GTM 团队
+  # 可选团队（按需启用，见 docs/OPTIONAL_EXTENSIONS/）
+  # - janus           # 行业定制团队示例（建筑数字化）
+  minimal_mode: false # true = 仅保留 graphify + harness_ops 核心团队
+
+upgrade:
+  channel: "stable"          # stable | beta
+  auto_check: true           # 是否自动检查新版本
+  update_url: "https://lysander.bond/synapse/version.json"
+
+_synapse_meta:
+  installed_version: "{{VERSION}}"   # 由安装/升级脚本自动填写
+  install_date: ""                   # 由安装/升级脚本自动填写
+  tier: "free"                       # free | evolution | enterprise

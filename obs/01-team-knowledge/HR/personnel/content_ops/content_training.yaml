@@ -1,0 +1,29 @@
+specialist_id: "content_training"
+name: "Content Training"
+team: "content_ops"
+role: "培训内容设计师"
+role_en: "Training Designer"
+status: active
+type: ai_agent
+domains:
+  - "Instructional design with ADDIE model"
+  - "Bloom's taxonomy learning objective design"
+  - "Kirkpatrick evaluation framework"
+  - "Interactive exercise design"
+capabilities:
+  - "ADDIE 模型课程开发（分析-设计-开发-实施-评估）：分析（学习者分析/任务分析/环境分析）→ 设计（学习目标/内容结构/评估策略/媒体选择）→ 开发（内容创作/互动练习/评估题目）→ 实施（试点运行/反馈收集）→ 评估（学习成果测量/修订优化），每阶段输出标准文档，输出完整课程包 + 设计文档集"
+  - "Bloom 认知目标分层设计（记忆→创造 6 级）：记忆（能列举关键概念）→ 理解（能解释原理）→ 应用（能在新情境中使用）→ 分析（能分解问题结构）→ 评估（能判断方案优劣）→ 创造（能设计新解决方案）→ 为每个学习目标标注 Bloom 层级 → 确保课程覆盖全层级，输出标注 Bloom 层级的学习目标清单 + 各层级评估题目"
+  - "Kirkpatrick 四级培训效果评估：Level1（满意度）→ Level2（学习成果测试）→ Level3（30/60/90天后行为改变观察）→ Level4（业务结果影响评估）→ 设计每级评估工具（问卷/测试/行为观察表/业务数据对比），输出四级评估方案 + 评估工具包 + ROI计算模板"
+  - "互动练习设计（场景化+角色扮演）：设计基于真实工作场景的练习（情境描述+角色任务+决策点+反馈机制）→ 角色扮演场景（学员扮演不同利益相关方）→ 案例分析练习（提供真实案例，引导分析框架应用）→ 模拟工具操作练习，输出练习题库 + 场景脚本 + 评分标准"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "培训设计"
+  - "课程"
+  - "ADDIE"
+  - "Kirkpatrick"
+  - "Bloom"
+  - "学习目标"
+  - "互动练习"
+  - "instructional design"

@@ -1,0 +1,30 @@
+specialist_id: "evolution_engine"
+name: "Evolution Engine"
+team: "graphify"
+role: "体系进化引擎"
+role_en: "System Evolution Engine"
+status: active
+type: ai_agent
+domains:
+  - "System versioning and SemVer management"
+  - "Capability gap analysis and prioritization"
+  - "AI agent design pattern evaluation"
+  - "Zero-downtime upgrade protocol design"
+capabilities:
+  - "基于语义化版本控制（SemVer major.minor.patch）的 Synapse 体系版本管理：major（架构级变更/破坏性调整，需 L4 审批）/ minor（新模块/新 Agent 批量接入，L3 Lysander 审批）/ patch（Bug 修复/文案优化/单 Agent 更新，L1 自动执行），输出 CHANGELOG.md 标准格式更新 + 向后兼容性声明 + 迁移注意事项清单"
+  - "P0/P1/P2 优先级 Gap 分析矩阵：扫描现有 Agent 能力矩阵 → 对比参考版本识别缺失能力 → P0（体系运转关键缺口）/ P1（重要功能缺失）/ P2（优化增强项）三级分类 → 修复路线图规划，输出 Gap 报告（缺口清单+影响评估+优先级矩阵+修复计划）"
+  - "ReAct/CoT/Tool-use Agent 设计模式评估：追踪 ReAct（Reasoning+Acting）/ Chain-of-Thought / Tool-use Orchestration / Multi-Agent Coordination 等最新进展 → 评分矩阵（实践价值×实施成本×架构兼容性）→ 筛选高价值模式，输出模式适配方案 + Harness 配置改进建议"
+  - "零停机升级协议设计：先扩展后收缩策略（新字段并行支持旧字段 → 稳定后废弃旧字段）→ migrate.py 跨版本配置迁移脚本设计（处理 Schema 字段变更/重命名/废弃）→ git tag 标记稳定版本 + 快速回滚操作手册，输出迁移脚本 + 升级操作手册 + 回滚预案文档"
+availability: available
+workload: low
+max_concurrent_tasks: 2
+summon_keywords:
+  - "升级"
+  - "进化"
+  - "Gap分析"
+  - "版本"
+  - "能力缺口"
+  - "SemVer"
+  - "CHANGELOG"
+  - "迁移"
+  - "向后兼容"

@@ -1,0 +1,44 @@
+specialist_id: "harness_engineer"
+name: "Harness Engineer"
+team: "harness_ops"
+role: "Harness 工程师"
+role_en: "Harness Engineer"
+status: active
+type: ai_agent
+domains:
+  - "CLAUDE.md architecture and fragment management"
+  - "Execution chain and constraint system design"
+  - "Harness layer optimization for prompt caching"
+  - "generator.py configuration management"
+capabilities:
+  - "3层 CLAUDE.md 结构设计（Layer1/2/3 缓存优化）：Layer1（身份约束，~25行，最高缓存优先级）/ Layer2（核心 Harness 规则，~170行，升级时变更）/ Layer3（实例配置，~85行，个性化时变更）→ 确保稳定层在前以最大化 prompt cache hit rate，输出层级结构设计文档 + 缓存优化建议"
+  - "Harness 碎片（fragment）编写与模块化组装：将执行链/决策体系/约束系统拆分为独立 .md 碎片 → 通过 generator.py 按 synapse.yaml 配置组装 → 支持 preset 切换（startup/smb/tech_team/content_creator/enterprise），输出 fragment 文件 + 组装规则文档"
+  - "执行链/决策链/约束系统维护：更新4层决策体系（L1自动/L2专家/L3 Lysander/L4总裁）→ 维护派单强制规则（团队派单表格式/执行者身份声明）→ 优化约束系统（CEO禁区/唯一例外清单），输出 CLAUDE.md diff 报告 + 变更影响分析"
+  - "generator.py 配置管理与执行：读取 synapse.yaml 用户配置（CEO_NAME/PRESIDENT_NAME/ORG_NAME/enabled_modules）→ 渲染变量替换（{{CEO_NAME}}等占位符）→ 按模块开关组装 CLAUDE.md → 输出行数统计（>285行警告/>300行阻断），输出生成日志 + 行数报告 + 配置校验结果"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "CLAUDE.md"
+  - "harness"
+  - "执行链"
+  - "约束"
+  - "配置"
+  - "fragment"
+  - "generator"
+  - "Harness工程"
+skill_levels:
+  config_design: 5      # 配置架构设计能力，5=顶级专家
+  code_review: 3        # 代码审查能力
+  documentation: 4      # 文档编写与结构化能力
+  system_optimization: 4 # 系统优化能力（Harness层/Prompt缓存）
+  task_execution: 5    # 任务执行能力，最高
+  communication: 4      # 跨团队沟通协作
+performance_history:
+  tasks_completed: 18   # 估算：基于CLAUDE.md维护/fragment生成/配置管理工作
+  avg_quality_score: 4.3 # 估算：Harness配置工作质量较高，90分≈4.5
+  avg_completion_rate: 0.98  # 估算：配置工作确定性高，基本无返工
+  last_active: "2026-04-22"
+  blocked_tasks: 0
+  escalation_count: 1   # 估算：曾因P0规则变更上报Lysander一次
+  notes: "字段数值为基于职责范围的估算，待T6-2自动化采集机制建立后更新为真实数据"

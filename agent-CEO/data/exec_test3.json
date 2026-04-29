@@ -1,0 +1,38 @@
+{
+  "records": [
+    {
+      "task_id": "T1",
+      "agent_id": "harness_eng",
+      "quality_score": 3.0,
+      "completion_time_minutes": 20,
+      "blockers": [
+        "config missing"
+      ],
+      "timestamp": "2026-04-22T20:11:56.169991",
+      "task_type": "T1",
+      "complexity": "M"
+    },
+    {
+      "task_id": "T2",
+      "agent_id": "rd_dev",
+      "quality_score": 2.8,
+      "completion_time_minutes": 30,
+      "blockers": [
+        "permission denied"
+      ],
+      "timestamp": "2026-04-22T20:11:56.169991",
+      "task_type": "T2",
+      "complexity": "L"
+    },
+    {
+      "task_id": "T3",
+      "agent_id": "qa_eng",
+      "quality_score": 2.5,
+      "completion_time_minutes": 15,
+      "blockers": [],
+      "timestamp": "2026-04-22T20:11:56.169991",
+      "task_type": "T3",
+      "complexity": "S"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "daily_budget": 50.0,
+  "alert_threshold": 0.8,
+  "warn_threshold": 0.6,
+  "records": [
+    {
+      "timestamp": "2026-04-22T13:35:41.407331",
+      "task_id": "DEMO-1",
+      "agent_id": "harness_engineer",
+      "tokens_used": 50000,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "input_cost_usd": 0.0,
+      "output_cost_usd": 0.0,
+      "cost_usd": 0.15,
+      "batch_discount_applied": false,
+      "task_value": 10.0,
+      "task_type": "S"
+    },
+    {
+      "timestamp": "2026-04-22T13:35:41.408907",
+      "task_id": "DEMO-2",
+      "agent_id": "capability_architect",
+      "tokens_used": 80000,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "input_cost_usd": 0.0,
+      "output_cost_usd": 0.0,
+      "cost_usd": 0.24,
+      "batch_discount_applied": false,
+      "task_value": 15.0,
+      "task_type": "M"
+    },
+    {
+      "timestamp": "2026-04-22T14:04:12.554049",
+      "task_id": "TEST",
+      "agent_id": "harness",
+      "tokens_used": 50000,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "input_cost_usd": 0.0,
+      "output_cost_usd": 0.0,
+      "cost_usd": 0.15,
+      "batch_discount_applied": false,
+      "task_value": 10.0,
+      "task_type": "unknown"
+    },
+    {
+      "timestamp": "2026-04-22T20:09:51.487729",
+      "task_id": "T6-1",
+      "agent_id": "harness_engineer",
+      "tokens_used": 50000,
+      "input_tokens": 45000,
+      "output_tokens": 5000,
+      "input_cost_usd": 0.135,
+      "output_cost_usd": 0.075,
+      "cost_usd": 0.21,
+      "batch_discount_applied": false,
+      "task_value": 10.0,
+      "task_type": "S"
+    },
+    {
+      "timestamp": "2026-04-22T20:09:51.489179",
+      "task_id": "T2-1",
+      "agent_id": "capability_architect",
+      "tokens_used": 150000,
+      "input_tokens": 145000,
+      "output_tokens": 5000,
+      "input_cost_usd": 0.435,
+      "output_cost_usd": 0.075,
+      "cost_usd": 0.459,
+      "batch_discount_applied": true,
+      "task_value": 15.0,
+      "task_type": "M"
+    }
+  ]
+}

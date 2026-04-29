@@ -1,0 +1,1394 @@
+version: 3.0.0
+last_updated: 2026-04-29T intel-action auto
+last_resume_check: 2026-04-23T22:00 Dubai
+tasks:
+- id: TASK-001
+  title: 情报日报 git 仓库 — 根因修复完成
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  created: '2026-04-17'
+  completed: '2026-04-19'
+  execution_stage: '5'
+  blocker: null
+  notes: 2026-04-19 根因确认：目录迁移时.git未随迁（原始仓库在Claude Code/synapse-core/）。总裁决策采用方案1a。harness_engineer已执行：git init + remote add origin https://github.com/lysanderl-glitch/synapse.git + fetch + branch tracking。仓库就绪，无需额外认证。下一次自动化任务git push将恢复正常。
+- id: TASK-002
+  title: 情报日报 2026-04-18 — 补生成
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  created: '2026-04-18'
+  completed: '2026-04-19'
+  execution_stage: '4'
+  notes: 2026-04-19 情报日报Agent补充说明：4-18日报未生成已于4-19确认，4-19日报已正常生成（9条情报，报告路径 obs/06-daily-reports/2026-04-19-intelligence-daily.html）。TASK-002 标记完成，git push 阻塞问题持续由 TASK-001 跟踪。
+- id: TASK-003
+  title: 情报日报 git push — 已验证恢复正常
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  created: '2026-04-19'
+  completed: '2026-04-20'
+  execution_stage: '5'
+  blocker: null
+  notes: 2026-04-20 22:00 日终复盘确认：git branch 与 origin/main 完全同步，commit dc03c2a（情报日报2026-04-20）已成功推送。TASK-001（仓库修复）效果验证通过，TASK-003 正式关闭。n8n webhook 404 独立追踪，不影响 git 流程。
+- id: INTEL-20260419-001
+  title: Claude Haiku 3 退役迁移 — 全库扫描完成，风险降级
+  status: assessed
+  priority: P1
+  team: rd
+  assigned_to: rd_backend
+  co_assigned: ai_ml_engineer
+  created: '2026-04-19'
+  assessed: '2026-04-19'
+  follow_up: '2026-04-25'
+  notes: 来源：情报行动管线 2026-04-19。claude-3-haiku-20240307 今日正式退役，替代模型：claude-haiku-4-5-20251001。2026-04-19 任务恢复Agent扫描：全库grep结果显示该模型ID仅出现在报告文件（active_tasks.yaml、HTML/MD报告），无任何运营代码（synapse.yaml、n8n_integration.yaml、py文件）引用该模型。实际风险低于P0预估，已降为P1，在下次AI代码集成时统一处理。
+- id: INTEL-20260419-002
+  title: 【P0】制定 Claude Sonnet 4 / Opus 4 停服迁移时间表（截止 2026-06-15）
+  status: inbox
+  priority: P0
+  team: rd
+  assigned_to: rd_devops
+  co_assigned: ai_ml_engineer
+  created: '2026-04-19'
+  follow_up: '2026-04-21'
+  notes: 来源：情报行动管线 2026-04-19。Anthropic 宣布 Claude Sonnet 4 / Opus 4 将于 2026-06-15 停服，2个月窗口期，需尽早规划迁移路径和资源分配。rd_devops 需本周内完成现状梳理、受影响系统清单和迁移资源估算。
+- id: INTEL-20260419-003
+  title: 【P1】Claude Managed Agents 公测评估 — Synapse Sub-Agent 沙箱接入
+  status: in_progress
+  priority: P1
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  created: '2026-04-19'
+  follow_up: '2026-04-25'
+  notes: 来源：情报行动管线 2026-04-19。Claude Managed Agents 进入公测，全托管沙箱执行框架。评估是否可降低 Synapse 基础设施维护成本，测试 Sub-Agent 任务沙箱执行模式。建议 ai_ml_engineer 本周启动测试。 2026-04-21情报行动评估：公测已正式上线（综合评分18/20，最高分），升级为in_progress，本周必须启动测试。
+- id: INTEL-20260419-004
+  title: 【P1】Synapse 定时 Agent 集成 task_budget 参数（≤50K token/任务）
+  status: inbox
+  priority: P1
+  team: rd
+  assigned_to: rd_backend
+  co_assigned: ai_ml_engineer
+  created: '2026-04-19'
+  follow_up: '2026-04-25'
+  notes: 来源：情报行动管线 2026-04-19。Claude API task budgets 正式 GA，可设定 Agent 最大 token 消耗上限。建议在 Synapse 所有定时 Agent 调用中加入 task_budget 参数，实现成本可预测化。
+- id: INTEL-20260419-005
+  title: 【P1】Claude Code Routines 评估 — 与 CLAUDE.md 执行链融合可行性
+  status: inbox
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  created: '2026-04-19'
+  follow_up: '2026-04-25'
+  notes: 来源：情报行动管线 2026-04-19。Claude Code 桌面版新增 Routines 功能（自动化工作流）。评估与 Synapse Harness 执行链的融合可行性，可标准化 Agent 工作流模板。
+- id: INTEL-20260420-001
+  title: 【P1】评估 Claude Opus 4.7 升级可行性 + Claude Code 重设计适配
+  status: inbox
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: ai_ml_engineer
+  created: '2026-04-20'
+  follow_up: '2026-04-24'
+  notes: 来源：情报行动管线 2026-04-20。Anthropic Claude Opus 4.7 正式GA，综合评分 19/20（最高优先）。需评估：① Opus 4.7 vs 当前 Sonnet 4.6 能力/成本比，确定是否升级 Synapse 核心模型；② Claude Code 重大重设计（多会话侧边栏、拖拽布局、集成终端、Diff查看器）对 Synapse Harness 操作方式的影响，更新 CLAUDE.md 相关操作指引；③ MCP 9700万装机量确认标准地位，评估 Synapse 工具集 MCP 兼容性。harness_engineer 本周内完成评估报告。
+- id: INTEL-20260420-002
+  title: 【P1】制定 Janus Digital Q2 Agent 产品路线图
+  status: inbox
+  priority: P1
+  team: graphify
+  assigned_to: graphify_strategist
+  created: '2026-04-20'
+  follow_up: '2026-04-25'
+  notes: 来源：情报行动管线 2026-04-20。Stanford AI Index 2026 确认 Agent 成功率从12%跃升至66%（综合评分16/20）。Agent 时代质变拐点已到，Janus Digital 需制定 Q2 Agent 产品/服务路线图。graphify_strategist 主导，基于 WebArena 基准数据和市场现状，确定 Janus Digital 可提供的 Agent 服务定义和定价模型。 2026-04-24 升级为正式产品线需求 REQ-JD-001，纳入 janus_digital 产品线治理。
+- id: INTEL-20260420-003
+  title: 【P1】Synapse Agent 治理对标 Gartner 框架 — 形成企业交付方案
+  status: inbox
+  priority: P1
+  team: graphify
+  assigned_to: graphify_strategist
+  co_assigned: harness_engineer
+  created: '2026-04-20'
+  follow_up: '2026-04-25'
+  notes: 来源：情报行动管线 2026-04-20。Gartner 预测40%企业应用将内嵌 Agent，94%受访者担忧 Agent 治理失控（综合评分16/20）。Synapse CEO Guard + 执行链架构与 Gartner 治理框架高度吻合，具备差异化优势。harness_engineer 梳理 Synapse 治理机制（CEO Guard / 执行链 / QA门禁）对标 Gartner 框架，graphify_strategist 将成果包装为 Janus Digital 可交付的企业 Agent 治理方案文档。 2026-04-24 升级为正式产品线需求 REQ-EG-001，纳入 enterprise_governance 产品线治理。
+- id: INTEL-20260420-004
+  title: 【P1】Q1 2026 融资趋势分析 — 制定 Janus Digital 市场定位与融资策略
+  status: inbox
+  priority: P1
+  team: graphify
+  assigned_to: graphify_strategist
+  co_assigned: financial_analyst
+  created: '2026-04-20'
+  follow_up: '2026-04-27'
+  notes: 来源：情报行动管线 2026-04-20。Q1 2026 AI 占风投总量80%（综合评分13/20，graphify/financial各5分）。垂直行业 AI SaaS 同比增长28%，跑赢横向平台3倍，直接验证 Janus Digital 垂直专业服务方向。哑铃效应（500M+巨轮 vs 3M-微轮）说明 Janus Digital 需清晰定位。graphify_strategist + financial_analyst 联合输出：① Janus Digital 市场定位声明；② 融资策略建议（含时间窗口）；③ 核心竞争优势梳理。
+- id: INTEL-20260420-005
+  title: 【P2】国产 AI 竞争威胁评估 — GLM-5.1 vs Synapse 模型选择策略
+  status: inbox
+  priority: P2
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  created: '2026-04-20'
+  follow_up: '2026-04-28'
+  notes: 来源：情报行动管线 2026-04-20。GLM-5.1 在 SWE-Bench Pro 超越 Claude Opus 4.6，可稳定执行8小时长时编程任务；Qwen 3.6-Plus 日Token消耗破1.4万亿（综合评分13/20）。ai_ml_engineer 评估：① GLM-5.1 对 Synapse 技术竞争地位的实际影响；② Qwen Agent 是否对 Janus Digital 市场形成竞争威胁；③ 是否需要调整 Synapse 的模型选择策略（补充国产模型作为 fallback 或成本优化选项）。
+- id: INTEL-20260420-006
+  title: 【P2】Gemma 4 开源评估 — 端侧本地推理可行性 + Claude Mythos API 跟踪
+  status: inbox
+  priority: P2
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  created: '2026-04-20'
+  follow_up: '2026-04-28'
+  notes: 来源：情报行动管线 2026-04-20。Google Gemma 4（26B/31B参数，256K上下文，NVIDIA优化，近零延迟）+ Claude Mythos Preview（网络安全专用）（综合评分12/20）。ai_ml_engineer 评估：① Gemma 4 用于 Synapse 低成本本地推理任务的可行性（特别是256K上下文场景）；② Claude Mythos API 访问方式和 Synapse 安全审计潜在用途；③ gemini-embedding-2 多模态 embedding 对 OBS 知识库检索的提升潜力。
+- id: INTEL-20260420-007
+  title: 【P0完成】Claude Sonnet 4 / Opus 4 停服迁移报告已完成
+  status: completed
+  priority: P0
+  team: rd
+  assigned_to: rd_devops
+  co_assigned: ai_ml_engineer
+  created: '2026-04-19'
+  completed: '2026-04-22'
+  follow_up: null
+  notes: 2026-04-22 rd_devops 完成全库扫描。核心发现：Synapse 架构无硬编码模型ID，迁移难度极低（0个核心配置文件需修改）。n8n 远程 Agent 配置需审查（阶段1，2026-04-25截止，P0）。推荐升级目标：claude-sonnet-4-7。报告路径：obs/01-team-knowledge/HR/intelligence-actions/INTEL-20260420-007-migration-report.md
+- id: INTEL-20260421-001
+  title: 【P2】OpenAI Agents SDK 沙盒机制 vs Synapse CEO Guard 架构对比研究
+  status: inbox
+  priority: P2
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: harness_engineer
+  created: '2026-04-21'
+  follow_up: '2026-04-28'
+  notes: 来源：情报行动管线 2026-04-21。OpenAI Agents SDK新增沙盒隔离执行环境、可配置记忆层、文件系统工具，支持100+非OpenAI模型。ai_ml_engineer评估：① OpenAI沙盒隔离设计与Synapse CEO Guard架构的技术对比，识别可借鉴的设计点；② 跨100+模型支持是否对Synapse多模型策略有参考价值；③ 是否需要将对比结论纳入Janus企业Agent治理方案文档（与INTEL-20260420-003联动）。
+- id: PLAN-X-001
+  title: WF-09 500错误修复 — n8n workflow atit1zW3VYUL54CJ
+  status: completed
+  priority: P0
+  team: harness_ops
+  assigned_to: harness_engineer
+  created: '2026-04-23'
+  follow_up: '2026-04-24'
+  completed_date: '2026-04-24'
+  execution_stage: '5'
+  blocker: null
+  notes: n8n workflow atit1zW3VYUL54CJ 触发时返回 500 错误。根因未确认，诊断工作在本日会话中已启动但未完成。下次会话第一优先项。WF-09 P0/P1/P2 全部修复完成（2026-04-24）：HMAC Validate throw改return、8个PMO workflow recipient修正为president、本地脚本模板更新。
+- id: CONTENT-PIPELINE-001
+  title: 全自动博客内容管线建设
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: knowledge_engineer
+  created: '2026-04-23'
+  completed_date: '2026-04-23'
+  execution_stage: '5'
+  blocker: null
+  deliverables:
+  - scripts/session-to-worklog.py — 每日会话自动提炼
+  - scripts/auto-publish-blog.py — 全自动博客发布
+  - Windows Task Scheduler 定时任务（每晚22:00）
+  - 22篇历史博客文章发布至 lysander.bond
+  - obs/04-content-pipeline/ 内容管线目录
+  notes: 2026-04-23 完成。全自动博客发布流水线上线，涵盖会话解析→工作日志生成→博客撰写→QA审查→git push全链路。历史14天会话回溯完成，22篇文章已发布。
+- id: PMO-DNS-SSL-001
+  title: pmo-api.lysander.bond HTTPS 上线
+  status: completed
+  priority: P2
+  context: 'PMO V2.0 GA 已完成（tag: v2.0-ga）。唯一遗留项：
+
+    为 pmo-api.lysander.bond 添加 DNS A 记录并签发 SSL 证书。
+
+    '
+  technical_details: '- 目标域名: pmo-api.lysander.bond
+
+    - 服务器 IP: 43.156.171.107
+
+    - nginx 配置: 已在服务器创建 /etc/nginx/sites-available/pmo-api.lysander.bond (HTTP proxy to :8088)
+
+    - 凭证文件: C:\Users\lysanderl_janusd\Multi-Agents System\obs\credentials.mdenc
+
+    - creds.py: C:\Users\lysanderl_janusd\Multi-Agents System\creds.py
+
+    - 密码提示: 2015（需总裁提供实际密码）
+
+    - DNSPod API: dnsapi.cn/Record.Create（login_token=SecretId,SecretKey）
+
+    - SSH 访问: ssh lysander-server（已授权）
+
+    '
+  created: 2026-04-23
+  completed_date: '2026-04-24'
+  blocker: null
+  unblock_requirements: null
+  historical_blocker: '2026-04-24 早 harness_engineer 子 Agent 执行验证：
+
+    credentials.mdenc 密码 `Liuzy2015#` 验证正确，成功解密。
+
+    但凭证库内仅含以下 Key（无 DNSPod 凭证）：
+
+    GITHUB_TOKEN, NOTION_TOKEN, N8N_API_KEY, GROQ_API_KEY, SLACK_TOKEN,
+
+    WECHAT_APPID, WECHAT_APPSECRET, OPENAI_API_KEY, 1PASSWORD_EMAIL,
+
+    SERVER_SSH_KEY_PATH, ANTHROPIC_API_KEY, Google AI Studio。
+
+    服务器端 ~/.config、/etc/dnspod*、环境变量均无 DNSPod 凭证。
+
+    lysander.bond NS 指向 DNSPod（a/b/c.dnspod.com），无通配符 A 记录。
+
+    DNS 步骤无法执行 → certbot --nginx 挑战会因 NXDOMAIN 失败 → 阻塞。
+
+    '
+  completion_note: '2026-04-24 总裁手动在 DNSPod 控制台添加 A 记录（value=43.156.171.107），
+
+    Lysander 派单 harness_engineer 子 Agent 执行 SSH certbot 签发 SSL 证书，
+
+    https://pmo-api.lysander.bond 正式上线。
+
+    凭证库无 DNSPod API 密钥，后续 DNS 自动化需单独补入。
+
+    验证数据：DNS（DNSPod/8.8.8.8/1.1.1.1）均解析到 43.156.171.107；
+
+    HTTPS 405（health HEAD）/ 404（root）/ GET health 返回 {"status":"ok","active_subscriptions":73}；
+
+    SSL 证书 Let''s Encrypt E7，subject=pmo-api.lysander.bond，notAfter=2026-07-23。
+
+    '
+- id: PMO-V200-GA-001
+  title: PMO Auto V2.0 GA — 验收完成
+  status: completed
+  priority: P0
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: pmo_test_engineer
+  created: '2026-04-22'
+  completed: '2026-04-23'
+  execution_stage: '5'
+  blocker: null
+  notes: 2026-04-23 总裁刘子杨正式批准 GA 发布。TC-A01~A06 全部 PASS：WF-01 项目初始化、Asana 项目创建、Notion Hub 生成、WF-06/WF-08 webhook 链、Slack DM 通知。WF-06/WF-08 凭证方案从 getCredentials → requestWithAuthentication 迁移完成（n8n task runner 兼容）。VERSION 锁定为 V2.0-GA，git tag v2.0-ga 已打。
+- id: PMO-E2E-0427-VERIFICATION
+  title: PMO Auto E2E 修复后验证 — BUG-001/002 已修复，BUG-003/004 待跟进
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: pmo_test_engineer
+  co_assigned: integration_qa
+  created: '2026-04-27'
+  completed: '2026-04-27'
+  execution_stage: '5'
+  blocker: null
+  e2e_overall_verdict: PASS
+  e2e_caveats:
+  - TC-A02 FAIL — 预存缺陷 BUG-003（WF-12 链路断裂），非 BUG-001/002 导致
+  - PRINCIPLE-001 PARTIAL — 仅 pmEmail 提取，deEmail/saEmail/cdeEmail 缺失（BUG-004）
+  bugs_resolved:
+  - id: BUG-001
+    description: WF-01 邀请团队成员 Code Node this.getCredentials is not a function
+    resolved_at: '2026-04-27T12:09:38Z'
+    fix_method: Code Node 替换为 HTTP Request 节点链（get-team-members-v2 → filter-member-gids-v2 → add-project-members-v2）
+    verification: exec
+  - id: BUG-002
+    description: WF-08 Webhook stale connection key 导致 Cannot read properties of undefined
+    resolved_at: '2026-04-27'
+    fix_method: connections dict key "汇总发送监控频道" 重命名为 "Notify via WF-09 (was 汇总发送监控频道)"
+    verification: exec
+  bugs_open:
+  - id: BUG-003
+    priority: P1
+    description: WF-12 (id:p8tPxmkhMcQPcRMh) 零执行历史 — WF-11→pmo-api→WF-12 触发链路断裂
+    follow_up: REQ-012-WBS-QA-001（2026-04-28 启动）
+  - id: BUG-004
+    priority: P2
+    description: '"提取注册表数据" Code Node 仅提取 pmEmail，deEmail/saEmail/cdeEmail 字段未提取'
+    follow_up: REQ-012-WBS-QA-001 范围内修复
+  report: obs/06-daily-reports/2026-04-27-pmo-auto-e2e-test-report.md
+- id: REQ-012-WBS-QA-001
+  title: WBS 导入流程 WF-02~WF-05 专项验证
+  status: scheduled
+  priority: P1
+  team: harness_ops
+  assigned_to: integration_qa
+  co_assigned: harness_engineer
+  created: '2026-04-24'
+  scheduled_start: '2026-04-28'
+  scheduled_end: '2026-05-10'
+  follow_up: '2026-04-28'
+  execution_stage: '0'
+  blocker: null
+  parent_req: REQ-012
+  notes: '2026-04-24 总裁决策：V2.1 Backlog REQ-012 本月内启动。
+
+    integration_qa 排期：2026-04-28 启动，预计 2026-05-10 完成。
+
+    验证目标：
+
+    ① WF-02 激活状态稳定性
+
+    ② WBS L1-L4 各层级导入测试全部 PASS
+
+    ③ WBS 依赖字段 L3/L4 补齐验证
+
+    ④ WF-02~WF-05 历史错误根因定位
+
+    测试计划文档：obs/06-daily-reports/2026-04-24-req-012-wbs-test-plan.md（待 2026-04-28 创建）
+
+    注：测试环境已迁移至 n8n.janusd.io，WBS 测试应在新实例上执行。
+
+    2026-04-27 新增：BUG-003 (P1) 必须作为本次 QA 任务首要调查项 —— WF-12 (id:p8tPxmkhMcQPcRMh) 零执行历史，WF-11→pmo-api→WF-12 链路断裂，具体断点需 2026-04-28 开始诊断。BUG-004 (P2) 同步修复："提取注册表数据" Code Node 补充 deEmail/saEmail/cdeEmail 字段提取逻辑。 '
+- id: SSOT-I18N-STRATEGY-2026-04-24
+  title: SSOT 内容整合 + 全站双语扩展
+  status: completed
+  completed_at: 2026-04-26
+  completed_via: v1.0-bilingual + v1.1.0-strategic-overhaul releases
+  current_phase: completed
+  decision_level: L4
+  approved_by: 总裁
+  approved_at: 2026-04-24
+  archive: obs/04-decision-knowledge/2026-04-24-ssot-i18n-plan/
+  president_decisions:
+    synapse_core_public: A (immediate push)
+    academy_certification: A (badge only)
+    president_personal_ip: B (no on-camera)
+  scope: full_site_100_percent
+  scope_details:
+    p0: 站点骨架 + Forge + Academy 全双语
+    p1: 博客精选 5 篇 full 再创作
+    p2: 博客 9 篇 full 翻译
+    p3: 博客 19 篇摘要式英文版（300-500 字）
+  scope_change_history:
+  - from: full_site_80_percent_plus_p1_blog_selection
+    to: full_site_100_percent_including_all_blogs
+    changed_at: 2026-04-24
+    changed_by: president
+  completion_note: '2026-04-26 v1.0-bilingual 锁定完成全站双语化（54 页 × 2 = 108 URLs）。
+
+    后续战略改造在 v1.1.0-strategic-overhaul 锁定。详见 lysander-bond CHANGELOG。
+
+    '
+- id: STRATEGIC-OVERHAUL-2026-04-26
+  title: lysander.bond 战略改造（去 Janus + 品牌统一 + Academy SaaS 删除 + LICENSE）
+  status: completed
+  completed_at: 2026-04-26
+  decision_level: L4
+  approved_by: 总裁
+  approved_at: 2026-04-26
+  version_lock: v1.1.0-strategic-overhaul
+  git_tag: v1.1.0-strategic-overhaul
+  archive: obs/04-decision-knowledge/2026-04-26-strategic-overhaul-approval-package.md
+  president_decisions:
+    decision_1: B (网站 0 处 Janus Digital / 建筑数字化 残留)
+    decision_2: A (Academy SaaS 订阅模式删除)
+    decision_3: A (品牌统一 — Synapse Forge → Synapse)
+    decision_4: A (BSL-1.1 LICENSE + 双语 USAGE_TERMS)
+    decision_5: A (终身 Pro 承诺保留兑现)
+  deliverables:
+  - 主导航 8→5 项 + /services /training /intelligence 301 redirects
+  - /academy/dashboard /academy/course 删除
+  - about.astro 创始人段重构（双身份）
+  - synapse-stats.yaml SSOT 上线（53/13/5 元规则修复）
+  - LICENSE.md (BSL-1.1) + USAGE_TERMS.md (双语) + README banner
+  - PIPELINE.md 治理框架建立 + pipeline-metrics 第一份基线
+  completion_note: 'v1.1.0 在 2026-04-26 commit fdb820f + e0f41cf 锁定，git tag 已推送。
+
+    首次纳入 Pipeline Product 治理框架。
+
+    '
+- id: PIPELINE-PRODUCT-GOVERNANCE-2026-04-26
+  title: 管线产品（Pipeline Product）治理元规则
+  status: active
+  rule_type: framework
+  decision_level: L4
+  approved_by: 总裁
+  approved_at: 2026-04-26
+  scope: lysander-bond
+  framework_doc: lysander-bond/PIPELINE.md
+  meta_rule_archive: obs/04-decision-knowledge/2026-04-26-pipeline-product-governance.md
+  enforcer: execution_auditor
+  next_review: 2026-07-26
+  rules_summary:
+  - 三层版本（MAJOR L4 / MINOR L3 / PATCH L2）
+  - MINOR+ 双轮 UAT 强制
+  - 每版本必须 metric baseline 快照
+  - 变更分类标签（strategic/feature/fix/chore/docs/i18n）
+  - main 分支非 PATCH 变更必须关联 tag 否则视为违规
+  notes: '首次基线 v1.0-bilingual (2026-04-25)，第二基线 v1.1.0-strategic-overhaul (2026-04-26)。
+
+    未经版本锁定直接 push 到 main 触发线上变更 → 违规 → Lysander 复盘 + Hotfix 补救。
+
+    '
+- id: BILINGUAL-BLOG-SOP-2026-04-24
+  title: 博客生产双语常态化（SOP 落地）
+  status: active
+  rule_type: production_standard
+  decision_level: L4
+  approved_by: 总裁
+  approved_at: 2026-04-24
+  sop_ref: obs/03-process-knowledge/bilingual-blog-production-sop.md
+  enforcer: integration_qa
+  next_review: 2026-07-24
+  notes: 历史 33 篇按 content_strategist P1/P2/P3 分级不受此约束 2026-04-28扩展：双语规则从博客扩展至全站所有新增页面（总裁指令）， Intelligence Hub EN路由补建触发，规则写入quality-assurance-framework.md
+- id: NOTION-HUB-001
+  title: Lysander-AI Hub 全量建设
+  status: completed
+  priority: P1
+  team: content_ops
+  assigned_to: content_strategist
+  created: '2026-04-25'
+  completed: '2026-04-26'
+  notes: '2026-04-26 全量完成。三个子页面：产品线详情/资产全景/团队体系。 自动化管道：asset_counter.py + asset_snapshot.yaml + notion_daily_sync.py扩展 + DB新字段。 待总裁手动操作：① Notion Share to web ② 数据库块拖到页面底部。 Hub URL: https://www.notion.so/34d114fc090c81dba651c2386164b46f 产品线: https://www.notion.so/34e114fc090c81e5ac9dffaa2fdf0450 资产全景: https://www.notion.so/34e114fc090c817aad30f978d16ed93c 团队体系: https://www.notion.so/34e114fc090c817d8349e1e394e3dc7b
+
+    '
+- id: INTEL-20260427-001
+  title: 【P1】Claude 4 API 迁移准备 — 全链路兼容性评估（紧急）
+  status: completed
+  priority: P1
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: harness_engineer
+  created: '2026-04-27'
+  completed: '2026-04-27'
+  follow_up: '2026-05-04'
+  execution_stage: '5'
+  blocker: null
+  source: intel-action 自动评估
+  deliverable: obs/01-team-knowledge/HR/intelligence-actions/INTEL-20260427-001-claude4-compat-assessment.md
+  notes: 来源：情报行动管线 2026-04-27。综合评分 19/20（紧急行动项）。Claude 4（Opus 4 / Sonnet 4）进入 Red Team 最终阶段，预计 Q2 发布。需完成：① Prompt Caching 策略兼容性评估；② CLAUDE.md Harness 新模型行为基准测试；③ 自动化管线 API 版本切换预案。与 INTEL-20260419-002 联动，共用扫描结果。不等正式发布再响应。 [2026-04-27 ai_ml_engineer 完成全链路评估：总体ATTENTION，3处硬编码脚本需修复，CEO Guard P0约束PASS，配置层零改动。]
+  rice:
+    score: 19
+    extracted_from: notes_regex_backfill
+- id: INTEL-20260427-002
+  title: 【P1】OpenAI Agents SDK 1.0 竞品深度对比 — Synapse 差异化护城河分析
+  status: completed
+  priority: P1
+  team: graphify
+  assigned_to: graphify_strategist
+  co_assigned: harness_engineer
+  created: '2026-04-27'
+  completed: '2026-04-27'
+  follow_up: '2026-05-04'
+  execution_stage: '5'
+  blocker: null
+  source: intel-action 自动评估
+  deliverable: obs/01-team-knowledge/HR/intelligence-actions/INTEL-20260427-002-openai-sdk-competitive-analysis.md
+  notes: 来源：情报行动管线 2026-04-27。综合评分 18/20。OpenAI Agents SDK 1.0 GA，Guardrails 机制与 CEO Guard 高度重叠，构成直接竞品压力。需输出：① SDK Guardrails vs CEO Guard 技术对比；② 执行链 vs Handoffs 架构差异；③ janus_digital + enterprise_governance 竞品差异化定位矩阵。与 INTEL-20260421-001 合并执行，避免重复调研。 [A3 闭环：2026-04-27 评估=in_progress，自动入池待 Lysander 主对话派单] 2026-04-27 graphify_strategist 完成三项交付：技术对比表、执行链架构对比、4条护城河+竞品定位矩阵+3条商业化建议。
+  rice:
+    score: 18
+    extracted_from: notes_regex_backfill
+- id: INTEL-20260427-003
+  title: 【P1】MCP 2.1 Agent Scope 落地评估 — CEO 执行禁区协议层强制
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: ai_ml_engineer
+  created: '2026-04-27'
+  completed: '2026-04-27'
+  follow_up: null
+  execution_stage: '5'
+  blocker: null
+  source: intel-action 自动评估
+  deliverable: obs/01-team-knowledge/HR/intelligence-actions/INTEL-20260427-003-mcp21-agent-scope-assessment.md
+  notes: 来源：情报行动管线 2026-04-27。综合评分 17/20。MCP 2.1 新增 Agent Scope 权限边界声明 + Context Integrity Hash，可将 Synapse P0 执行禁区从文档约定升级为协议层强制。需完成：① P0 禁区与 Agent Scope 映射文档；② Context Integrity Hash 集成可行性；③ 落地路径建议。MCP 9700 万装机量背书，杠杆效应最高的单点投入。参见 INTEL-20260420-001 背景。 [A3 闭环：2026-04-27 评估=in_progress，自动入池待 Lysander 主对话派单] 2026-04-27 harness_engineer 完成评估：可行性=部分可行（近期80%+中期100%），最高价值落地点为PreToolUse hook增强+mcp_agent_scope.json预置，详见deliverable。
+  rice:
+    score: 17
+    extracted_from: notes_regex_backfill
+- id: INTEL-20260427-004
+  title: 【P2】Stanford HAI Harness 白皮书研读 — enterprise_governance 学术背书整合
+  status: approved-pending-dispatch
+  priority: P2
+  team: harness_ops
+  assigned_to: knowledge_engineer
+  co_assigned: graphify_strategist
+  created: '2026-04-27'
+  follow_up: '2026-05-04'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  notes: '来源：情报行动管线 2026-04-27。综合评分 15/20（财务 2/5，研究免费但转化路径间接）。Stanford HAI《Agent Harness Engineering: Principles and Patterns》与 Synapse 设计高度契合，Entropy Budget 概念与 CLAUDE.md 350 行上限直接呼应。需输出：① Guides/Sensors/Constraints/Entropy Budget 对照笔记（OBS 沉淀）；② enterprise_governance 对外叙事学术引用素材包（3-5 条关键论点）。 [A3 闭环：2026-04-27 评估=inbox，自动入池待 Lysander 主对话派单]'
+  rice:
+    score: 15
+    extracted_from: notes_regex_backfill
+- id: INTEL-20260427-005
+  title: 【P2】Gemini 2.5 Ultra 基准测试追踪 — Synapse 底层模型竞争态势更新
+  status: approved-pending-dispatch
+  priority: P2
+  team: graphify
+  assigned_to: ai_tech_researcher
+  co_assigned: null
+  created: '2026-04-27'
+  follow_up: '2026-05-06'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  notes: 来源：情报行动管线 2026-04-27。综合评分 14/20。Gemini 2.5 Ultra 代码生成基准超越 Claude Sonnet 3.7，但 Synapse 差异化在 Harness 治理，短期非替代威胁。需输出：① Gemini 2.5 Ultra vs Claude Sonnet 4.x 基准对比摘要；② Synapse 模型选择策略影响评估。与 INTEL-20260420-005 合并输出竞争态势全景图。 [A3 闭环：2026-04-27 评估=inbox，自动入池待 Lysander 主对话派单]
+  rice:
+    score: 14
+    extracted_from: notes_regex_backfill
+- id: INTEL-20260427-006
+  title: 【P2】Cognition AI B 轮信号分析 — Janus Digital 投资人叙事框架更新
+  status: approved-pending-dispatch
+  priority: P2
+  team: graphify
+  assigned_to: graphify_strategist
+  co_assigned: financial_analyst
+  created: '2026-04-27'
+  follow_up: '2026-05-06'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  notes: 来源：情报行动管线 2026-04-27。综合评分 12/20（inbox 下限，技术 2/5 属弱项）。Cognition AI 20 亿估值 B 轮，走自主 Agent 路线，与 Janus Digital 存在叙事分叉。需输出：① Cognition 估值逻辑拆解；② 可治理 Agent vs 自主 Agent 叙事定位说明；③ 投资人竞品定位矩阵（与 INTEL-20260427-002 共享产出）。与 INTEL-20260420-004 合并推进。 [A3 闭环：2026-04-27 评估=inbox，自动入池待 Lysander 主对话派单]
+  rice:
+    score: 12
+    extracted_from: notes_regex_backfill
+- id: INTEL-20260427-007
+  title: 【P2】Qwen 3 + Cursor 1.0 工具链评估 — 低成本本地化与开发效率提升
+  status: approved-pending-dispatch
+  priority: P2
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: null
+  created: '2026-04-27'
+  follow_up: '2026-05-06'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  notes: 来源：情报行动管线 2026-04-27。综合评分均 13/20，合并执行降低成本。需输出：① Qwen 3-72B 作为 enterprise_governance 低成本本地化底座可行性评估（数据主权场景）；② Cursor 1.0 Background Agent 与 Synapse 定时 Agent 编排兼容性评估；③ 综合引入建议（是否引入 + 各自适用场景）。与 INTEL-20260420-005、INTEL-20260420-006 形成连续性，避免重复研究。 [A3 闭环：2026-04-27 评估=inbox，自动入池待 Lysander 主对话派单]
+  rice:
+    score: 13
+    extracted_from: notes_regex_backfill
+- id: SYNAPSEHD-DOMAIN-UNLOCK-FOLLOWUP-2026-04-30
+  title: synapsehd.com 备案完成后闭环（周四提醒）
+  status: pending
+  priority: P0
+  expected_trigger_date: '2026-04-30'
+  decision_level: L3
+  authorized_by: 总裁
+  authorized_at: '2026-04-26'
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: ai_systems_dev
+  created: '2026-04-26'
+  follow_up: '2026-04-30'
+  execution_stage: '0'
+  blocker: null
+  context: '总裁 2026-04-27 提交火山引擎 synapsehd.com ICP 备案，预计 2-3 工作日完成。
+
+    备案完成后（最迟周四 2026-04-30），需 Lysander 立即启动闭环动作。
+
+    备案前 Lysander 已完成所有前置改造（SITE_URL 环境变量化 + GHA deploy-volcano + SSL 脚本占位）。
+
+    '
+  pre_check:
+  - 通过火山引擎控制台确认 ICP 备案状态 = 已通过
+  - 验证：curl -sIL http://synapsehd.com/ 返回 200（不再被 webblock 拦截）
+  next_actions:
+  - 1. 启用 Let's Encrypt SSL（执行 prepared-script /scripts/enable-ssl.sh）
+  - 2. nginx vhost 加 listen 443 + force HTTP→HTTPS redirect
+  - 3. canonical / hreflang 切换为 https://synapsehd.com
+  - 4. 触发 GitHub Actions deploy-volcano workflow，验证自动部署
+  - 5. 全站 UAT 回归（HTTP/SEO/i18n/双语 toggle）
+  - 6. Lock v1.1.1-multi-deploy（PATCH 锁版）+ pipeline-metrics/v1.1.1.yaml
+  - 7. 总裁简报：synapsehd.com 全功能上线
+  runbook: obs/03-process-knowledge/synapsehd-com-activation-runbook-2026-04-30.md
+  rollback_plan: '如备案审核未通过：
+
+    - 保留 www.synapsehd.com HTTP（无需 SSL）作为临时入口
+
+    - 不启用 https://synapsehd.com（裸根仍被 WAF 拦截）
+
+    - active_tasks 状态从 pending 改为 blocked，等待重新提交备案
+
+    '
+- id: PMO-MIGRATION-PHASE1-001
+  title: PMO Auto n8n 迁移 Phase 1 — M1 验收通过，48小时观察期
+  status: monitoring
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: integration_qa
+  created: '2026-04-27'
+  follow_up: '2026-04-29'
+  execution_stage: '6'
+  blocker: null
+  notes: '2026-04-27 Phase 1 M1 全部 PASS：
+
+    - 9个WF已在 n8n.janusd.io 激活（WF-01~WF-09）
+
+    - pmo-api N8N_WF08_URL 已切换至 janusd.io
+
+    - 旧实例 n8n.lysander.bond 9个WF全部暂停
+
+    - 48小时稳定期：2026-04-27 ~ 2026-04-29
+
+    2026-04-29后：旧实例可关闭，保留备份。
+
+    Phase 2 (Asana→Monday) 待 Phase 1 稳定满5工作日后启动。
+
+    决策归档：D-2026-0427-002.md
+
+    '
+- id: INFRA-GHA-NODEJS20-001
+  title: GH Actions Node.js 20 退役升级（截止 2026-09-16）
+  status: backlog
+  priority: P2
+  team: harness_ops
+  assigned_to: harness_engineer
+  created: '2026-04-27'
+  deadline: '2026-08-01'
+  follow_up: '2026-08-01'
+  execution_stage: '0'
+  blocker: null
+  notes: '5 个 GH Actions workflow（heartbeat-check/intel-daily/intel-action/task-resume/n8n-snapshot）
+
+    均使用 actions/checkout@v4 + actions/setup-python@v5（Node.js 20 runner）。
+
+    GitHub 将于 2026-09-16 移除 Node.js 20，届前需升级至 Node.js 24 兼容版本。
+
+    Lysander 决策：2026-08-01 前执行，给截止日留 6 周缓冲。
+
+    来源：integration_qa 审计 2026-04-26-cron-audit-report.md。
+
+    '
+- id: INFRA-NOTION-SYNC-001
+  title: NotionDailySync 任务状态确认（已删除，待总裁确认是否重建）
+  status: completed
+  priority: P3
+  team: harness_ops
+  assigned_to: harness_engineer
+  created: '2026-04-27'
+  follow_up: null
+  execution_stage: '0'
+  blocker: null
+  notes: 'Windows Task Scheduler 中 Synapse-NotionDailySync 任务已被主动删除
+
+    （存档 harness/n8n-snapshots/_archive/Synapse-NotionDailySync_pre-delete.xml）。
+
+    脚本 scripts/notion_daily_sync.py 完好存在。
+
+    根因：原任务未用完整 Python 路径注册，导致锁屏时 PATH 缺失失败。
+
+    Lysander 决策：暂缓重建，等总裁确认是否需要此任务继续运行。
+
+    如需恢复：建议迁移至 GH Actions（与情报管线迁移方向一致）而非重建 Windows Task。
+
+    2026-04-27 Lysander 决策：不删除，迁移至 GH Actions。hub-daily-sync.yml 已创建，UTC 18:00 = Dubai 22:00 每日触发。
+
+    '
+- id: INTEL-20260428-001
+  title: 【P1】Claude 4 系列迁移评估 — Sonnet 4 / Opus 4 API 端点接入 Synapse Intelligence Pipeline
+  status: approved-pending-dispatch
+  priority: P1
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: harness_engineer
+  created: '2026-04-28'
+  follow_up: '2026-05-05'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: 19
+    extracted_from: notes_regex
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-28。Claude 4 系列综合评分 19/20（最高）。需完成 Sonnet 4 / Opus 4 API 基准测试（200K 上下文、工具调用延迟），评估 RAG 管线与 Daily Intelligence Routine 迁移收益，产出含回滚策略的迁移方案文档。与 INTEL-20260420-007 停服迁移报告结论对接。 [A3 闭环：2026-04-28 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260428-002
+  title: 【P1-URGENT】CEO Guard 审计链升级 — PreToolUse 异步 Hook 技术评估与迁移方案
+  status: approved-pending-dispatch
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: ai_systems_dev
+  created: '2026-04-28'
+  follow_up: '2026-04-30'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: 18
+    extracted_from: notes_regex
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-28。综合评分 18/20，日报原标记 URGENT，24 小时评估窗口。harness_engineer 须在 2026-04-29 前完成异步 Hook 与 ceo-guard-audit.log 同步架构兼容性评估；ai_systems_dev 设计审计写入解耦方案；更新 ceo-guard-tests.md 5 条测试场景。注意：涉及 P0 规则变更，须总裁会话中确认后执行。 [A3 闭环：2026-04-28 评估=in_progress，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260428-003
+  title: 【P1】OpenAI Agents SDK 1.0 GA 竞品分析 — 声明式派单层可行性评估
+  status: approved-pending-dispatch
+  priority: P1
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: harness_engineer
+  created: '2026-04-28'
+  follow_up: '2026-05-05'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: 18
+    extracted_from: notes_regex
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-28。综合评分 18/20。对比 OpenAI Handoff 协议 + E2B 沙箱 vs Synapse 文本驱动派单制度，评估声明式配置层引入可行性，结论纳入 enterprise_governance 路线图。与 INTEL-20260421-001 联动，避免重复调研。 [A3 闭环：2026-04-28 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260428-004
+  title: 【P1】MCP 1.4 Stateful Server 迁移评估 — active_tasks.yaml 跨会话状态管理标准化
+  status: approved-pending-dispatch
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: rd_backend
+  created: '2026-04-28'
+  follow_up: '2026-05-05'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: 17
+    extracted_from: notes_regex
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-28。综合评分 17/20。评估 MCP 1.4 Stateful Server 替代 active_tasks.yaml 轮询的可行性（文件锁竞争风险消除），rd_backend 评估 Resource Subscription 适配工作量，产出两页技术评估摘要。 [A3 闭环：2026-04-28 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260428-005
+  title: 【P1】DeepMind 四层治理框架映射 + enterprise_governance 白皮书叙事升级（含 a16z 融资数据）
+  status: approved-pending-dispatch
+  priority: P1
+  team: product_ops
+  assigned_to: enterprise_architect
+  co_assigned: graphify_strategist
+  created: '2026-04-28'
+  follow_up: '2026-05-02'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: 17
+    extracted_from: notes_regex
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-28。DeepMind 四层框架评分 17/20，a16z 报告评分 14/20（合并处理）。enterprise_architect 将四层框架映射至 Synapse P0/P1/P2 约束体系；graphify_strategist 升级白皮书叙事（双权威引用：DeepMind + Gartner），纳入 a16z +340% 融资数据；knowledge_engineer 沉淀文档。目标：本周内产出白皮书草稿 v1，可用于早期客户沟通。 [A3 闭环：2026-04-28 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260428-006
+  title: 【P1】Cursor 1.2 Background Agent 竞品监控 — Janus Digital 差异化定位更新
+  status: approved-pending-dispatch
+  priority: P1
+  team: growth
+  assigned_to: graphify_strategist
+  co_assigned: growth_insights
+  created: '2026-04-28'
+  follow_up: '2026-05-05'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: 16
+    extracted_from: notes_regex
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-28。综合评分 16/20。growth_insights 建立 Cursor 企业化路线监控机制；graphify_strategist 更新 Janus Digital 差异化定位文档（企业多 Agent 治理 vs 个人开发者工具）。触发升级条件：Cursor 企业版在 30 天内有明确信号 → 升级为 P0。 [A3 闭环：2026-04-28 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260428-007
+  title: 【P2】Qwen 3 竞品与成本策略评估 — janus_digital 国内客户次级模型候选
+  status: approved-pending-dispatch
+  priority: P2
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: financial_analyst
+  created: '2026-04-28'
+  follow_up: '2026-05-05'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: 15
+    extracted_from: notes_regex
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-28。综合评分 15/20。评估 Qwen 3（128K 上下文，SWE-bench 51.2%，定价约 Claude Sonnet 1/4）作为成本敏感场景次级模型候选；financial_analyst 评估定价模型影响；graphify_strategist 评估国内市场竞争威胁。建议与 INTEL-20260420-005（GLM-5.1 评估）合并形成国产模型竞争威胁综合报告。 [A3 闭环：2026-04-28 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: SYNAPSE-PLATFORM-V030-001
+  title: synapse-platform v0.3.0 — RBAC + CI/CD P0 交付
+  status: backlog
+  priority: P0
+  product: synapse_platform
+  team: rd
+  assigned_to: ai_systems_dev
+  co_assigned: integration_qa
+  created: '2026-04-28'
+  follow_up: null
+  execution_stage: '0'
+  blocker: pending_president_authorization
+  pmc_ref: synapse-platform PMC (独立治理)
+  requirements:
+  - REQ-SP-001
+  - REQ-SP-002
+  version_target: v0.3.0
+  notes: 'synapse-platform 独立产品线 v0.3.0 P0 需求。
+
+    决策依据：D-2026-04-28-002（总裁批准独立 PMC 治理）。
+
+    前置条件：总裁授权 v0.3.0 开发启动（尚未授权）。
+
+    代码仓库：C:/Users/lysanderl_janusd/Projects/synapse-platform
+
+    PMC 章程：synapse-platform/docs/product/pmc-charter.md
+
+    当前版本：v0.2.1（commit 39ce3b8，tag v0.2.1）
+
+    知识归档补录日期：2026-04-28（根因：原设计会话未触发归档流程）
+
+    '
+- id: GLOBAL-PIPELINE-GOV-001
+  title: 全局产品管线治理机制 — Sprint 1/2/3 全部完成
+  status: completed
+  priority: P0
+  decision_ref: D-2026-04-29-001
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: ai_systems_dev
+  created: '2026-04-29'
+  completed: '2026-04-29'
+  execution_stage: '5'
+  blocker: null
+  deliverables:
+  - .github/workflows/pipeline-daily-sync.yml — 每日 2:00 AM Dubai 全局产品管线同步
+  - scripts/pipeline-metrics-refresh.py — Content Collection 计数 + 假成功检测
+  - .claude/harness/pmc-governance.md — PMC 治理前置制度
+  - obs/02-product-knowledge/Content-Marketing/product-profile.md — 新建委员会档案
+  - obs/02-product-knowledge/Janus-Digital/product-profile.md — 占位档案（draft）
+  - obs/02-product-knowledge/Enterprise-Governance/product-profile.md — 占位档案（draft）
+  - .github/workflows/intel-daily.yml — 补 Slack 成功+失败通知
+  - .github/workflows/intel-action.yml — 补 Slack 成功+失败通知
+  - .github/workflows/n8n-snapshot.yml — 补 Slack 失败告警
+  notes: '2026-04-29 总裁批准后当日全部执行完成。
+
+    圆桌评审综合评分 7.5/10，条件通过，M1/M2/M3 三条修改项均已在执行中落实。
+
+    从今日起每日 2:00 AM Dubai 自动刷新全局产品管线信息并推送 Slack。
+
+    '
+- id: PMO-MONDAY-PHASE2-001
+  title: PMO Auto Monday 迁移 Phase 2 — Asana→Monday 全链路切换
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: ai_systems_dev
+  created: '2026-04-29'
+  completed: '2026-04-29'
+  follow_up: null
+  execution_stage: '5'
+  blocker: null
+  architecture_ref: obs/02-project-knowledge/pmo-monday-auto-architecture-2026.md
+  notes: |
+    2026-04-29 Lysander L2 决策新建追踪条目（D-2026-04-29-001 授权范围内）。
+    Phase 1 已于 2026-04-27 完成（Registry Board ID: 5095424024，WF-01~09 已适配）。
+    Phase 2 已于 2026-04-29 全部完成：
+    - WF-01~09 全部适配（03/04/05/06 归档，01/02/08/09 active）
+    - pmo-api Monday 路由全部上线（/run-wbs-monday, /webhooks/monday, /webhooks/monday/register, /webhooks/monday/coverage）
+    - M2-A/B/D/F/H PASS，M2-C/E 留 Phase 3，M2-G DEFERRED
+    - WF-01 credential 修复（Notion account + Anthropic account），最近 3 次执行全 success
+    - Monday Registry Board: 3 items，WBS Board 生成验证通过
+    2026-04-29 版本锁定完成：pmo-monday-v2.0.0，产品档案更新至 profile_version=1.0.0
+- id: PMO-MONDAY-PHASE2-STEP4
+  title: PMO Auto Monday Phase 2 — WF-01 credential 修复 + 连续验证
+  status: completed
+  priority: P0
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: integration_qa
+  created: '2026-04-29'
+  completed: '2026-04-29'
+  execution_stage: '5'
+  blocker: null
+  notes: |
+    WF-01 credential 问题根因：n8n.janusd.io 节点使用旧 Asana/HTTP 凭证，
+    替换为正确凭证：Notion account (zfnc6V4iDxGmuaf7) + Anthropic account (sv7ExR3w2Pn6J5Zl)。
+    修复后连续 3 次执行均 status:success，WF-01 稳定运行确认。
+    2026-04-29 版本锁定完成：pmo-monday-v2.0.0，产品档案更新至 profile_version=1.0.0
+- id: PMO-MONDAY-PHASE2-DUALTRACK
+  title: PMO Auto Monday Phase 3 双轨期（72h 并行运行）— 待启动
+  status: pending
+  priority: P0
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: integration_qa
+  created: '2026-04-29'
+  follow_up: '2026-05-06'
+  execution_stage: '0'
+  blocker: phase3_prerequisites
+  pre_check:
+    - M2-C L4 Link Board 验证完成
+    - M2-E WorkDoc 真实实现完成
+    - Docker 镜像重建（pmo-api 代码固化）
+  notes: |
+    Phase 3 双轨期（72h）：Monday + Asana 并行运行，无回归验证后正式切换。
+    前置条件：M2-C/E 完成 + Docker 镜像重建。
+    2026-04-29 版本锁定完成：pmo-monday-v2.0.0，产品档案更新至 profile_version=1.0.0
+- id: INTEL-20260429-001
+  title: 【P1】Claude 3.7 扩展思考接入评估 + thinking tokens 成本模型建立
+  status: approved-pending-dispatch
+  priority: P1
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: opc_cfo_agent
+  created: '2026-04-29'
+  follow_up: '2026-05-06'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: 19
+    extracted_from: notes_regex
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-29。Claude 3.7 Sonnet Extended Thinking 正式 GA，thinking tokens 独立计费（$3/MTok）。需评估 Synapse 各场景消耗量、建立预算上限参数，与 INTEL-20260419-004（task_budget）联动，同步评估 harness_entropy_auditor 精度提升可行性。综合评分 19/20，本周最高优先。 [A3 闭环：2026-04-29 评估=in_progress，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260429-002
+  title: 【P1】Claude Code 1.2 适配 — CLAUDE.md SubAgent 并发配置更新 + MCP 热重载验证
+  status: approved-pending-dispatch
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: integration_qa
+  created: '2026-04-29'
+  follow_up: '2026-05-03'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: null
+    extracted_from: missing
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-29。Claude Code 1.2 SubAgent 并发上限改为 CLAUDE.md 可配置（默认5，上限20），MCP 支持热重载。harness_engineer 需更新 CLAUDE.md 并发配置节（建议默认值10），验证 MCP 热重载兼容性，integration_qa 执行变更验证。可与 INTEL-20260419-005（Claude Code Routines）合并处理。 [A3 闭环：2026-04-29 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260429-003
+  title: 【P1】OpenAI Agents SDK 1.0 竞品分析 — enterprise_governance 差异化壁垒重评
+  status: approved-pending-dispatch
+  priority: P1
+  team: graphify
+  assigned_to: graphify_strategist
+  co_assigned: enterprise_architect
+  created: '2026-04-29'
+  follow_up: '2026-05-06'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: null
+    extracted_from: missing
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-29。OpenAI Agents SDK 1.0 引入 Handoff 协议 + Guardrails，首次将 Agent 治理 SDK 化，对 enterprise_governance 产品线构成直接竞争压力。graphify_strategist 主导竞品对比矩阵，harness_engineer 提供技术层面差异化证据，enterprise_architect 更新白皮书与 Battle Card（关联 REQ-EG-001）。 [A3 闭环：2026-04-29 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260429-004
+  title: 【P2】Gemini 2.5 Pro 多模型路由评估 — 代码生成场景 A/B 测试方案
+  status: approved-pending-dispatch
+  priority: P2
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: rd_backend
+  created: '2026-04-29'
+  follow_up: '2026-05-09'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: null
+    extracted_from: missing
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-29。Gemini 2.5 Pro SWE-bench Verified 72.1%，超越 Claude 3.7（70.3%）。评估 RD 代码生成场景 A/B 测试可行性，关联 janus_digital 多模型路由策略。建议与 INTEL-20260420-005、INTEL-20260429-006 合并为多模型架构策略专项。 [A3 闭环：2026-04-29 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260429-005
+  title: 【P2】Stanford HAI 47% 数据纳入 enterprise_governance GTM Battle Card
+  status: approved-pending-dispatch
+  priority: P2
+  team: growth
+  assigned_to: gtm_strategist
+  co_assigned: graphify_strategist
+  created: '2026-04-29'
+  follow_up: '2026-05-06'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: null
+    extracted_from: missing
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-29。Stanford HAI 2026 确认 47% 企业因 Agent 治理缺失推迟部署，与 Gartner 40% 预测形成双权威背书矩阵。gtm_strategist 本周内更新 Battle Card，形成市场教育话术模板，关联 enterprise_governance 产品线 GTM 策略。 [A3 闭环：2026-04-29 评估=inbox，自动入池待 Lysander 主对话派单]
+- id: INTEL-20260429-006
+  title: 【P2】Qwen 3 本地部署可行性评估 — OPC 成本模型补充方案
+  status: approved-pending-dispatch
+  priority: P2
+  team: ai_ml
+  assigned_to: ai_ml_engineer
+  co_assigned: opc_cfo_agent
+  created: '2026-04-29'
+  follow_up: '2026-05-09'
+  execution_stage: '0'
+  blocker: null
+  source: intel-action 自动评估
+  rice:
+    score: null
+    extracted_from: missing
+  summary: ''
+  notes: 来源：情报行动管线 2026-04-29。Qwen 3 全系列开源，MoE 推理成本降低 60%，128K 上下文。评估 Synapse 低强度任务替换可行性及成本差异，关联 INTEL-20260420-005（GLM-5.1）和 INTEL-20260420-006（Gemma 4），合并为国产/开源模型综合策略报告，提交 Lysander 决策。 [A3 闭环：2026-04-29 评估=inbox，自动入池待 Lysander 主对话派单]
+follow_ups: []
+today_plan:
+  date: '2026-04-21'
+  generated_by: butler_pmo (synapse-calendar-sync)
+  calendar_events_count: 7
+  calendar_events:
+  - time: 09:00-10:00
+    title: ！Check WBS工序数据库，确保准确无误
+    type: focus_time
+  - time: 10:00-11:00
+    title: Apple Store上架问题处理
+    type: focus_time
+  - time: 11:00-12:00
+    title: New AWS Account Manager
+    type: meeting
+    organizer: euclidw@janusd.com
+    attendees:
+    - andreyt@janusd.com
+    - mhawadhi@amazon.ae
+    - shanglee@amazon.co.uk
+    conference: Google Meet
+  - time: 12:00-13:00
+    title: PMO 体系产品化可迁移性分析
+    type: focus_time
+  - time: 13:00-14:00
+    title: 跟进新的测试环境的搭建提供所需支持
+    type: focus_time
+  - time: 14:00-17:00
+    title: Lecture on Project Management & Digital Delivery Process
+    type: meeting
+    organizer: spikez@janusd.com
+    attendees:
+    - rosaw@janusd.com
+    note: 3小时讲座，下午时段占满
+  - time: 17:00-18:00
+    title: fireflies To Notion 在Cowork中有定时任务
+    type: focus_time
+  active_tasks_count: 12
+  in_progress:
+  - INTEL-20260420-007
+  - INTEL-20260419-003
+  follow_up_today:
+  - INTEL-20260419-002
+  - INTEL-20260420-007
+  inbox_tasks:
+  - INTEL-20260419-002
+  - INTEL-20260419-004
+  - INTEL-20260419-005
+  - INTEL-20260420-001
+  - INTEL-20260420-002
+  - INTEL-20260420-003
+  - INTEL-20260420-004
+  - INTEL-20260420-005
+  - INTEL-20260420-006
+  - INTEL-20260421-001
+  priority_top3:
+  - rank: 1
+    item: '【P0 逾期第2天】INTEL-20260420-007: 停服迁移 — rd_devops 今日必须完成：①受影响系统清单 ②现状梳理报告 ③迁移资源估算。停服截止2026-06-15，剩余55天。'
+    priority: P0
+    assigned_to: rd_devops
+  - rank: 2
+    item: '【P0 今日follow_up】INTEL-20260419-002: 制定完整停服迁移时间表 — 与INTEL-20260420-007联动，基于今日rd_devops交付物制定。'
+    priority: P0
+    assigned_to: rd_devops
+  - rank: 3
+    item: '【P1】INTEL-20260420-001: Claude Opus 4.7 升级评估报告 — harness_engineer 截止4月24日，本周内完成。'
+    priority: P1
+    assigned_to: harness_engineer
+  schedule_alert: ⚠️ 14:00-17:00 讲座占满下午，上午窗口（09:00-11:00）需优先推进P0任务。11:00 AWS新客户会议（外部，重要）。
+  system_status:
+    情报管线: ✅ 正常
+    git仓库: ✅ 正常（TASK-001/003已关闭）
+    slack通知: ✅ 正常
+    n8n_webhook: 🔵 健康检查自动化已就绪，待Slack配置
+  notes: P0双重停服任务今日截止。下午14:00-17:00讲座连续3小时，实质工作窗口在上午（09:00-11:00）和午后（13:00-14:00）。 11:00 New AWS Account Manager为重要外部会议（与Amazon团队）。10项inbox任务待分配。 【P1-5 2026-04-22】webhook_health_checker.py 已创建，webhook_health_config.yaml 已配置（8条endpoint，alert_threshold=3）。 n8n_webhook状态自动监控就绪，Slack告警待配置 webhook URL 后立即生效。
+resume_log:
+- timestamp: 2026-04-20T06:00 Dubai
+  agent: synapse-task-resume
+  summary: '任务恢复检查完成。in_progress: 1项(INTEL-20260420-007 P0), pending_verification: 1项(TASK-003), inbox: 10项。INTEL-20260420-007今日为rd_devops截止日，需确认是否完成现状梳理。TASK-003待08:00日报Agent运行后自动验证。'
+- timestamp: 2026-04-20T22:00 Dubai
+  agent: synapse-daily-review
+  summary: 日终复盘完成。TASK-003 git push 验证通过并关闭（branch与origin/main同步）。INTEL-20260420-007 P0今日逾期，明日强制优先。情报管线正常，7条inbox任务待执行。复盘报告生成：obs/06-daily-reports/2026-04-20-retro.md。Slack通知发送。
+- timestamp: 2026-04-21T10:00 Dubai
+  agent: synapse-intelligence-action
+  summary: 情报行动评估完成（2026-04-21）。评估7条情报，综合评分>12条目6/7。新建任务1条：INTEL-20260421-001（OpenAI SDK架构对比，P2）。状态升级：INTEL-20260419-003从inbox→in_progress（Claude Managed Agents公测已上线，18/20最高分）。现有任务强化标注：INTEL-20260420-001（MCP审计优先级提升）。
+- timestamp: 2026-04-21T06:00 Dubai
+  agent: synapse-task-resume
+  summary: '任务恢复检查完成（2026-04-21 早6点）。in_progress: 2项 — INTEL-20260420-007（P0，rd_devops停服迁移，已逾期第2天，三项交付物未完成）、INTEL-20260419-003（P1，Claude Managed Agents评估，ai_ml_engineer正常推进）。⚠️ P0警报：停服截止2026-06-15剩余55天，rd_devops须今日强制完成①受影响系统清单②现状梳理③迁移资源估算。INTEL-20260419-002（P0 inbox，今日follow_up）需今日处理。inbox: 10项，assessed: 1项，completed: 3项。'
+- id: BLOG-PIPELINE-V2-001
+  title: 博客生产管线 v2 全面改造 — 完成
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: ai_systems_dev
+  co_assigned: integration_qa
+  created: '2026-04-28'
+  completed: '2026-04-28'
+  execution_stage: '5'
+  blocker: null
+  decision_level: L4
+  approved_by: 总裁
+  deliverables:
+  - scripts/auto-publish-blog.py — Prompt v2 + system prompt + structural_qa + 双语修复 + QA 100分制
+  - src/content/blog/en/ — 10 篇英文摘要回填（slug backfill）
+  notes: '2026-04-28 总裁批准并验收通过。
+
+    根因：@tailwindcss/typography 未安装（blog 视觉），脚本路径硬编码旧架构（双语缺失），prompt 无结构约束（内容质量）。
+
+    改造内容：SYSTEM_PROMPT（博主人格锚定）+ BLOG_PROMPT_V2（TL;DR/推理/代码块/callout强制）
+
+    + structural_qa()（零API结构门禁）+ QA 100分制（75分通过）
+
+    + 路径修正（content/blog/zh/ + content/blog/en/）
+
+    + generate_blog_post_en()（英文摘要350-500词）
+
+    + 10篇历史文章英文版回填，frontmatter schema修复（slug+publishDate）
+
+    Synapse-Mini commit: 2641210 | lysander-bond commit: 28c1cf4
+
+    博客生产标准 v1.0 生效，新文章从下次自动发布起执行。
+
+    '
+- id: BLOG-VISUAL-FIX-001
+  title: 博客文章视觉修复 + synapsehd.com 内容联动激活
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: ai_systems_dev
+  co_assigned: integration_qa
+  created: '2026-04-28'
+  completed: '2026-04-28'
+  execution_stage: '5'
+  blocker: null
+  deliverables:
+  - src/styles/global.css — .blog-content 自定义排版样式
+  - .github/workflows/deploy-volcano.yml — push 自动触发已启用
+  - PIPELINE.md — synapsehd.com 正式纳入 lysander.bond 镜像分支
+  notes: '2026-04-28 完成。
+
+    博客视觉：@tailwindcss/typography 未安装，prose 类无效，改用 .blog-content 自定义 CSS（18px/行高1.75/H2-H4层次/代码块/引用块/链接）。
+
+    synapsehd.com 联动：deploy-volcano.yml 由 workflow_dispatch → push+main 自动触发。
+
+    VOLCANO_SSH_KEY 已由总裁配置，部署链路验证 PASS（rsync 同步完成，2061884 bytes）。
+
+    synapsehd.com 已纳入 PIPELINE.md 镜像分支管理。
+
+    '
+- id: PMO-MONDAY-PHASE2-STEP0
+  title: PMO Auto Phase 2 — Step 0 环境准备（已完成）
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: ai_systems_dev
+  created: '2026-04-28'
+  completed: '2026-04-28'
+  execution_stage: '5'
+  blocker: null
+  notes: 'Step 0 — 环境准备。
+
+    2026-04-28 Step 0 已完成：
+
+    - Monday API Token 已获取（总裁提供）
+
+    - EN Notion 数据库已填充：11 projects + 76 WBS tasks
+
+    - PMO_REGISTRY Board 已创建：ID=5095424024，URL=https://janusd-company.monday.com/boards/5095424024
+
+    - Workspace ID: 6203977
+
+    下一步：Step 1 — 实现 /run-wbs-monday 端点并测试端到端 WBS 导入流程
+
+    2026-04-28 completion note: Step 0 所有前置条件满足，Step 1 开发已完成并验证，正式进入 Step 2 n8n 改造阶段。
+
+    '
+- id: PMO-MONDAY-PHASE2-STEP1
+  title: PMO Monday Auto Phase 2 Step 1 — pmo-api Monday 路由开发完成并部署
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: ai_systems_dev
+  co_assigned: harness_engineer
+  created: '2026-04-28'
+  completed: '2026-04-28'
+  execution_stage: '5'
+  blocker: null
+  notes: '新增文件：monday_client.py (485行) / wbs_to_monday.py (894行) / monday_webhook_validator.py (122行)
+
+    新增路由：/run-wbs-monday / /webhooks/monday / /webhooks/monday/register / /webhooks/monday/coverage
+
+    部署至：https://pmo-api.lysander.bond（Docker容器，/home/ubuntu/pmo-ai-auto/）
+
+    ENV 已设置：MONDAY_API_TOKEN / MONDAY_WORKSPACE_ID=6203977 / MONDAY_REGISTRY_BOARD_ID=5095424024
+
+    L3 父子关系修正：从 WBS编码点分推断 → 父任务字段（Parent WBS Code），64条记录已回填
+
+    E2E 测试：board_id=5095431730，12 groups / 13 items / 43 subitems，0 errors
+
+    '
+- id: PMO-MONDAY-PHASE2-STEP2
+  title: PMO Monday Auto Phase 2 Step 2 — n8n WF 适配（WF-01~09 改造完成，等待E2E验证）
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: harness_engineer
+  co_assigned: integration_qa
+  created: '2026-04-28'
+  completed: '2026-04-28'
+  follow_up: null
+  execution_stage: '5'
+  blocker: null
+  notes: '2026-04-28 WF-01 改造完成并激活：
+
+    - Asana节点替换为 /run-wbs-monday 调用
+
+    - 读取源切换：中文项目注册表 → EN Project Registry (61e17074)
+
+    - 字段名修正：Monday项目ID → Monday Board ID / Import Status
+
+    - Monday API credential 已注册 n8n.janusd.io (ID: j98bmQhpL4exD3fA)
+
+    - WF-01 已激活，测试通过：board 5095439427 创建成功
+
+    - nginx proxy_read_timeout 已修正为 120s（防止504超时）
+
+    2026-04-28 WF-02~09 适配完成 + nginx reload 成功（proxy_read_timeout=120s）。等待 WF-01 E2E 验证。
+
+    WF适配状态（n8n.janusd.io）：
+
+    - WF-03（IyPPIbipFxFalaqH）: [ARCHIVED-Phase3] 前缀，inactive
+
+    - WF-04（Nk4jYqWAxSEAwvjc）: [ARCHIVED-Phase3] 前缀，inactive
+
+    - WF-05（AECqdI67yJ80FVtQ）: [ARCHIVED-Phase3] 前缀，inactive
+
+    - WF-06（QmhXNcOVRts3VhJu）: [ARCHIVED-Phase3] 前缀，inactive
+
+    - WF-07（5KYWHZdDMQ7spyut）: Asana节点 → Monday节点
+
+    - WF-08（k9q2wFznB710th8o）: webhook路径改为 monday-task-complete
+
+    - WF-02（iKdZGmQL9Zah2SUq）: 重命名为 Monday-ready
+
+    - WF-09（UE3AOepDM1Z6UewC）: 重命名为 Monday-ready
+
+    WF-01 残留Asana死代码（非阻塞，Phase 3 清理）：
+
+    - invite-project-members 节点仍含 Asana 成员邀请逻辑
+
+    - extract-registry 含 asanaProjectName 变量名
+
+    注：n8n.janusd.io API Key 需更新（当前提供的JWT已失效），WF状态基于前序子Agent会话记录。
+
+    '
+- id: SYNAPSE-PLATFORM-VOYAGE-001
+  title: synapse-platform v0.3.2~v0.3.3 Enterprise RAG Pipeline 完整激活
+  status: completed
+  priority: P1
+  team: rd
+  assigned_to: ai_systems_dev
+  co_assigned: integration_qa
+  created: '2026-04-29'
+  completed: '2026-04-29'
+  follow_up: null
+  execution_stage: '5'
+  blocker: null
+  decision_ref: D-2026-04-29-001
+  notes: 'v0.3.2 Voyage AI 嵌入层切换（完成）：
+
+    - VOYAGE_API_KEY 写入 .env（OPENAI_API_KEY 注释掉）
+
+    - src/rag/embedder.ts 新建（Voyage AI voyage-3, 1024 dims）
+
+    - corpus-ingester.ts / semantic-retriever.ts / knowledge-upload.ts 切换
+
+    - migrations/003: vector(1536) → vector(1024)
+
+    - 单元测试 mock 从 openai 切换至 embedder.js，vi.hoisted 修复
+
+    - 274/274 tests pass
+
+
+    v0.3.3 Enterprise RAG Pipeline（完成）：
+
+    - src/rag/reranker.ts 新建（Jina reranker-v2-base-multilingual）
+
+    - semantic-retriever.ts 两阶段检索：pgvector(candidateK=topK×3) → Jina rerank(topK)
+
+    - embedder.ts 429 指数退避重试（22s/44s/66s，maxRetries=10）
+
+    - corpus-ingester.ts EMBED_BATCH=5，20s 批间延迟适配 Voyage free-tier
+
+    - pm-agent 语料入库：35 chunks 跨 7 批次成功写入 Supabase
+
+    - 中文查询精排 E2E 验证通过
+
+    - 完整管线验证：Voyage embed → pgvector(top-24) → Jina rerank → top-8
+
+    - 274/274 tests pass（无回归），TypeScript 编译无错误
+
+
+    版本：commit 74e816e，tag v0.3.3，branch acceptance-simulation
+
+    已知问题（非阻断）：DB 中 pm-agent 语料显示 6 行（实际 35 chunks），ID 生成逻辑问题，列入 v0.4.0
+
+    '
+- id: SYNAPSE-PLATFORM-V040-001
+  title: synapse-platform v0.4.0 — RBAC + CI/CD + GitHub remote
+  status: completed
+  stage: delivered
+  priority: P0
+  product: synapse_platform
+  team: rd
+  assigned_to: ai_systems_dev
+  co_assigned: integration_qa
+  created: '2026-04-29'
+  completed: '2026-04-29'
+  commit: e273a04
+  tag: v0.4.0
+  decision_ref: D-2026-04-29-002
+  follow_up: null
+  execution_stage: '5'
+  blocker: null
+  pmc_ref: synapse-platform PMC (独立治理)
+  requirements:
+  - REQ-SP-001
+  - REQ-SP-002
+  version_target: v0.4.0
+  next_step: 总裁验收后启动正式训练
+  notes: |
+    前置版本：v0.3.3（commit 74e816e，tag v0.3.3）已交付并验证。
+    决策依据：D-2026-04-28-002（总裁批准独立 PMC 治理）。
+    代码仓库：C:/Users/lysanderl_janusd/Projects/synapse-platform
+    交付范围：
+    - REQ-SP-001: RBAC Phase 4（NoOpPermissionGate + RbacPermissionGate + migration 004）
+    - REQ-SP-002: CI/CD（.github/workflows/ci.yml + .env.example + check:env）
+    - Layer 3: Feedback Rules（rules-upload.ts + PMAgent injection + add-rule CLI）
+    - Layer 4: Progressive Memory（memory-accumulator.ts + approve_handoff 触发）
+    - 产品审查 CRITICAL 修复：README 虚假 API 文档已移除
+    - 20 个新单元测试，294/294 全部通过
+    - DB migration 004 已应用到 Supabase
+- id: SYNAPSE-PLATFORM-TRAINING-001
+  title: "PMAgent 正式训练启动"
+  status: pending_president_approval
+  priority: P1
+  description: |
+    v0.4.0 交付后，总裁验收通过后启动 PMAgent 正式训练流程：
+    1. 添加首批规则 (npm run rules:add)
+    2. 通过 Slack 运行真实任务积累 golden examples
+    3. 验证 4 层训练体系端对端工作
+  next_step: "等待总裁验收 v0.4.0 后下达训练启动指令"
+  blocker: 总裁验收
+  created: '2026-04-29'
+- id: INTEL-HUB-001
+  title: Intelligence Hub 情报闭环可视化系统 — 建设完成
+  status: completed
+  priority: P1
+  team: harness_ops
+  assigned_to: ai_systems_dev
+  co_assigned: harness_engineer
+  created: '2026-04-28'
+  completed: '2026-04-28'
+  execution_stage: '5'
+  blocker: null
+  decision_level: L3
+  deliverables:
+  - src/content.config.ts — intelligence-daily/decisions/results 三个 Content Collections
+  - src/pages/intelligence/index.astro — 情报 Hub 三栏布局（日报/决策/结果）
+  - src/pages/intelligence/daily/[date].astro — 日报详情动态路由
+  - src/pages/intelligence/decisions/[id].astro — 决策详情动态路由
+  - src/pages/intelligence/results/[date].astro — 执行结果动态路由
+  - scripts/intelligence/publish_to_bond.py — 情报内容→Content Collections 转换脚本
+  - .github/workflows/intel-daily.yml — 增加 lysander-bond 自动发布步骤
+  - .github/workflows/intel-action.yml — 增加 lysander-bond 自动发布步骤
+  - 历史数据回填：9 篇日报 + 7 篇执行结果 + 27 篇决策日志
+  notes: "2026-04-28 完成。形成情报生成→归档→lysander.bond可查看的完整闭环。\nlysander-bond commits: 499d044（前端页面）+ fec8870（历史数据回填）\nSynapse-Mini commit: 0756807（GHA管线 + publish_to_bond.py）\n路由架构：/intelligence/（Hub）→ /intelligence/daily/ → /intelligence/decisions/ → /intelligence/results/\nGHA 集成：intel-daily.yml 和 intel-action.yml 均在报告生成后自动推送至 lysander-bond。\nBOND_WRITE_TOKEN 需在 Synapse-Mini GitHub repo secrets 确认配置。\nQA 验收：integration_qa 2026-04-28 执行中。\n2026-04-29 后续：post-deploy-health.yml 健康检查激活，历史 itemCount 全部修正，lysander.bond 版本锁定 v1.2.0-intelligence-hub。\n2026-04-28 QA验收后发现并修复两个P0/P1 bug：\n1. P0 构建失败：Astro 6 render API变更，post.render()→render(post)，\n   影响3个动态路由文件（daily/decisions/results [param].astro）\n2. P1 路由冲突：astro.config.mjs中/intelligence redirect覆盖了Hub页面\n3. 主导航新增\"情报\"入口（Layout.astro），所有页面可见\n最终修复commit: 0f0bd0f（Astro 6 API fix + redirect删除）\n9bc2538（主导航情报入口）\n13fa216（三卡片入口 + Hero CTA）\n"

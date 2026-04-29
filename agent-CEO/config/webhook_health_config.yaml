@@ -1,0 +1,111 @@
+# webhook_health_config.yaml — n8n Webhook 健康检查配置
+# Synapse v3.0 — P1-5 交付物
+# ==============================================================
+# 说明：
+#   monitored_endpoints 列出所有需监控的 webhook
+#   health_check.status 参考 n8n_integration.yaml health_check 章节
+# ==============================================================
+
+version: "1.0.0"
+last_updated: "2026-04-22"
+
+# ── 监控间隔 ──────────────────────────────────────────────
+check_interval_minutes: 5    # 建议配合 n8n 定时 workflow 或 cron agent 定期调用 batch_check()
+timeout_seconds: 5          # 请求超时阈值（超过视为 TIMEOUT）
+alert_threshold: 3          # 连续失败次数达到此值则触发 Slack 告警
+
+# ── Slack 告警配置（已废弃，2026-04-22）───────────────────────────────
+# ⚠️  已废弃：slack_webhook_url 不再在此配置。
+# 告警统一通过 n8n webhook 入口，由 n8n 驱动 Slack Bot 发送。
+# 不再需要独立维护 Slack Incoming Webhook URL。
+# 保留此段供参考，Slack Bot Credentials 已在 n8n_integration.yaml 中配置。
+# # slack_webhook_url: ""   ← 已删除
+
+# ── 被监控的 Webhook Endpoints ─────────────────────────────
+# 来源：agent-CEO/config/n8n_integration.yaml
+# 标注说明：
+#   critical  = 决策链核心，失败时 Slack 告警（alert_threshold=3）
+#   warning   = 情报管线，降级不影响核心决策链，仅记录日志
+monitored_endpoints:
+
+  # ── Critical：决策链核心 Webhook ────────────────────────
+  # 这些 webhook 失效会导致事件链尾端断链，必须立即处理
+  - name: "action-notify"
+    url: "https://n8n.lysander.bond/webhook/action-notify"
+    priority: critical
+    note: "行动管线完成后通知总裁（Slack 断链风险）"
+
+  - name: "butler-execute"
+    url: "https://n8n.lysander.bond/webhook/butler-execute"
+    priority: critical
+    note: "L1 自动执行触发"
+
+  - name: "expert-review"
+    url: "https://n8n.lysander.bond/webhook/expert-review"
+    priority: critical
+    note: "L2 专家评审触发"
+
+  - name: "lysander-approve"
+    url: "https://n8n.lysander.bond/webhook/lysander-approve"
+    priority: critical
+    note: "L3 Lysander 决策触发"
+
+  # ── Warning：情报管线 Webhook ───────────────────────────
+  # 情报管线降级不影响核心决策链，但应尽快激活
+  - name: "intelligence-action"
+    url: "https://n8n.lysander.bond/webhook/intelligence-action"
+    priority: warning
+    note: "情报日报完成后触发行动管线（已知 404，需手动激活）"
+
+  - name: "qa-auto-review"
+    url: "https://n8n.lysander.bond/webhook/qa-auto-review"
+    priority: warning
+    note: "代码变更触发 QA 审查"
+
+  - name: "qa-gate-85"
+    url: "https://n8n.lysander.bond/webhook/qa-gate-85"
+    priority: warning
+    note: "85/100 QA 门禁自动放行/阻止"
+
+  - name: "task-status"
+    url: "https://n8n.lysander.bond/webhook/task-status"
+    priority: warning
+    note: "任务状态变更通知（已记录 404）"
+
+# ── 健康状态定义 ─────────────────────────────────────────
+# STATUS 说明：
+#   HEALTHY     → HTTP 200，webhook 正常
+#   UNHEALTHY   → HTTP 404/402/4xx，webhook 未激活或需要认证
+#   TIMEOUT     → 响应时间超过 timeout_seconds
+#   NETWORK_ERROR → 连接失败（DNS/拒绝连接/超时）
+health_status_definitions:
+  HEALTHY:
+    condition: "status_code == 200"
+    action: "记录日志，重置 failure_count"
+  UNHEALTHY:
+    condition: "status_code in [404, 402, 4xx]"
+    action: "增加 failure_count，≥3次触发告警"
+    note: "404 = webhook 从未被调用过，需手动 POST 一次激活"
+  TIMEOUT:
+    condition: "response_time > timeout_seconds"
+    action: "增加 failure_count，≥3次触发告警"
+    note: "可能原因：n8n 实例离线、网络分区、防火墙阻断了 443 端口"
+  NETWORK_ERROR:
+    condition: "requests.RequestException"
+    action: "增加 failure_count，≥3次触发告警"
+    note: "需检查 n8n.lysander.bond DNS 解析和 SSL 证书有效性"
+
+# ── 恢复操作 SOP ──────────────────────────────────────────
+# 当 webhook 连续 3 次检查失败时，按以下步骤操作
+recovery_sop:
+  critical_webhook_failed:
+    step_1: "登录 n8n UI → 检查对应 workflow 是否处于 Active 状态"
+    step_2: "手动 POST 一次到该 webhook URL 以激活 test webhook"
+    step_3: "生产环境使用 /webhook/xxx（无 -test 后缀）路径"
+    step_4: "在 n8n 中确认 workflow 历史记录有最新调用"
+    step_5: "再次运行 webhook_health_checker 验证恢复 HEALTHY"
+  network_unreachable:
+    step_1: "确认 n8n.lysander.bond 可从外部网络访问（浏览器直接打开测试）"
+    step_2: "检查 n8n cloud 实例状态：https://n8n.lysander.bond/health"
+    step_3: "检查防火墙/代理是否阻断了 443 端口"
+    step_4: "确认 HMAC secret 与 n8n_integration.yaml 中 webhook_security.hmac_secret 一致"

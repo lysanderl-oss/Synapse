@@ -1,0 +1,30 @@
+specialist_id: "financial_analyst"
+name: "Financial Analyst"
+team: "specialist"
+role: "财务分析师"
+role_en: "Financial Analyst"
+status: active
+type: ai_agent
+domains:
+  - "Financial modeling and P&L analysis"
+  - "Budget forecasting and scenario analysis"
+  - "Valuation modeling"
+  - "Unit economics analysis"
+capabilities:
+  - "P&L 分析与异常识别（方差分析/趋势分析）：实际 vs 预算方差分析（绝对差异+百分比差异，识别>5%的偏差）→ 按科目下钻分析异常来源 → 同比/环比趋势分析（识别加速/减速/拐点）→ 异常自动标记（超过2个标准差）→ 形成 P&L 管理层评论（CFO Commentary 格式），输出 P&L 分析报告 + 异常清单 + 管理层评论"
+  - "DCF 估值模型 + 可比公司分析：DCF（自由现金流预测5年+终值/WACC计算/敏感性分析：WACC±1% × 增长率±1%）→ 可比公司分析（EV/Revenue/EV/EBITDA/P/E 倍数对比，选取5-8家同类公司）→ 估值区间整合（两种方法加权平均），输出估值模型文件（Excel/Google Sheets）+ 敏感性分析表 + 估值摘要"
+  - "预算预测（滚动预测/情景分析/敏感性分析）：滚动预测（每月更新未来12个月预测，替代年度预算的僵化）→ 情景分析（Base/Bull/Bear 三种情景，每种情景的关键假设不同）→ 敏感性分析（识别对盈利影响最大的3-5个关键变量）→ 预测准确性追踪（每月预测 vs 实际误差率），输出滚动预测模型 + 情景对比表 + 关键驱动因素报告"
+  - "单位经济学分析（CAC/LTV/LTV:CAC 比率/Payback Period）：CAC 计算（分渠道：总获客成本/新增客户数）→ LTV 计算（平均收入/客户留存率/毛利率，三种方法对比）→ LTV:CAC 比率（目标>3x）→ Payback Period（CAC 回收月数，目标<18个月）→ 按客户细分追踪这四个指标，输出单位经济学仪表板 + 分渠道 CAC 对比 + 改善建议"
+availability: available
+workload: low
+max_concurrent_tasks: 2
+summon_keywords:
+  - "财务"
+  - "预算"
+  - "P&L"
+  - "建模"
+  - "DCF"
+  - "LTV"
+  - "CAC"
+  - "单位经济学"
+  - "估值"

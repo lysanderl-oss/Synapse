@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 开发工具对比 — Codex vs Claude Code + Harness</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #0a0e1a;
+    color: #e8eaf0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* Progress bar */
+  #progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #e94560, #10b981);
+    transition: width 0.4s ease;
+    z-index: 100;
+  }
+
+  /* Slide counter */
+  #slide-counter {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #6b7280;
+    letter-spacing: 2px;
+    z-index: 100;
+  }
+
+  /* Navigation arrows */
+  .nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #9ca3af;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .nav-btn:active { transform: translateY(-50%) scale(0.93); }
+  #btn-prev { left: 20px; }
+  #btn-next { right: 20px; }
+
+  /* Slides wrapper */
+  #slides-wrapper {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+  }
+
+  /* Individual slide */
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px 70px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateX(40px);
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+  }
+  .slide.exit-left {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  /* Slide number badge */
+  .slide-badge {
+    position: absolute;
+    top: 22px;
+    right: 32px;
+    font-size: 12px;
+    color: #374151;
+    letter-spacing: 1px;
+  }
+
+  /* Typography */
+  .slide-title {
+    font-size: 42px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+    line-height: 1.2;
+    color: #f1f5f9;
+  }
+  .slide-subtitle {
+    font-size: 22px;
+    font-weight: 400;
+    color: #94a3b8;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .slide-note {
+    font-size: 15px;
+    color: #4b5563;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  /* Two-column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 28px;
+  }
+
+  /* Card */
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px 32px;
+  }
+  .card-red { border-top: 3px solid #e94560; }
+  .card-green { border-top: 3px solid #10b981; }
+  .card-neutral { border-top: 3px solid #6366f1; }
+
+  .card-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .label-red { color: #e94560; }
+  .label-green { color: #10b981; }
+
+  .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #e8eaf0;
+  }
+
+  ul.bullet-list {
+    list-style: none;
+    padding: 0;
+  }
+  ul.bullet-list li {
+    font-size: 16px;
+    color: #cbd5e1;
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+  ul.bullet-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #4b5563;
+  }
+  ul.bullet-list.red li::before { color: #e94560; }
+  ul.bullet-list.green li::before { color: #10b981; }
+
+  /* Big number */
+  .big-num {
+    font-size: 68px;
+    font-weight: 800;
+    line-height: 1;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .big-num.red { color: #e94560; }
+  .big-num.green { color: #10b981; }
+
+  .num-label {
+    font-size: 14px;
+    color: #6b7280;
+    letter-spacing: 0.5px;
+  }
+
+  .num-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 16px;
+  }
+  .num-item {
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Table */
+  .compare-table {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+    margin-top: 28px;
+    font-size: 16px;
+  }
+  .compare-table th {
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+  }
+  .compare-table th:nth-child(1) { text-align: left; color: #6b7280; }
+  .compare-table th:nth-child(2) { color: #e94560; }
+  .compare-table th:nth-child(3) { color: #10b981; }
+  .compare-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #cbd5e1;
+  }
+  .compare-table td:nth-child(1) { color: #94a3b8; font-size: 14px; }
+  .compare-table td:nth-child(2) { text-align: center; color: #fca5a5; }
+  .compare-table td:nth-child(3) { text-align: center; color: #6ee7b7; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 32px;
+    width: 100%;
+    max-width: 900px;
+  }
+  .tl-block {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 16px 14px;
+    text-align: center;
+    font-size: 13px;
+    color: #cbd5e1;
+    border: 1px solid rgba(255,255,255,0.08);
+    line-height: 1.4;
+  }
+  .tl-block.red-block { border-color: rgba(233,69,96,0.4); background: rgba(233,69,96,0.08); }
+  .tl-block.green-block { border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.08); }
+  .tl-block.mid-block { border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.08); color: #a5b4fc; }
+  .tl-arrow {
+    font-size: 22px;
+    color: #374151;
+    padding: 0 10px;
+    flex-shrink: 0;
+  }
+  .tl-label {
+    font-size: 11px;
+    color: #4b5563;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* Highlight box */
+  .highlight-box {
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.25);
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin-top: 20px;
+    font-size: 15px;
+    color: #a5b4fc;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  /* Quote */
+  .quote-box {
+    background: rgba(233,69,96,0.08);
+    border-left: 3px solid #e94560;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 20px;
+    margin-top: 12px;
+    font-size: 15px;
+    color: #fca5a5;
+    font-style: italic;
+  }
+
+  /* Cover slide */
+  .cover-tag {
+    display: inline-block;
+    background: rgba(99,102,241,0.15);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 13px;
+    color: #818cf8;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #e94560, #10b981);
+    margin: 20px auto;
+    border-radius: 2px;
+  }
+  .cover-meta {
+    font-size: 14px;
+    color: #374151;
+    margin-top: 8px;
+  }
+
+  /* Summary cards */
+  .summary-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 30px;
+  }
+  .summary-quote {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .summary-fit {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 6px;
+  }
+  .summary-fit span {
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-right: 4px;
+  }
+
+  /* Recommend bullets */
+  .rec-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 16px;
+    max-width: 700px;
+    text-align: left;
+  }
+  .rec-list li {
+    font-size: 17px;
+    color: #cbd5e1;
+    padding: 8px 0 8px 28px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .rec-list li:last-child { border-bottom: none; }
+  .rec-list li .num {
+    position: absolute;
+    left: 0;
+    font-weight: 800;
+    color: #6366f1;
+  }
+  .rec-list li span { color: #10b981; font-weight: 600; }
+
+  .warning-tag {
+    display: inline-block;
+    background: rgba(245,158,11,0.12);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #fbbf24;
+    margin-top: 20px;
+  }
+
+  /* Mobile warning */
+  #mobile-warning {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #0a0e1a;
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+  }
+  #mobile-warning h2 { font-size: 22px; color: #f1f5f9; margin-bottom: 12px; }
+  #mobile-warning p { font-size: 15px; color: #6b7280; }
+
+  @media (max-width: 800px) {
+    #mobile-warning { display: flex; }
+  }
+
+  /* Icon dots */
+  .dot-red { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #e94560; margin-right: 8px; }
+  .dot-green { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981; margin-right: 8px; }
+
+  /* Slide 7 position */
+  .scene-tag {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .scene-tag.red { color: #e94560; }
+  .scene-tag.green { color: #10b981; }
+
+  /* Slide 4 user role */
+  .role-label {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .role-bad { background: rgba(233,69,96,0.15); color: #e94560; border: 1px solid rgba(233,69,96,0.3); }
+  .role-good { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+</style>
+</head>
+<body>
+
+<div id="mobile-warning">
+  <h2>请在桌面浏览器查看</h2>
+  <p>此演示文稿针对宽屏设计，最小宽度 800px</p>
+</div>
+
+<div id="progress-bar"></div>
+<div id="slide-counter">1 / 9</div>
+
+<button class="nav-btn" id="btn-prev">&#8592;</button>
+<button class="nav-btn" id="btn-next">&#8594;</button>
+
+<div id="slides-wrapper">
+
+  <!-- Slide 1: Cover -->
+  <div class="slide active" id="slide-1">
+    <span class="slide-badge">01 / 09</span>
+    <div class="cover-tag">内部评估报告</div>
+    <div class="slide-title" style="font-size:52px;">AI 开发工具对比</div>
+    <div class="slide-subtitle">Codex &nbsp;vs&nbsp; Claude Code + Harness</div>
+    <div class="cover-divider"></div>
+    <p style="font-size:17px;color:#64748b;text-align:center;max-width:560px;line-height:1.7;">
+      基于同一产品真实开发过程的多团队评估<br>
+      Synapse Digital Twin Collaboration Platform
+    </p>
+    <p class="cover-meta" style="margin-top:20px;">2026-04-28 &nbsp;·&nbsp; Synapse-PJ 内部</p>
+  </div>
+
+  <!-- Slide 2: Background -->
+  <div class="slide" id="slide-2">
+    <span class="slide-badge">02 / 09</span>
+    <div class="slide-title" style="font-size:36px;">同一产品，两种工具</div>
+    <div class="two-col">
+      <div class="card card-red">
+        <div class="card-label label-red"><span class="dot-red"></span>工具 A — Codex</div>
+        <ul class="bullet-list red">
+          <li>工具形态：对话式 AI 助手</li>
+          <li>13 轮对话过程记录</li>
+          <li>重点：沟通过程与协作模式</li>
+          <li>参与深度：用户高度参与</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <div class="card-label label-green"><span class="dot-green"></span>工具 B — Claude Code + Lysander Harness</div>
+        <ul class="bullet-list green">
+          <li>工具形态：Claude Code + 自研执行链框架</li>
+          <li>33.6 小时完整时间线记录</li>
+          <li>重点：阶段交付与执行效率</li>
+          <li>参与深度：AI 高度自主</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box">同一产品 · 不同工具 → 横向对比有效</div>
+  </div>
+
+  <!-- Slide 3: Key Numbers -->
+  <div class="slide" id="slide-3">
+    <span class="slide-badge">03 / 09</span>
+    <div class="slide-title" style="font-size:36px;">关键数字对比</div>
+    <div class="two-col" style="margin-top:24px;">
+      <div class="card card-red">
+        <div class="card-label label-red"><span class="dot-red"></span>工具 A — Codex</div>
+        <div class="num-grid">
+          <div class="num-item">
+            <span class="big-num red" data-target="multi" style="font-size:42px;">多次</span>
+            <span class="num-label">用户强制干预</span>
+          </div>
+          <div class="num-item">
+            <span class="big-num red" data-target="0">0</span>
+            <span class="num-label">内建自动化测试</span>
+          </div>
+          <div class="num-item" style="grid-column: span 2;">
+            <span style="font-size:18px;color:#fca5a5;font-weight:600;">无质量门禁 · 无治理交付物</span>
+          </div>
+        </div>
+      </div>
+      <div class="card card-green">
+        <div class="card-label label-green"><span class="dot-green"></span>工具 B — Claude Code + Harness</div>
+        <div class="num-grid">
+          <div class="num-item">
+            <span class="big-num green" data-target="90" id="num-90">0</span>
+            <span class="num-label">自主执行占比 %</span>
+          </div>
+          <div class="num-item">
+            <span class="big-num green" data-target="274" id="num-274">0</span>
+            <span class="num-label">自动化测试通过</span>
+          </div>
+          <div class="num-item">
+            <span class="big-num green" data-target="88" id="num-88" style="font-size:48px;">0</span>
+            <span class="num-label">Phase 最低评分</span>
+          </div>
+          <div class="num-item">
+            <span style="font-size:16px;color:#6ee7b7;font-weight:600;display:block;margin-top:8px;">PMC + 4份OBS文档</span>
+            <span class="num-label">治理交付物</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Execution Autonomy -->
+  <div class="slide" id="slide-4">
+    <span class="slide-badge">04 / 09</span>
+    <div class="slide-title" style="font-size:38px;">执行主权：谁在做工作？</div>
+    <div class="slide-subtitle" style="font-size:17px;margin-bottom:4px;">用户是"决策者"还是"测试员"？</div>
+    <div class="two-col" style="margin-top:20px;">
+      <div class="card card-red">
+        <div class="role-bad">用户 = 测试员</div>
+        <div class="card-label label-red"><span class="dot-red"></span>工具 A 问题</div>
+        <ul class="bullet-list red">
+          <li>Round 4-6：用户被迫手动触发测试</li>
+          <li>每修复一层，用户重新参与验证</li>
+          <li>用户陷入重复性操作循环</li>
+        </ul>
+        <div class="quote-box">
+          "你在让我做测试员"<br>
+          <span style="font-size:12px;color:#9ca3af;">— 总裁 Round 8 明确抗议</span>
+        </div>
+      </div>
+      <div class="card card-green">
+        <div class="role-good">用户 = 决策者</div>
+        <div class="card-label label-green"><span class="dot-green"></span>工具 B 表现</div>
+        <ul class="bullet-list green">
+          <li>~15 条总裁指令 = 4 个完整 Phase</li>
+          <li>策略批准 / 架构决策 / 产品线注册</li>
+          <li>用户始终保持决策者角色</li>
+          <li>AI 团队处理全部执行细节</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Quality -->
+  <div class="slide" id="slide-5">
+    <span class="slide-badge">05 / 09</span>
+    <div class="slide-title" style="font-size:38px;">质量机制对比</div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th><span class="dot-red"></span>工具 A</th>
+          <th><span class="dot-green"></span>工具 B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>质量门禁</td>
+          <td>无内建</td>
+          <td>强制 ≥ 85 / 100</td>
+        </tr>
+        <tr>
+          <td>测试方式</td>
+          <td>手动 Slack 触发</td>
+          <td>274 自动化测试</td>
+        </tr>
+        <tr>
+          <td>问题发现</td>
+          <td>被动（用户触发）</td>
+          <td>主动（Mock 全覆盖）</td>
+        </tr>
+        <tr>
+          <td>交付标准</td>
+          <td>隐性（"能跑了"）</td>
+          <td>显性（9 / 9 验收标准）</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="highlight-box" style="background:rgba(245,158,11,0.07);border-color:rgba(245,158,11,0.25);color:#fbbf24;">
+      ⚠️ 共同盲区：两个工具在生产接入阶段均暴露出真实 Bug
+    </div>
+  </div>
+
+  <!-- Slide 6: Test Strategy -->
+  <div class="slide" id="slide-6">
+    <span class="slide-badge">06 / 09</span>
+    <div class="slide-title" style="font-size:36px;">技术能力：测试策略</div>
+    <div class="slide-subtitle" style="font-size:16px;">Mock 全绿 ≠ 生产就绪</div>
+    <div class="two-col" style="margin-top:20px;">
+      <div class="card card-red">
+        <span class="scene-tag red">工具 A — 真实集成优先</span>
+        <ul class="bullet-list" style="margin-top:8px;">
+          <li style="color:#6ee7b7;">✅ 真实信号，高信噪比</li>
+          <li style="color:#fca5a5;">❌ 每次需用户手动触发</li>
+          <li style="color:#fca5a5;">❌ 无法批量回归测试</li>
+          <li style="color:#fca5a5;">❌ 依赖外部服务可用性</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <span class="scene-tag green">工具 B — Mock 优先 + 生产补充</span>
+        <ul class="bullet-list" style="margin-top:8px;">
+          <li style="color:#6ee7b7;">✅ 274 测试可一键回归</li>
+          <li style="color:#6ee7b7;">✅ 主动发现盲区并上报</li>
+          <li style="color:#6ee7b7;">✅ 无需外部依赖即可运行</li>
+          <li style="color:#fbbf24;">⚠️ 生产接入仍暴露 7 类 Bug</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Use Cases -->
+  <div class="slide" id="slide-7">
+    <span class="slide-badge">07 / 09</span>
+    <div class="slide-title" style="font-size:38px;">适用场景定位</div>
+    <div class="two-col" style="margin-top:24px;">
+      <div class="card card-red">
+        <span class="scene-tag red">工具 A — 最适合</span>
+        <ul class="bullet-list red">
+          <li>早期战略规划与原型</li>
+          <li>快速 PoC，容忍高参与度</li>
+          <li>小规模工具 / 脚本开发</li>
+          <li>探索性对话，方向未定</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <span class="scene-tag green">工具 B — 最适合</span>
+        <ul class="bullet-list green">
+          <li>多 Phase 产品开发</li>
+          <li>需要质量门禁的生产系统</li>
+          <li>需治理交付物的项目</li>
+          <li>希望保持"决策者"角色</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Recommendation -->
+  <div class="slide" id="slide-8">
+    <span class="slide-badge">08 / 09</span>
+    <div class="slide-title" style="font-size:36px;">选型建议</div>
+    <div class="slide-subtitle" style="font-size:17px;">推荐混合使用路径</div>
+    <div class="timeline">
+      <div class="tl-block red-block">
+        战略规划 / 原型<br>
+        <span class="tl-label">工具 A</span>
+      </div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-block mid-block">
+        方向确认<br>
+        <span class="tl-label">切换节点</span>
+      </div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-block green-block">
+        产品化交付<br>
+        <span class="tl-label">工具 B</span>
+      </div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-block" style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.05);">
+        版本发布 + 治理<br>
+        <span class="tl-label">工具 B</span>
+      </div>
+    </div>
+    <ol class="rec-list">
+      <li><span class="num">1</span> 主线工具：<span>工具 B</span>（治理优先，跨会话连续执行）</li>
+      <li><span class="num">2</span> 早期探索：工具 A（快速发散，低成本试错）</li>
+      <li><span class="num">3</span> 无论哪个工具：强制设立"生产集成验证 Phase"</li>
+    </ol>
+    <div class="warning-tag">
+      ⚠️ 工具 B 优势 = Claude Code + Harness 组合，非 Claude Code 单独
+    </div>
+  </div>
+
+  <!-- Slide 9: Conclusion -->
+  <div class="slide" id="slide-9">
+    <span class="slide-badge">09 / 09</span>
+    <div class="slide-title" style="font-size:36px;">一句话总结</div>
+    <div class="summary-two">
+      <div class="card card-red" style="padding:28px;">
+        <div class="card-label label-red"><span class="dot-red"></span>工具 A — Codex</div>
+        <div class="summary-quote" style="color:#e94560;">"战略探索强，执行自主弱"</div>
+        <div class="summary-fit">
+          <span style="background:rgba(16,185,129,0.1);color:#6ee7b7;">适合：快速发散</span>
+          <span style="background:rgba(233,69,96,0.1);color:#fca5a5;">不适合：复杂产品交付</span>
+        </div>
+      </div>
+      <div class="card card-green" style="padding:28px;">
+        <div class="card-label label-green"><span class="dot-green"></span>工具 B — Claude Code + Harness</div>
+        <div class="summary-quote" style="color:#10b981;">"执行自主强，框架成本高"</div>
+        <div class="summary-fit">
+          <span style="background:rgba(16,185,129,0.1);color:#6ee7b7;">适合：产品化交付</span>
+          <span style="background:rgba(245,158,11,0.1);color:#fbbf24;">前提：Harness 框架就位</span>
+        </div>
+      </div>
+    </div>
+    <p class="cover-meta" style="margin-top:28px;font-size:13px;">
+      Synapse-PJ &nbsp;·&nbsp; 2026-04-28 &nbsp;·&nbsp; 内部使用
+    </p>
+  </div>
+
+</div>
+
+<script>
+  const totalSlides = 9;
+  let current = 1;
+  let animating = false;
+
+  function updateUI() {
+    document.getElementById('slide-counter').textContent = current + ' / ' + totalSlides;
+    const pct = ((current - 1) / (totalSlides - 1)) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('btn-prev').style.opacity = current === 1 ? '0.25' : '1';
+    document.getElementById('btn-next').style.opacity = current === totalSlides ? '0.25' : '1';
+  }
+
+  function goTo(next) {
+    if (animating) return;
+    if (next < 1 || next > totalSlides) return;
+    if (next === current) return;
+    animating = true;
+
+    const outEl = document.getElementById('slide-' + current);
+    const inEl = document.getElementById('slide-' + next);
+    const dir = next > current ? 1 : -1;
+
+    // Setup incoming slide position
+    inEl.style.transition = 'none';
+    inEl.style.opacity = '0';
+    inEl.style.transform = 'translateX(' + (dir * 50) + 'px)';
+    inEl.style.pointerEvents = 'none';
+
+    // Force reflow
+    inEl.offsetHeight;
+
+    // Animate out
+    outEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    outEl.style.opacity = '0';
+    outEl.style.transform = 'translateX(' + (-dir * 40) + 'px)';
+
+    // Animate in
+    inEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    inEl.style.opacity = '1';
+    inEl.style.transform = 'translateX(0)';
+    inEl.style.pointerEvents = 'all';
+
+    current = next;
+    updateUI();
+
+    setTimeout(() => {
+      outEl.style.transition = 'none';
+      outEl.style.opacity = '0';
+      outEl.style.pointerEvents = 'none';
+      outEl.style.transform = 'translateX(40px)';
+      animating = false;
+
+      // Trigger number animation on slide 3
+      if (current === 3) {
+        triggerCountUp();
+      }
+    }, 420);
+  }
+
+  // Count up animation
+  function countUp(el, target, duration) {
+    if (typeof target !== 'number') return;
+    let start = 0;
+    const startTime = performance.now();
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(start + (target - start) * eased);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  let countUpDone = false;
+  function triggerCountUp() {
+    if (countUpDone) return;
+    countUpDone = true;
+    countUp(document.getElementById('num-90'), 90, 1200);
+    countUp(document.getElementById('num-274'), 274, 1600);
+    countUp(document.getElementById('num-88'), 88, 1000);
+  }
+
+  // Navigation
+  document.getElementById('btn-prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('btn-next').addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
+  // Init
+  updateUI();
+
+  // Ensure initial slide is visible
+  const firstSlide = document.getElementById('slide-1');
+  firstSlide.style.opacity = '1';
+  firstSlide.style.transform = 'translateX(0)';
+  firstSlide.style.pointerEvents = 'all';
+</script>
+</body>
+</html>

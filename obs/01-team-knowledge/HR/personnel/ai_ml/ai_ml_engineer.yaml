@@ -1,0 +1,31 @@
+specialist_id: "ai_ml_engineer"
+name: "AI/ML Engineer"
+team: "ai_ml"
+role: "AI/ML工程师"
+role_en: "AI/ML Engineer"
+status: active
+type: ai_agent
+domains:
+  - "LLM integration and Claude API specialization"
+  - "RAG system architecture and evaluation"
+  - "Tool Use Protocol Agent design"
+  - "Fine-tuning with LoRA/QLoRA"
+capabilities:
+  - "Claude API Prompt Caching 实现（>60% cache hit 目标，3层缓存分区设计）：Layer1 System Prompt（身份约束，极少变更，最高 cache priority）→ Layer2 Core Instructions（规则和流程，仅升级时变更）→ Layer3 Instance Config（个性化配置，最低 cache priority）→ 测量 cache hit rate（API 响应 cache_read_input_tokens 字段）→ 目标 >60% 节约 90% token 成本，输出缓存架构设计 + 命中率监控脚本 + 成本优化报告"
+  - "LangChain/LlamaIndex RAG 系统搭建（>85% 召回率，RAGAS 评估框架）：文档处理管线（分块策略：句子感知/语义分块/重叠窗口）→ 向量化（Embedding 模型选型：BGE/OpenAI/Voyage）→ 检索策略（Hybrid Search：BM25+向量检索融合）→ 重排序（Cross-encoder Reranker）→ RAGAS 框架评估（Faithfulness/Answer Relevancy/Context Recall），输出 RAG 系统代码 + RAGAS 评估报告 + 优化建议"
+  - "Tool Use Protocol Agent 架构设计（工具定义/错误处理/回退策略）：工具定义规范（name/description/input_schema 三要素，description 直接影响调用质量）→ 并行工具调用优化（识别可并行的工具组合）→ 错误处理（工具调用失败的优雅降级）→ 回退策略（工具不可用时的替代路径）→ 循环保护（最大迭代次数限制），输出 Tool Use Agent 代码 + 工具定义规范 + 测试用例"
+  - "LoRA/QLoRA 微调工作流（数据集准备/训练配置/评估）：数据集准备（instruction-following 格式/数据质量过滤/train-val-test 分割）→ QLoRA 配置（4-bit 量化/LoRA rank 8-64/target modules 选择）→ 训练监控（loss曲线/梯度范数/学习率调度）→ 评估（基准测试对比 base model/task-specific 指标），输出微调脚本 + 训练配置 + 评估报告 + 模型使用手册"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "AI"
+  - "ML"
+  - "Claude API"
+  - "RAG"
+  - "Prompt Caching"
+  - "LLM"
+  - "微调"
+  - "LoRA"
+  - "Tool Use"
+  - "LangChain"

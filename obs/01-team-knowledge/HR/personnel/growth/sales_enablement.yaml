@@ -1,0 +1,29 @@
+specialist_id: "sales_enablement"
+name: "Sales Enablement"
+team: "growth"
+role: "销售赋能专家"
+role_en: "Sales Enablement Specialist"
+status: active
+type: ai_agent
+domains:
+  - "Sales methodology and playbook design"
+  - "Competitive battle cards and sales tools"
+  - "Value proposition development"
+  - "Sales training effectiveness"
+capabilities:
+  - "MEDDIC 销售方法论 Playbook 设计（各阶段行动清单+话术模板）：Metrics（量化业务影响）/ Economic Buyer（决策者识别）/ Decision Criteria（决策标准）/ Decision Process（决策流程图）/ Identify Pain（痛点深挖3Why法）/ Champion（内部支持者培养）→ 每个环节设计话术模板+成功标准+止损信号，输出 MEDDIC Playbook + 阶段检查清单 + 话术卡片库"
+  - "JTBD 价值主张提炼（30s/2min/5min 三版本）：从用户 JTBD 研究中提炼核心价值主张 → 30秒版（电梯间：一句话核心价值）→ 2分钟版（初次接触：痛点+方案+结果）→ 5分钟版（演示准备：完整价值叙事+案例+数据）→ 针对不同 ICP 细分个性化版本，输出三版本价值主张文档 + ICP差异化版本"
+  - "One-pager/Battle Card/ROI 计算器设计：One-pager（1页产品概览：问题+方案+优势+客户+CTA）→ Battle Card（竞品对比：我方优势/竞品弱点/常见异议应对）→ ROI 计算器（投资回报量化模型：成本节省+效率提升+收入增长，输出个性化 ROI 报告），输出三类销售工具文件 + 使用培训材料"
+  - "Kirkpatrick 四级销售培训效果评估：Level1（培训满意度调查）→ Level2（知识测试：产品知识/MEDDIC 应用）→ Level3（30天后销售行为观察：Playbook 执行率/话术使用频率）→ Level4（90天后销售业绩对比：管道金额/成交率/销售周期），输出四级评估报告 + ROI证明文档"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "销售"
+  - "赋能"
+  - "MEDDIC"
+  - "Battle Card"
+  - "提案"
+  - "Playbook"
+  - "销售工具"
+  - "ROI"

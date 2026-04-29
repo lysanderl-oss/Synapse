@@ -1,0 +1,76 @@
+# OPC CFO Agent — 财务配置
+# 设计：Phase 2 T3-1 | execution_auditor | 2026-04-22
+
+version: "1.0.0"
+updated: "2026-04-22"
+
+# ── 预算控制 ────────────────────────────────────────────────────────────────
+budget:
+  daily_limit: 50.0           # 美元/天上限
+  alert_threshold: 0.8         # 触发 critical 预警的消耗比例（80%）
+  warn_threshold: 0.6          # 触发 warning 状态的消耗比例（60%）
+  task_budget_default: 10.0    # 单任务默认预算上限（美元）
+
+# ── 定价模型 ────────────────────────────────────────────────────────────────
+pricing:
+  cost_per_token: 0.000003    # Claude Sonnet 4.6 输入+输出混合（美元）
+  # 参考：Sonnet 4.6 $3/M input tokens, $15/M output tokens → 混合均值 ≈ $3/MT
+
+  # 不同模型定价
+  models:
+    sonnet_4_6: 0.000003      # 默认
+    sonnet_4_5: 0.000003
+    opus_3_5:  0.000015
+    haiku_3_5: 0.0000002
+
+# ── 财务预警规则 ────────────────────────────────────────────────────────────
+alerting:
+  # 触发条件
+  triggers:
+    over_budget:        true   # 超出日预算
+    anomalous_spend:   true   # 单次任务成本超过 task_budget_default 的 3x
+    cost_trend_up:      true   # 连续 3 天消耗环比增长 >20%
+    daily_critical:     true   # 消耗达到 alert_threshold（80%）
+
+  # 告警级别
+  levels:
+    normal:   usage < 60%
+    warning:  60% <= usage < 80%
+    critical: 80% <= usage < 100%
+    exceeded: usage >= 100%
+
+# ── ROI 分析配置 ────────────────────────────────────────────────────────────
+roi:
+  min_acceptable: 1.0          # ROI 最低要求（价值/成本 >= 1.0x）
+  good_threshold: 2.0          # 良好 ROI 阈值
+  # task_value 由调用方估算传入，默认 0（无价值估算时跳过 ROI 评分）
+
+# ── 报告配置 ────────────────────────────────────────────────────────────────
+reporting:
+  daily_burn_rate: true        # 生成每日消耗报告
+  weekly_summary:   true        # 生成每周汇总
+  monthly_report:   true        # 生成月度报告
+  state_file: "agent-CEO/config/cfo_state.json"
+
+# ── 执行审计集成 ────────────────────────────────────────────────────────────
+integration:
+  hook_into_task_budget: true  # 执行任务前调用 check_task_budget()
+  record_on_task_complete: true  # 任务完成后自动记录成本
+  sync_with_active_tasks: true  # 与 active_tasks.yaml 同步
+
+  # 财务数据导出
+  export_formats:
+    - json
+    - markdown
+
+# ── Agent 路由关键字 ────────────────────────────────────────────────────────
+routing:
+  keywords:
+    - "成本监控"
+    - "预算控制"
+    - "ROI"
+    - "财务预警"
+    - "消耗分析"
+    - "日预算"
+    - "Token消耗"
+    - "费用报告"

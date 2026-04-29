@@ -1,0 +1,14 @@
+[
+  {
+    "implemented": "IMP-20260422133322-A01",
+    "category": "team",
+    "action": "Agent 'harness_engineer' 阻塞率 25%（4次阻塞），建议审查其工作流程或补充必要工具/知识",
+    "evidence": [
+      "过去16个任务中阻塞4次",
+      "阻塞率 25%",
+      "Agent ID: harness_engineer"
+    ],
+    "priority": "P1",
+    "timestamp": "2026-04-22T13:33:22.949105"
+  }
+]

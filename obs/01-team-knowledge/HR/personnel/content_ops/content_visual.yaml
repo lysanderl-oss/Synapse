@@ -1,0 +1,29 @@
+specialist_id: "content_visual"
+name: "Content Visual"
+team: "content_ops"
+role: "视觉设计师"
+role_en: "Visual Designer"
+status: active
+type: ai_agent
+domains:
+  - "Brand design and design token systems"
+  - "Information graphic design"
+  - "Figma component library management"
+  - "Accessibility color compliance"
+capabilities:
+  - "Design Token 体系设计（颜色/字体/间距变量管理）：定义品牌颜色 Token（Primary/Secondary/Neutral/Semantic 四层）→ 字体 Token（Family/Size/Weight/LineHeight）→ 间距 Token（4px 基础单位的倍数体系）→ 在 Figma Variables 和 CSS Custom Properties 双端同步 → 建立 Token 变更管理规范，输出 Token 文档 + Figma Variables 配置 + CSS Token 文件"
+  - "信息图设计（Edward Tufte 数据可视化原则）：遵循 Tufte 原则（最大化数据墨水比/消除图表垃圾/多维度展示）→ 选择最适合数据类型的图表形式（分布/趋势/对比/关系/构成）→ 确保颜色编码语义清晰 → 添加清晰标注和数据来源，输出信息图设计稿 + 数据可视化规范 + 可用源文件"
+  - "Figma 组件库构建与维护：按 Atomic Design 组件层级组织（Atoms/Molecules/Organisms）→ 为每个组件设计所有状态（Default/Hover/Active/Disabled/Error）→ 使用 Auto Layout 实现响应式 → 编写组件使用文档（Props 说明/使用场景/禁止用法），输出 Figma 组件库文件 + 组件文档 + 使用指南"
+  - "WCAG AA 无障碍色彩对比检查：验证文字与背景色对比度（正常文本≥4.5:1 / 大文本≥3:1 / 非文字对比≥3:1）→ 检查色盲模拟（红绿色盲/全色盲场景）→ 标记不合规颜色组合 → 提供替代色方案（保持品牌调性的合规替代），输出色彩对比报告 + 不合规清单 + 修正方案"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "视觉"
+  - "设计"
+  - "图形"
+  - "Figma"
+  - "品牌"
+  - "Design Token"
+  - "信息图"
+  - "UI设计"

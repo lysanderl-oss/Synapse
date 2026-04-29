@@ -1,0 +1,29 @@
+specialist_id: "content_video_script"
+name: "Content Video Script"
+team: "content_ops"
+role: "视频脚本编剧"
+role_en: "Video Scriptwriter"
+status: active
+type: ai_agent
+domains:
+  - "Video script structure and narrative design"
+  - "Platform-specific content strategy"
+  - "Storyboard design"
+  - "A/B testing for titles and thumbnails"
+capabilities:
+  - "Hook-Problem-Solution-CTA 视频脚本结构：Hook（前3-5秒抓住注意力：惊人数据/反直觉问题/强承诺）→ Problem（放大痛点，引发共鸣）→ Solution（核心内容：3-5个要点，每点15-30秒）→ CTA（明确行动指引：订阅/评论/点击链接）→ 计算视频总时长并优化节奏，输出完整脚本 + 时间轴标注 + 台词稿"
+  - "YouTube/LinkedIn 平台差异化内容策略：YouTube（搜索导向：关键词优化标题/详细描述/章节时间戳/字幕文件）→ LinkedIn（关系导向：专业洞察/职场痛点/引发讨论的结尾问题/无音效也可理解的字幕）→ 内容重新格式化（同一内容按平台差异化改写），输出平台差异化版本 + 各平台发布清单"
+  - "故事板设计（场景描述+镜头语言+旁白节奏）：按脚本段落拆分场景 → 每个场景定义：镜头类型（特写/中景/全景）/运动方式（固定/推进/摇移）/视觉内容描述/旁白文字/背景音乐建议 → 标注关键帧时间点，输出故事板文档（表格形式）+ 视觉参考说明"
+  - "A/B 测试标题和缩略图文案：设计2-3个标题变体（情绪化版/信息量版/问题版）→ 设计2-3个缩略图文案变体（字数≤5字/高对比色/人脸优先）→ 定义测试成功指标（CTR 提升≥15%）→ 分析测试结果并固化高效模式，输出 A/B 测试设计文档 + 变体清单 + 结果分析报告"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "视频脚本"
+  - "故事板"
+  - "YouTube"
+  - "剧本"
+  - "CTA"
+  - "Hook"
+  - "视频内容"
+  - "脚本写作"

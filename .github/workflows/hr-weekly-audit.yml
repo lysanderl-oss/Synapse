@@ -1,0 +1,79 @@
+name: HR Weekly Audit
+
+on:
+  schedule:
+    - cron: '0 19 * * 0'  # UTC 19:00 Sunday = Dubai 23:00 Sunday
+  workflow_dispatch:
+
+concurrency:
+  group: hr-weekly-audit
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  hr-weekly-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install anthropic PyYAML python-dotenv requests
+
+      - name: Run HR Weekly Audit
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONIOENCODING: utf-8
+        run: python3 -X utf8 agent-CEO/dispatch_weekly_audit.py
+
+      - name: Commit and push audit report
+        run: |
+          git config user.name "synapse-hr-bot"
+          git config user.email "hr-bot@synapse-pj.local"
+          git add obs/01-team-knowledge/HR/weekly-audit/ || true
+          git add logs/ || true
+          if git diff --staged --quiet; then
+            echo "[HR Audit] No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(hr): weekly audit $(date -u +%Y-%m-%d) [skip ci]"
+          for i in 1 2 3; do
+            if git push origin HEAD:${{ github.ref_name }}; then
+              echo "[HR Audit] Push success on attempt $i"
+              exit 0
+            fi
+            echo "[HR Audit] Push attempt $i failed, rebasing..."
+            git pull --rebase origin ${{ github.ref_name }} || { echo "Rebase failed"; exit 1; }
+          done
+          echo "[HR Audit] Push failed after 3 attempts"
+          exit 1
+
+      - name: Notify failure via Slack
+        if: failure()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping"
+            exit 0
+          fi
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"recipient\": \"president\",
+              \"title\": \"🚨 HR 周度审查失败 ${{ github.run_id }}\",
+              \"body\": \"hr-weekly-audit 异常 — 见 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\",
+              \"source\": \"hr-weekly-audit\",
+              \"priority\": \"critical\"
+            }" || echo "[Slack] notify failed (non-blocking)"

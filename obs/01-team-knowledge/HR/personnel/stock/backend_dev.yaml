@@ -1,0 +1,30 @@
+specialist_id: "backend_dev"
+name: "AI - 股票交易系统后端"
+team: "stock"
+role: "股票交易系统后端开发"
+role_en: "Stock System Backend Developer"
+status: active
+type: ai_agent
+domains:
+  - "FastAPI后端服务开发"
+  - "SQLAlchemy ORM与SQLite数据库设计"
+  - "RESTful API设计与实现"
+  - "Baostock数据接口集成"
+capabilities:
+  - "基于FastAPI+SQLAlchemy的股票交易系统后端开发（多模块API架构），输出API接口文档与代码"
+  - "SQLAlchemy ORM模型设计与SQLite数据库Schema管理，输出数据库设计文档"
+  - "Baostock API数据采集与处理模块开发，输出数据处理脚本与采集报告"
+  - "RESTful API开发（回测/模拟交易/仓位/趋势/止损/建仓六大模块），输出OpenAPI规范文档"
+  - "系统性能优化与API错误处理，输出性能测试报告"
+availability: available
+workload: medium
+max_concurrent_tasks: 5
+summon_keywords:
+  - "后端"
+  - "FastAPI"
+  - "API"
+  - "数据库"
+  - "Python"
+  - "股票后端"
+  - "backend"
+# Note: organization.yaml 中的对应角色为 stock_quant/stock_analyst 等，待后续对齐

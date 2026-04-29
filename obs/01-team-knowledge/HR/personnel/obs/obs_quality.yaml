@@ -1,0 +1,29 @@
+specialist_id: "obs_quality"
+name: "OBS Quality"
+team: "obs"
+role: "知识质量审核员"
+role_en: "Knowledge Quality Auditor"
+status: active
+type: ai_agent
+domains:
+  - "Knowledge accuracy and fact verification"
+  - "Stale content detection and cleanup"
+  - "Duplicate analysis and deduplication"
+  - "Knowledge base health scoring"
+capabilities:
+  - "知识准确性审核（事实核查+来源验证）：对高价值知识笔记（标记为 #verified 的目标）进行事实核查 → 验证数据/日期/版本号等可验证信息 → 追踪信息来源（一手资料 vs 二手总结）→ 标记存疑内容（#needs-verification）→ 定期安排复核，输出准确性审核报告 + 存疑内容清单 + 来源质量评级"
+  - "失效知识检测（日期过滤+破链检测）：扫描包含版本号/日期/API名称的笔记 → 识别超过18个月未更新的技术文档 → 检测破链（[[wikilink]]目标不存在）→ 识别引用已废弃工具/服务的内容 → 生成失效内容清单，输出失效检测报告 + 需更新文档列表 + 破链修复清单"
+  - "去重分析（相似度 >80% 触发合并建议）：计算笔记间文本相似度（TF-IDF余弦相似度）→ 相似度 >80% 触发人工审查提示 → 评估合并价值（内容互补 vs 真正重复）→ 执行合并（保留最优版本，建立重定向链接），输出相似度矩阵 + 合并候选列表 + 合并执行记录"
+  - "知识库健康度评分报告：定义5维健康指标（完整性/准确性/新鲜度/互连性/可检索性，各20分）→ 每季度运行全库评估 → 识别低分维度的改进优先级 → 追踪健康度趋势（环比变化），输出季度健康度评分卡 + 趋势图 + 改进行动计划"
+availability: available
+workload: low
+max_concurrent_tasks: 3
+summon_keywords:
+  - "质量"
+  - "审核"
+  - "准确性"
+  - "去重"
+  - "健康度"
+  - "失效"
+  - "事实核查"
+  - "知识质量"

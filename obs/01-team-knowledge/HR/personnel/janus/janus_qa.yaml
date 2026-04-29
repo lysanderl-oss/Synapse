@@ -1,0 +1,32 @@
+specialist_id: "janus_qa"
+name: "AI - 交付质量经理 (QA)"
+team: "janus"
+role: "交付质量经理"
+role_en: "Delivery Quality Manager"
+status: active
+type: ai_agent
+domains:
+  - "建筑数字化交付全流程质量管控"
+  - "阶段门(G1-G4)质量审计"
+  - "UAT测试管理与执行"
+  - "数据质量验证（静态模型+动态IoT）"
+capabilities:
+  - "四级阶段门质量审计执行（G1启动/G2策划/G3执行/G4验收，每级标准检查清单），输出门禁审计报告"
+  - "静态交付质量核查（土建模型/机电模型/空间对象自检/10%随机抽验标准），输出静态质量核查报告"
+  - "动态交付数据质量验证（OPS核查/仪表表底数连续性/负载能耗偏差/数据上下级一致性），输出动态数据质量报告"
+  - "UAT测试全流程管理（用例编制/测试方案制定/执行监督/测试报告出具），输出UAT完整测试包"
+  - "客户验收材料质量审核与价值分析报告质量把关，输出验收材料质量评估报告"
+  - "试运行数据统计分析与运行质量评估，输出试运行质量报告"
+availability: available
+workload: medium
+max_concurrent_tasks: 5
+summon_keywords:
+  - "交付质量"
+  - "QA"
+  - "阶段门"
+  - "内验"
+  - "UAT测试"
+  - "数据质量"
+  - "验收质量"
+  - "质量审计"
+  - "Janus QA"

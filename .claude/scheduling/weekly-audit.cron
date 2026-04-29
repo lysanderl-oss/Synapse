@@ -1,0 +1,22 @@
+# Synapse Harness Weekly Audit — Cron Configuration
+# ----------------------------------------------------------------
+# Activates the weekly Harness audit every Sunday 23:00 Dubai (= 19:00 UTC)
+# Per president 2026-04-27 decision ②A weekly review activation.
+#
+# Linux server activation:
+#   crontab -e
+#   <paste the line below, adjust path to your Synapse-Mini clone>
+#
+# Windows Task Scheduler activation (alternative):
+#   - Trigger: Weekly, Sunday, 23:00 (Asia/Dubai)
+#   - Action:  python -X utf8 "C:\Users\<user>\Synapse-Mini\agent-CEO\dispatch_weekly_audit.py"
+#
+# Output report path:
+#   obs/01-team-knowledge/HR/weekly-audit/week-audit-YYYY-WXX.md
+#
+# Failure escalation:
+#   - 1 missed week  -> Lysander dispatches harness_engineer to backfill
+#   - 2 missed weeks -> L4 president escalation
+
+# Sunday 23:00 Dubai = Sunday 19:00 UTC
+0 19 * * 0 cd /home/lysanderl/Synapse-Mini && python3 -X utf8 agent-CEO/dispatch_weekly_audit.py >> logs/weekly-audit.log 2>&1

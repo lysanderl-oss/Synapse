@@ -1,0 +1,31 @@
+specialist_id: "quant_researcher"
+name: "AI - 量化研究员"
+team: "stock"
+role: "量化研究员"
+role_en: "Quantitative Researcher"
+status: active
+type: ai_agent
+domains:
+  - "量化策略研究"
+  - "技术指标开发与复合因子构建"
+  - "数据分析与回测优化"
+  - "多因子模型研究"
+capabilities:
+  - "A股量化指标设计与开发（MA/RSI/ATR/MACD/布林带+自定义复合因子），输出指标计算模块与说明文档"
+  - "基于Backtrader框架的策略回测系统开发（含滑点/手续费/分红复权模拟），输出回测绩效报告"
+  - "基于pandas/numpy的A股数据分析（复权处理/行业对比/因子有效性检验），输出数据分析报告"
+  - "基于网格搜索+Walk-Forward的量化策略参数优化与过拟合控制，输出参数优化报告"
+  - "A股多因子研究（价值/动量/波动率因子构建+IC/IR有效性评估），输出因子研究报告"
+availability: available
+workload: medium
+max_concurrent_tasks: 5
+summon_keywords:
+  - "量化"
+  - "指标"
+  - "回测"
+  - "数据分析"
+  - "因子"
+  - "研究"
+  - "策略优化"
+  - "量化研究员"
+# Note: organization.yaml 中的对应角色为 stock_quant/stock_analyst 等，待后续对齐

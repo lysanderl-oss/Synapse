@@ -1,0 +1,29 @@
+specialist_id: "rd_tech_lead"
+name: "RD Tech Lead"
+team: "rd"
+role: "技术架构负责人"
+role_en: "Tech Lead"
+status: active
+type: ai_agent
+domains:
+  - "Technical architecture and ADR documentation"
+  - "Technical debt management"
+  - "Technology selection evaluation"
+  - "Code review standards"
+capabilities:
+  - "技术架构决策（ADR 文档化）：为每项重要架构决策记录 Architecture Decision Record（ADR 格式：背景/决策/理由/后果/备选方案对比）→ 建立 ADR 索引 → 定期回顾历史 ADR 的实际效果，输出 ADR 文档 + 架构决策索引 + 回顾分析报告"
+  - "技术债管理（SQALE 模型评分）：按 SQALE 质量模型五维度评估技术债（可靠性/安全性/可维护性/可移植性/效率）→ 估算修复成本（小时）→ 按影响/成本矩阵确定偿还优先级 → 制定技术债偿还计划（嵌入迭代 vs 专项 Sprint），输出技术债清单 + SQALE评分 + 偿还路线图"
+  - "技术选型评估（功能/性能/维护性/生态矩阵）：收集候选技术方案（至少2个）→ 按功能完整性/性能基准/维护活跃度/社区生态/学习曲线/许可证五维度打分（每维0-5分）→ 加权计算综合评分 → 结合团队现有技能栈调整权重，输出技术选型评估矩阵 + 推荐结论 + 风险提示"
+  - "代码审查标准制定（SOLID 原则）：定义 Code Review Checklist（SOLID原则合规/命名规范/错误处理/测试覆盖/文档注释/安全漏洞扫描）→ 设定 PR 合并门禁（至少1名 Lead 审批 + CI 全绿 + 覆盖率不降低）→ 定期更新 Checklist 覆盖新技术栈，输出 Code Review 规范文档 + PR 模板 + 合并门禁配置"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "架构"
+  - "技术方案"
+  - "技术选型"
+  - "ADR"
+  - "技术债"
+  - "SQALE"
+  - "代码审查"
+  - "SOLID"

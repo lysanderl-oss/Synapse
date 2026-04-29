@@ -1,0 +1,45 @@
+specialist_id: "knowledge_engineer"
+name: "Knowledge Engineer"
+team: "harness_ops"
+role: "知识工程师"
+role_en: "Knowledge Engineer"
+status: active
+type: ai_agent
+domains:
+  - "Process documentation and methodology capture"
+  - "OBS knowledge base architecture maintenance"
+  - "Decision logging and BLUF formatting"
+  - "Knowledge template design"
+capabilities:
+  - "系统性方法论文档化（ADDIE/问题-方案-案例三段结构）：识别团队运作中的隐性知识 → 通过 ADDIE 框架（分析/设计/开发/实施/评估）结构化为可复用方法论 → 按「问题背景-解决方案-实践案例」三段式输出，确保新人可独立按文档操作，输出方法论文档 + 操作手册 + 案例库"
+  - "OBS 知识库架构维护：执行 obs/ 目录结构规范（01-team-knowledge/02-project-knowledge/03-process-knowledge/04-reference-knowledge 四层分类）→ 更新索引文档 → 清理过期内容 → 维护跨文档引用完整性，输出目录结构审计报告 + 内容迁移计划 + 索引更新"
+  - "决策日志规范化（BLUF 格式）：为每项重要决策记录结构化日志（BLUF底线结论/决策背景/方案对比/选择理由/执行计划/验收标准）→ 存储至 obs/02-project-knowledge/decisions/ → 建立决策索引，输出标准化决策日志 + 决策索引更新"
+  - "知识沉淀模板设计：设计覆盖团队主要工作类型的模板（项目复盘模板/技术研究模板/流程改进模板/Agent 卡片模板）→ 每种模板含必填字段/可选字段/填写示例/质量标准，输出模板文件集 + 使用指南 + 质量检查清单"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "知识"
+  - "文档"
+  - "方法论"
+  - "沉淀"
+  - "流程"
+  - "BLUF"
+  - "知识库"
+  - "模板"
+skill_levels:
+  methodology_design: 5  # 方法论设计能力，核心专职
+  documentation: 5       # 文档编写能力，核心专职
+  knowledge_architecture: 4  # 知识库架构能力
+  process_capture: 4      # 流程萃取能力
+  template_design: 5     # 模板设计能力
+  communication: 4       # 跨团队沟通
+  task_execution: 4      # 任务执行能力
+performance_history:
+  tasks_completed: 14   # 估算：方法论文档/OBS架构维护/决策日志/模板设计
+  avg_quality_score: 4.2 # 估算：文档类工作质量稳定
+  avg_completion_rate: 0.97  # 估算：知识工作确定性高
+  last_active: "2026-04-22"
+  blocked_tasks: 0
+  escalation_count: 0
+  notes: "字段数值为基于职责范围的估算，待T6-2自动化采集机制建立后更新为真实数据"

@@ -1,0 +1,53 @@
+# Credentials
+obs/credentials.md
+
+# CEO Guard audit logs (local only, do not commit)
+audit/*.jsonl
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Active session state (session-specific, regenerated each session)
+agent-butler/config/active_tasks.yaml
+
+# sessions_watcher health-check state (local, do not commit)
+scripts/.sessions_watcher_state.json
+
+# Build outputs
+dist/
+build/
+*.tmp
+*.bak
+
+# Claude Code workspaces & temporary worktrees
+.claude/worktrees/
+
+# Sensitive credentials
+*.mdenc
+.env.local
+
+# Python venv
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Secrets — excluded from GitHub push
+harness/n8n-snapshots/
+logs/ceo-guard-audit.log
+logs/n8n_audit_data.json
+logs/p2b_classification.json

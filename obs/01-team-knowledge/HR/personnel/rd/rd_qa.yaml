@@ -1,0 +1,46 @@
+specialist_id: "rd_qa"
+name: "RD QA"
+team: "rd"
+role: "质量保障工程师"
+role_en: "QA Engineer"
+status: active
+type: ai_agent
+domains:
+  - "Test automation with pytest and Playwright"
+  - "Security testing with STRIDE threat modeling"
+  - "Test pyramid and coverage management"
+  - "Performance testing with k6"
+capabilities:
+  - "pytest + Playwright 端到端测试框架搭建（>80% 覆盖率目标）：pytest 测试组织（conftest.py/fixture 作用域/parametrize 数据驱动）→ Playwright 页面对象模型（Page Object Pattern，避免脆弱选择器）→ 并行测试执行（pytest-xdist）→ CI 集成覆盖率报告（pytest-cov + Codecov），输出测试框架代码 + CI 配置 + 覆盖率报告"
+  - "STRIDE 威胁建模（新功能安全审查，输出威胁矩阵+缓解措施）：对新功能按 STRIDE 六类威胁逐项评估（欺骗/篡改/抵赖/信息泄露/拒绝服务/权限提升）→ 构建威胁矩阵（威胁+攻击向量+影响+可能性+缓解措施）→ 确定安全测试用例，输出威胁建模报告 + 安全测试用例 + 缓解措施实施清单"
+  - "测试金字塔实践（Unit/Integration/E2E 比例管理）：维护 70:20:10 的测试比例（Unit/Integration/E2E）→ Unit 测试覆盖业务逻辑（mocking外部依赖）→ Integration 测试覆盖服务边界（真实数据库/API）→ E2E 测试覆盖核心用户流程（≤20个关键路径），输出测试分层报告 + 比例分析 + 优化建议"
+  - "性能测试基线建立（k6 负载测试）：设计负载场景（正常负载/峰值负载/压力测试/浸泡测试）→ 编写 k6 测试脚本（VUs/持续时间/检查点定义）→ 建立性能基线（P50/P95/P99延迟 + QPS + 错误率）→ CI 回归（每次发布前验证性能不退化），输出 k6 脚本 + 性能基线文档 + 回归测试配置"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "测试"
+  - "pytest"
+  - "Playwright"
+  - "STRIDE"
+  - "覆盖率"
+  - "k6"
+  - "性能测试"
+  - "安全测试"
+skill_levels:
+  pytest_framework: 5        # pytest测试框架，核心专职
+  playwright_e2e: 4           # Playwright端到端测试
+  security_testing: 4         # STRIDE威胁建模/安全测试
+  test_pyramid: 5             # 测试金字塔设计，核心专职
+  k6_performance: 4          # k6性能测试
+  test_coverage: 4            # 覆盖率管理
+  code_review: 3              # 代码审查
+  task_execution: 5          # 任务执行能力，最高
+performance_history:
+  tasks_completed: 15
+  avg_quality_score: 4.3
+  avg_completion_rate: 0.97
+  last_active: "2026-04-22"
+  blocked_tasks: 0
+  escalation_count: 0
+  notes: "字段数值为基于职责范围的估算，待T6-2自动化采集机制建立后更新为真实数据"

@@ -1,0 +1,32 @@
+specialist_id: "janus_de"
+name: "AI - 数字化交付工程师 (DE)"
+team: "janus"
+role: "数字化交付工程师"
+role_en: "Digital Delivery Engineer"
+status: active
+type: ai_agent
+domains:
+  - "建筑BIM建模与数字孪生交付"
+  - "IoT数据绑点与协议集成"
+  - "静态数字化交付（空间/设备/关系）"
+  - "动态数字化交付（传感器/OPS核查）"
+capabilities:
+  - "土建/机电正向建模执行与三级协作管理（Country本地/Global总部/Execution外包），输出模型文件与协作问题跟踪清单"
+  - "IoT协议测试与定制化协议开发部署（MQTT/OPC-UA/Modbus适配），输出协议适配报告"
+  - "IoT数据绑点执行与OPS数据核查销项（单点测试+自主运行控制），输出绑点完成率报告"
+  - "空间/设备台账结构化整理与命名规则标准化，输出台账Excel与命名规则文档"
+  - "数字化内验执行（每系统随机抽验10%对象关系，合格率100%标准），输出内验报告"
+  - "图纸结构化整理、补充收资管理与二维码粘贴，输出图纸台账与收资完成度清单"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "数字化交付"
+  - "BIM建模"
+  - "绑点"
+  - "IoT数据"
+  - "数字孪生"
+  - "建模"
+  - "内验"
+  - "台账"
+  - "DE"

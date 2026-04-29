@@ -1,0 +1,59 @@
+name: Blog Pipeline Heartbeat
+
+on:
+  workflow_dispatch:
+  schedule:
+    # UTC 19:00 = Dubai 23:00（blog-publish 22:00 + 1h）
+    - cron: '0 19 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout synapse-sessions
+        uses: actions/checkout@v4
+        with:
+          repository: lysanderl-glitch/synapse-sessions
+          token: ${{ secrets.SESSIONS_REPO_TOKEN }}
+
+      - name: Check synapse-sessions freshness
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          # 检查 last_sync.json 是否在 24h 内
+          if [ ! -f last_sync.json ]; then
+            ALERT="last_sync.json 不存在，sessions_watcher 可能未运行"
+            STATUS="critical"
+          else
+            LAST_SYNC=$(jq -r .last_sync last_sync.json)
+            LAST_TS=$(date -d "$LAST_SYNC" +%s 2>/dev/null || echo 0)
+            NOW_TS=$(date +%s)
+            DIFF_HOURS=$(( (NOW_TS - LAST_TS) / 3600 ))
+            if [ $DIFF_HOURS -gt 24 ]; then
+              ALERT="synapse-sessions ${DIFF_HOURS}h 未更新，本机 watcher 可能停摆"
+              STATUS="warning"
+            else
+              ALERT="✅ 博客管线健康（last_sync ${DIFF_HOURS}h ago）"
+              STATUS="info"
+            fi
+          fi
+
+          echo "$ALERT (status=$STATUS)"
+
+          # Slack 通知（仅 warning/critical 才发）
+          if [ "$STATUS" != "info" ]; then
+            curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"recipient\": \"president\",
+                \"title\": \"📡 博客管线心跳告警\",
+                \"body\": \"$ALERT\",
+                \"source\": \"blog-heartbeat\",
+                \"priority\": \"$STATUS\"
+              }" || echo "[Slack] notify failed"
+          fi

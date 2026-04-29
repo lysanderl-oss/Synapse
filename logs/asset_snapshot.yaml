@@ -1,0 +1,18 @@
+snapshot_date: "2026-04-27"
+yaml_count: 94
+py_count: 54
+js_count: 4
+total_scripts: 58
+teams_count: 13
+agents_count: 56
+active_workflows: 9
+sites_count: 3
+versions:
+  synapse: "1.0.0"
+  pmo_auto: "2.0.3"
+  infra: "1.0.7"
+delta_from_yesterday:
+  yaml_count: -125
+  py_count: -31
+  agents_count: +0
+generated_at: "2026-04-27T05:46:41.195460+00:00"

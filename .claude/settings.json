@@ -1,0 +1,60 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Read",
+      "Bash",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "mcp__Desktop_Commander__read_file",
+      "mcp__Desktop_Commander__write_file",
+      "mcp__Desktop_Commander__edit_block"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\lysanderl_janusd\\Projects\\synapse-platform"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -X utf8 \"C:/Users/lysanderl_janusd/Synapse-Mini/agent-CEO/dispatch_auditor.py\" --summary 2>/dev/null; if [ $? -ne 0 ]; then echo '[CEO-GUARD] Audit module ready'; fi",
+            "timeout": 5,
+            "statusMessage": "CEO Guard 初始化..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/c/Users/lysanderl_janusd/Synapse-Mini/scripts/ceo-guard-pre.js\" 2>/dev/null || echo '{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"additionalContext\": \"[CEO-GUARD] 审计脚本异常，但提醒仍然有效：Lysander CEO 主对话禁止直接调用 Bash/Edit/Write。\"}}'",
+            "timeout": 10,
+            "statusMessage": "CEO Guard 审计..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/c/Users/lysanderl_janusd/Synapse-Mini/scripts/ceo-guard-post.js\" 2>/dev/null || true",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

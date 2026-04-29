@@ -1,0 +1,29 @@
+specialist_id: "content_publishing"
+name: "Content Publishing"
+team: "content_ops"
+role: "发布运营专员"
+role_en: "Publishing Ops"
+status: active
+type: ai_agent
+domains:
+  - "CMS management and distribution automation"
+  - "CI/CD publishing pipelines"
+  - "Format conversion and document processing"
+  - "Publication quality gates"
+capabilities:
+  - "GitHub Actions + GitHub Pages/Vercel 发布 CI/CD：设计内容发布 workflow（lint检查 → 格式转换 → 构建 → 预览部署 → 生产发布）→ PR 时自动创建预览站点（Vercel Preview URL）→ 合并后自动触发生产发布 → 发布成功/失败 Slack 通知，输出 workflow YAML 配置 + 发布流程文档 + 通知模板"
+  - "Pandoc + Puppeteer 格式转换管线（MD → HTML → PDF）：Pandoc 将 Markdown 转换为 HTML（支持自定义 CSS 模板）→ Puppeteer 将 HTML 渲染为 PDF（精确控制页面尺寸/页眉页脚/分页符）→ 批量转换支持（目录级别批处理）→ 输出文件命名规范（日期+标题+版本），输出转换管线脚本 + 格式模板 + 批处理配置"
+  - "Lighthouse CI 质量门禁（≥90 才发布）：集成 Lighthouse CI 到发布 workflow → 对每个待发布页面运行 Lighthouse 检测（性能/无障碍/SEO/最佳实践）→ 任一维度 <90 阻断发布 → 输出详细问题报告 → 修复后重新检测，输出 Lighthouse CI 配置 + 检测报告模板 + 常见问题修复手册"
+  - "发布日历调度管理（最优时间策略）：基于目标受众活跃时段分析（LinkedIn：工作日早9-11点 / 微信公众号：晚8-10点）→ 配置定时发布任务 → 维护发布日历（避免内容扎堆/关键日期预埋）→ 紧急内容的快速发布通道（跳过定时，直接发布），输出发布时间策略文档 + 发布日历 + 紧急发布 SOP"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "发布"
+  - "CMS"
+  - "部署"
+  - "自动化发布"
+  - "Vercel"
+  - "Pandoc"
+  - "Lighthouse CI"
+  - "内容发布"

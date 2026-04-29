@@ -1,0 +1,244 @@
+[
+  {
+    "agent_id": "ai_systems_dev",
+    "task_id": "T30-0",
+    "quality_score": 4.1,
+    "duration_minutes": 27,
+    "blockers": [
+      "api_config"
+    ],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-03-23T14:27:42.999556"
+  },
+  {
+    "agent_id": "ai_systems_dev",
+    "task_id": "T25-1",
+    "quality_score": 4.5,
+    "duration_minutes": 52,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-03-28T14:27:42.999556"
+  },
+  {
+    "agent_id": "ai_systems_dev",
+    "task_id": "T20-2",
+    "quality_score": 3.9,
+    "duration_minutes": 51,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-02T14:27:42.999556"
+  },
+  {
+    "agent_id": "ai_systems_dev",
+    "task_id": "T15-3",
+    "quality_score": 4.6,
+    "duration_minutes": 21,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-07T14:27:42.999556"
+  },
+  {
+    "agent_id": "ai_systems_dev",
+    "task_id": "T10-4",
+    "quality_score": 3.8,
+    "duration_minutes": 17,
+    "blockers": [
+      "api_config"
+    ],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-12T14:27:42.999556"
+  },
+  {
+    "agent_id": "ai_systems_dev",
+    "task_id": "T5-5",
+    "quality_score": 3.7,
+    "duration_minutes": 56,
+    "blockers": [
+      "api_config"
+    ],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-17T14:27:42.999556"
+  },
+  {
+    "agent_id": "harness_engineer",
+    "task_id": "T30-0",
+    "quality_score": 4.0,
+    "duration_minutes": 20,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-03-23T14:27:43.001066"
+  },
+  {
+    "agent_id": "harness_engineer",
+    "task_id": "T25-1",
+    "quality_score": 4.5,
+    "duration_minutes": 12,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-03-28T14:27:43.001066"
+  },
+  {
+    "agent_id": "harness_engineer",
+    "task_id": "T20-2",
+    "quality_score": 3.6,
+    "duration_minutes": 49,
+    "blockers": [
+      "api_config"
+    ],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-02T14:27:43.001066"
+  },
+  {
+    "agent_id": "harness_engineer",
+    "task_id": "T15-3",
+    "quality_score": 4.2,
+    "duration_minutes": 50,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-07T14:27:43.001066"
+  },
+  {
+    "agent_id": "harness_engineer",
+    "task_id": "T10-4",
+    "quality_score": 3.8,
+    "duration_minutes": 48,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-12T14:27:43.001066"
+  },
+  {
+    "agent_id": "harness_engineer",
+    "task_id": "T5-5",
+    "quality_score": 3.6,
+    "duration_minutes": 29,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-17T14:27:43.002081"
+  },
+  {
+    "agent_id": "integration_qa",
+    "task_id": "T30-0",
+    "quality_score": 3.8,
+    "duration_minutes": 10,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-03-23T14:27:43.002081"
+  },
+  {
+    "agent_id": "integration_qa",
+    "task_id": "T25-1",
+    "quality_score": 4.0,
+    "duration_minutes": 35,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-03-28T14:27:43.002081"
+  },
+  {
+    "agent_id": "integration_qa",
+    "task_id": "T20-2",
+    "quality_score": 3.6,
+    "duration_minutes": 54,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-02T14:27:43.002081"
+  },
+  {
+    "agent_id": "integration_qa",
+    "task_id": "T15-3",
+    "quality_score": 4.0,
+    "duration_minutes": 17,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-07T14:27:43.003080"
+  },
+  {
+    "agent_id": "integration_qa",
+    "task_id": "T10-4",
+    "quality_score": 4.3,
+    "duration_minutes": 47,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-12T14:27:43.003080"
+  },
+  {
+    "agent_id": "integration_qa",
+    "task_id": "T5-5",
+    "quality_score": 3.8,
+    "duration_minutes": 59,
+    "blockers": [],
+    "task_type": "python_development",
+    "skills_used": [
+      "python_development",
+      "task_execution"
+    ],
+    "timestamp": "2026-04-17T14:27:43.003080"
+  }
+]

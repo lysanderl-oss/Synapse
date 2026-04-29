@@ -1,0 +1,85 @@
+name: Notion Daily Sync
+
+# Notion Hub 每日同步管线
+# UTC 18:00 = Dubai 22:00 每日运行
+# 执行 notion_daily_sync.py → commit logs/asset_snapshot.yaml
+
+on:
+  schedule:
+    - cron: '0 18 * * *'  # UTC 18:00 = Dubai 22:00
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hub-daily-sync
+  cancel-in-progress: false
+
+jobs:
+  notion-daily-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install anthropic notion-client PyYAML python-dotenv
+
+      - name: Run Notion daily sync
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DB_ID: ${{ secrets.NOTION_DB_ID }}
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+          PYTHONIOENCODING: utf-8
+        run: python scripts/notion_daily_sync.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "synapse-hub-bot"
+          git config user.email "hub-bot@synapse-pj.local"
+          git add logs/asset_snapshot.yaml || true
+          if git diff --staged --quiet; then
+            echo "[Hub] No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(notion): daily sync $(date -u +%Y-%m-%d) [skip ci]"
+          for i in 1 2 3; do
+            if git push origin HEAD:${{ github.ref_name }}; then
+              echo "[Hub] Push success on attempt $i"
+              exit 0
+            fi
+            echo "[Hub] Push attempt $i failed, rebasing..."
+            git pull --rebase origin ${{ github.ref_name }} || { echo "Rebase failed"; exit 1; }
+          done
+          echo "[Hub] Push failed after 3 attempts"
+          exit 1
+
+      - name: Notify failure via Slack
+        if: failure()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping"
+            exit 0
+          fi
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"recipient\": \"president\",
+              \"title\": \"🚨 Notion 每日同步失败 ${{ github.run_id }}\",
+              \"body\": \"hub-daily-sync 异常 — 见 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\",
+              \"source\": \"hub-daily-sync\",
+              \"priority\": \"critical\"
+            }" || echo "[Slack] notify failed (non-blocking)"

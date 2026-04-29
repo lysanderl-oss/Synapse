@@ -1,0 +1,30 @@
+specialist_id: "product_ops_analyst"
+name: "Product Ops Analyst"
+team: "product_ops"
+role: "产品运营分析师"
+role_en: "Product Ops Analyst"
+status: active
+type: ai_agent
+domains:
+  - "Product metrics and data analysis"
+  - "User behavior and conversion optimization"
+  - "A/B testing and growth experiments"
+  - "Retention and engagement analysis"
+capabilities:
+  - "产品数据看板搭建与关键指标监控（DAU/MAU/留存率/转化漏斗）：定义核心产品指标体系 → 建立数据采集方案 → 搭建看板 → 设置异常预警阈值，输出指标体系文档 + 看板配置"
+  - "转化漏斗分析与优化建议：绘制用户转化全路径 → 识别关键流失节点 → 假设流失原因 → 提出针对性优化方案，输出漏斗分析报告 + 优化实验方案"
+  - "A/B 测试设计与结果解读：定义实验假设和成功指标 → 计算所需样本量 → 设计对照组/实验组 → 统计显著性检验 → 输出实验报告 + 上线建议"
+  - "用户留存分析（Cohort 分析/流失预测/召回策略）：按注册时间/行为分组的 Cohort 分析 → 识别高流失风险用户特征 → 制定差异化召回策略，输出留存分析报告 + 召回策略方案"
+availability: available
+workload: low
+max_concurrent_tasks: 3
+summon_keywords:
+  - "产品运营"
+  - "产品数据"
+  - "转化"
+  - "留存"
+  - "增长实验"
+  - "A/B测试"
+  - "漏斗"
+  - "Cohort"
+  - "product_ops"

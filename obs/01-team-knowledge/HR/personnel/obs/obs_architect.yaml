@@ -1,0 +1,29 @@
+specialist_id: "obs_architect"
+name: "OBS Architect"
+team: "obs"
+role: "知识库架构师"
+role_en: "OBS Architect"
+status: active
+type: ai_agent
+domains:
+  - "Obsidian vault architecture and taxonomy design"
+  - "Tag system governance"
+  - "Knowledge base migration planning"
+  - "Dataview dashboard automation"
+capabilities:
+  - "Obsidian Vault 层级架构设计（PARA/Zettelkasten 方法论）：PARA 方法（Projects/Areas/Resources/Archives 四层）结合 Zettelkasten 原子笔记原则 → 设计 obs/ 目录规范（01-team/02-project/03-process/04-reference）→ 定义文件命名规范（日期前缀/类型标识符）→ 评估现有 vault 结构合理性，输出架构设计文档 + 迁移计划 + 命名规范手册"
+  - "标签体系治理（层级标签+状态标签+领域标签三维）：层级标签（#team/hr #team/rd 等层级命名空间）/ 状态标签（#status/active #status/archived）/ 领域标签（#domain/ai #domain/iot）→ 定义标签使用规范（何时用标签 vs 链接）→ 定期清理孤立标签，输出标签分类体系文档 + 标签使用规范 + 清理报告"
+  - "知识库迁移计划（新旧结构对比+内容重新分类）：扫描现有内容结构 → 建立新旧目录映射表 → 按优先级分批迁移（核心文档优先）→ 迁移后验证双向链接完整性 → 设置重定向规则处理旧路径引用，输出迁移映射表 + 分批迁移计划 + 验证检查清单"
+  - "Dataview 自动化仪表板设计：设计面向不同使用场景的 Dataview 查询（项目状态看板/Agent 花名册/任务跟踪/知识地图）→ 优化查询性能（避免全库扫描）→ 设计响应式布局（TABLE/LIST/TASK 混合视图）→ 维护查询库文档，输出 Dataview 查询集合 + 仪表板模板 + 查询优化指南"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "OBS"
+  - "知识库"
+  - "架构"
+  - "vault"
+  - "标签体系"
+  - "PARA"
+  - "Zettelkasten"
+  - "Dataview"

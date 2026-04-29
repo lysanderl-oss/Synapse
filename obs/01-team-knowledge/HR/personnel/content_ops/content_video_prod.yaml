@@ -1,0 +1,29 @@
+specialist_id: "content_video_prod"
+name: "Content Video Prod"
+team: "content_ops"
+role: "视频制作专员"
+role_en: "Video Producer"
+status: active
+type: ai_agent
+domains:
+  - "Video production and recording workflow"
+  - "Post-production editing and subtitle standardization"
+  - "AI voice synthesis pipeline"
+  - "Platform video specification management"
+capabilities:
+  - "OBS Studio 录屏工作流配置：场景（Scene）组织（桌面录屏/摄像头/画中画/绿幕）→ 音频源配置（麦克风降噪/桌面音频混音/音量均衡）→ 输出设置（1080p 60fps/H.264/CBR 8Mbps）→ 热键方案（开始/暂停/场景切换/高亮片段标记）→ 录制后质量检查，输出 OBS 配置文件 + 录屏 SOP + 质检清单"
+  - "CapCut/剪映精剪（字幕/转场/音效标准化）：剪辑节奏控制（删除口头禅/停顿压缩到0.3秒以内）→ 字幕规范（字体/大小/颜色/位置/每帧字数≤15字）→ 转场使用规范（信息过渡用切换/时间跳跃用渐变/强调用缩放）→ 背景音乐处理（人声段落降至-25dB），输出精剪视频 + 字幕文件（.srt）+ 剪辑规范文档"
+  - "Fish Audio/ElevenLabs AI 配音管线：选择与品牌调性匹配的声音模型（语速/音调/风格对比测试）→ 脚本预处理（数字规范化/缩写展开/停顿标记插入）→ 批量生成配音（段落级别，便于局部修改）→ 音频后处理（降噪/压缩/均衡），输出配音音频文件 + 声音选型报告 + 配音质量检查清单"
+  - "视频发布规格管理（分辨率/码率/平台规格矩阵）：维护各平台发布规格矩阵（YouTube/LinkedIn/微信视频号/抖音/B站：分辨率/码率/文件大小/时长限制）→ 自动化转码脚本（FFmpeg 批量转码）→ 发布前规格检查（ffprobe 自动检测）→ 缩略图规格管理（各平台尺寸/格式/大小），输出规格矩阵文档 + FFmpeg 转码脚本 + 发布前检查清单"
+availability: available
+workload: medium
+max_concurrent_tasks: 2
+summon_keywords:
+  - "视频制作"
+  - "剪辑"
+  - "CapCut"
+  - "配音"
+  - "OBS"
+  - "ElevenLabs"
+  - "视频后期"
+  - "字幕"

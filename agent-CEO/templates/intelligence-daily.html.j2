@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>情报日报 {{ report_date }}</title>
+<style>
+  body{font-family:'Segoe UI',sans-serif;max-width:860px;margin:40px auto;line-height:1.7;color:#222;padding:0 20px}
+  h1{color:#1a1a2e;font-size:1.8em;margin-bottom:4px}
+  h2{color:#16213e;border-bottom:2px solid #0f3460;padding-bottom:8px;margin-top:36px}
+  .meta{color:#888;font-size:0.85em;margin-bottom:24px}
+  .item{background:#f8f9fa;border-left:4px solid #0f3460;padding:14px 16px;margin:14px 0;border-radius:4px}
+  .item:hover{background:#f0f2f8}
+  .item.urgent{border-left-color:#e94560;background:#fff5f5}
+  .item strong{font-size:1.05em;color:#1a1a2e}
+  .score{color:#e94560;font-weight:bold}
+  .item-meta{color:#888;font-size:0.82em;margin:4px 0 8px}
+  .tag{display:inline-block;background:#0f3460;color:white;padding:2px 9px;border-radius:12px;font-size:0.78em;margin-right:4px;margin-top:6px}
+  .tag.orange{background:#e07b00}
+  .tag.green{background:#1a7a4a}
+  .tag.red{background:#c0392b}
+  .tag.purple{background:#6c3483}
+  .summary-box{background:#1a1a2e;color:#f0f0f0;border-radius:8px;padding:18px 22px;margin-top:12px;line-height:1.8}
+  .summary-box p{margin:0 0 12px}
+  .summary-box p:last-child{margin-bottom:0}
+  .kpi-row{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0 24px}
+  .kpi{background:#0f3460;color:white;border-radius:8px;padding:12px 18px;flex:1;min-width:140px;text-align:center}
+  .kpi .num{font-size:1.6em;font-weight:bold;color:#f8d246}
+  .kpi .label{font-size:0.78em;opacity:0.85;margin-top:2px}
+  .footer-meta{color:#888;font-size:0.82em;margin-top:32px;border-top:1px solid #eee;padding-top:12px}
+</style>
+</head>
+<body>
+
+<h1>🔍 Synapse 情报日报</h1>
+<p class="meta">
+  生成时间：{{ generated_at }} Dubai &nbsp;|&nbsp;
+  执行者：{{ executor_id | default('ai_ml_engineer') }} &nbsp;|&nbsp;
+  覆盖周期：{{ coverage_period | default('过去 24 小时') }}
+</p>
+
+{% if show_kpi %}
+<div class="kpi-row">
+  <div class="kpi"><div class="num">{{ intelligence_items | length }}</div><div class="label">精选情报条目</div></div>
+  <div class="kpi"><div class="num">{{ min_score | default(8) }}</div><div class="label">最低综合评分/20</div></div>
+  <div class="kpi"><div class="num">{{ topic_count | default(6) }}</div><div class="label">覆盖搜索主题</div></div>
+  <div class="kpi"><div class="num">{{ decision_level | default('L3') }}</div><div class="label">建议决策级别</div></div>
+</div>
+{% endif %}
+
+{% if urgent_items %}
+<h2>⚠️ 紧急行动项</h2>
+{% for item in urgent_items %}
+<div class="item urgent">
+  <span class="tag red">URGENT</span>
+  {% for tag in item.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+  <strong>{{ item.title }}</strong>
+  <p>{{ item.summary }}</p>
+  <p class="score">
+    战略：{{ item.score.strategy }}/5 |
+    产品：{{ item.score.product }}/5 |
+    技术：{{ item.score.tech }}/5 |
+    风险：{{ item.score.risk }}/5 |
+    综合：{{ item.score.total }}/20 🔴
+  </p>
+  <p class="item-meta">来源：{% if item.source_url %}<a href="{{ item.source_url }}" target="_blank">{{ item.source_name }}</a>{% else %}{{ item.source_name }}{% endif %}</p>
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>今日精选情报</h2>
+
+{% for item in intelligence_items %}
+<div class="item">
+  <strong>{{ item.title }}</strong><br>
+  <span class="item-meta">
+    来源：{% if item.source_url %}<a href="{{ item.source_url }}" target="_blank">{{ item.source_name }}</a>{% else %}{{ item.source_name }}{% endif %}
+    &nbsp;|&nbsp; 时间：{{ item.published_at }}
+  </span>
+  <p>{{ item.summary }}</p>
+  <span class="score">
+    战略 {{ item.score.strategy }}/5 ·
+    产品 {{ item.score.product }}/5 ·
+    技术 {{ item.score.tech }}/5 ·
+    风险 {{ item.score.risk }}/5 ·
+    <strong>综合 {{ item.score.total }}/20</strong>
+  </span>
+  {% if item.recommended_action %}
+  <span class="score">· 推荐行动：{{ item.recommended_action }}</span>
+  {% endif %}
+  <br>
+  {% for tag in item.tags %}
+  <span class="tag{% if tag.color %} {{ tag.color }}{% endif %}">{{ tag.label | default(tag) }}</span>
+  {% endfor %}
+</div>
+{% endfor %}
+
+<h2>执行摘要</h2>
+<div class="summary-box">
+  {% for paragraph in executive_summary %}
+  <p>{{ paragraph | safe }}</p>
+  {% endfor %}
+</div>
+
+<p class="footer-meta">
+  执行链：{{ executor_id | default('ai_ml_engineer') }}（采集+撰写）→ integration_qa（审查）→ Lysander CEO（交付）<br>
+  {% if qa_score %}QA 评分：{{ qa_score }}/100（完整性 {{ qa_breakdown.completeness }} + 准确性 {{ qa_breakdown.accuracy }} + 一致性 {{ qa_breakdown.consistency }} + 可维护性 {{ qa_breakdown.maintainability }} + 合规性 {{ qa_breakdown.compliance }}）{% if qa_score >= 85 %}✅ 通过{% else %}❌ 需修正{% endif %}<br>{% endif %}
+  报告路径：obs/06-daily-reports/{{ report_date }}-intelligence-daily.html<br>
+  — Synapse Intelligence Pipeline · {{ executor_id | default('ai_ml_engineer') }} · {{ report_date }} —
+</p>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+specialist_id: "executive_briefer"
+name: "Executive Briefer"
+team: "pdg"
+role: "总裁简报官"
+role_en: "Executive Briefer"
+status: active
+type: ai_agent
+domains:
+  - "Executive communication and briefing design"
+  - "Multi-source data fusion for C-suite"
+  - "Briefing frequency and format management"
+  - "Information accuracy verification"
+capabilities:
+  - "三层递进简报结构（BLUF 底线前置/要点摘要/完整详情）：BLUF（Bottom Line Up Front：1-2句话核心结论+关键行动）→ 要点摘要（3-5个要点，每点≤2行，含量化指标）→ 完整详情（背景/数据/分析/风险/建议，按需阅读）→ 确保总裁在30秒内获取核心信息，输出标准化简报文档 + 简报口头要点版本"
+  - "多源数据融合为总裁简报（量化指标+风险预警+行动建议）：聚合来自各团队的执行数据、项目进度、市场情报 → 去重/矛盾信息核查 → 按重要性排序 → 提炼3-5个量化指标（KPI进度/预算执行率/风险等级）→ 输出风险预警（需总裁关注的事项）+ 建议决策行动，输出融合简报 + 数据来源索引"
+  - "午报/晚报/夜报三频次格式设计：午报（工作日12pm，当日进展快照：3个重点+2个风险）→ 晚报（6pm，当日完成情况+明日计划）→ 夜报（10pm，总裁指定的战略洞察+行动建议，仅重要时发送）→ 每种格式严格字数上限（午报≤200字/晚报≤300字/夜报≤500字），输出三种格式模板 + 发送规范"
+  - "简报一致性校验（与原始资料 100% 对齐）：每条简报结论必须可追溯到原始数据或报告 → 禁止推断性陈述无来源标注 → 数字精确度核查（比例/绝对值/同比环比）→ 与各团队汇报源文件进行交叉验证，输出一致性核查清单 + 差异记录 + 核查通过证明"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "简报"
+  - "汇报"
+  - "BLUF"
+  - "总裁"
+  - "executive briefing"
+  - "日报"
+  - "简报官"
+  - "PDG"

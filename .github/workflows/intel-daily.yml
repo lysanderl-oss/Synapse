@@ -1,0 +1,139 @@
+name: Intelligence Daily Report
+
+on:
+  workflow_dispatch:  # Week 1 只手动触发
+    inputs:
+      date_override:
+        description: "覆盖报告日期（可选，默认今日 YYYY-MM-DD）"
+        required: false
+        default: ""
+  # Week 2 切流生产启用（2026-04-24）
+  schedule:
+    - cron: '0 4 * * *'  # UTC 04:00 = Dubai 08:00
+
+permissions:
+  contents: write  # 需要 commit 报告
+
+concurrency:
+  group: intel-daily
+  cancel-in-progress: false  # 不要并行跑多份
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install "anthropic>=0.40" requests pyyaml jinja2 "ruamel.yaml>=0.17"
+
+      - name: Run intelligence daily agent (with retry)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+          PYTHONIOENCODING: utf-8
+          EXECUTOR_ID: github-actions-bot
+        run: |
+          MAX_ATTEMPTS=3
+          RETRY_WAIT=60
+          ATTEMPT=1
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            echo "[Retry] Attempt $ATTEMPT/$MAX_ATTEMPTS"
+            pushd scripts/intelligence > /dev/null
+            if python daily_agent.py --date "${{ inputs.date_override }}"; then
+              echo "[Retry] Success on attempt $ATTEMPT"
+              popd > /dev/null
+              exit 0
+            fi
+            popd > /dev/null
+            ATTEMPT=$((ATTEMPT + 1))
+            if [ $ATTEMPT -le $MAX_ATTEMPTS ]; then
+              echo "[Retry] Wait ${RETRY_WAIT}s before next attempt"
+              sleep $RETRY_WAIT
+            fi
+          done
+          echo "[Retry] All $MAX_ATTEMPTS attempts failed"
+          exit 1
+
+      - name: Commit & push report
+        run: |
+          git config user.name "synapse-intel-bot"
+          git config user.email "intel-bot@synapse-pj.local"
+          git add obs/06-daily-reports/*-intelligence-daily.html || true
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore(intel): daily report ${{ inputs.date_override || github.run_id }}"
+          # Retry push with rebase-on-conflict (other bot workflows may push concurrently)
+          for attempt in 1 2 3; do
+            if git push origin HEAD:${{ github.ref_name }}; then
+              echo "Push succeeded on attempt $attempt"
+              exit 0
+            fi
+            echo "Push attempt $attempt failed, rebasing..."
+            git pull --rebase origin ${{ github.ref_name }} || { echo "Rebase failed"; exit 1; }
+          done
+          echo "Push failed after 3 attempts"
+          exit 1
+
+      # ── 发布到 lysander-bond ──────────────────────────────
+      - name: Checkout lysander-bond
+        uses: actions/checkout@v4
+        with:
+          repository: lysanderl-glitch/lysander-bond
+          token: ${{ secrets.BOND_WRITE_TOKEN }}
+          path: lysander-bond
+
+      - name: Publish daily intel to lysander-bond
+        env:
+          BOND_REPO_DIR: ${{ github.workspace }}/lysander-bond
+        run: |
+          python scripts/intelligence/publish_to_bond.py --type daily --date $(date +%Y-%m-%d)
+
+      - name: Commit and push to lysander-bond
+        working-directory: lysander-bond
+        run: |
+          git config user.name "Synapse Intel Agent"
+          git config user.email "intel@lysander.bond"
+          git add src/content/intelligence/
+          if git diff --cached --quiet; then
+            echo "No new intel content to push"
+          else
+            git commit -m "chore(intel): auto-publish daily intel $(date +%Y-%m-%d) [no-decision]"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push origin main && break || sleep 5
+            done
+          fi
+
+      - name: Notify success via Slack
+        if: success()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping"
+            exit 0
+          fi
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d '{"text":"✅ 情报日报管线成功 — intelligence daily published to lysander.bond","run_url":"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}'
+
+      - name: Notify failure via Slack
+        if: failure()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping"
+            exit 0
+          fi
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d '{"text":"⚠️ 情报日报管线失败 — intelligence daily pipeline failed","run_url":"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}'

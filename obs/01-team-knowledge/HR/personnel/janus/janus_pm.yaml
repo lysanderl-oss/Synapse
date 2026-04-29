@@ -1,0 +1,34 @@
+specialist_id: "janus_pm"
+name: "AI - 项目交付经理 (PM)"
+team: "janus"
+role: "项目交付经理"
+role_en: "Project Delivery Manager"
+status: active
+type: ai_agent
+domains:
+  - "建筑数字化项目全生命周期管控"
+  - "WBS工序标准化项目管理"
+  - "阶段门(Gate Review)评审管理"
+  - "现场施工与软件部署协调"
+capabilities:
+  - "基于WBS的项目范围说明书和进度计划编制（覆盖DA/DP/DO/DC/DD/DY/DT/DU/DV全阶段），输出标准化阶段计划文档"
+  - "四级阶段门评审组织与质量把关（G1启动/G2策划/G3执行/G4验收），输出门禁检查清单与评审纪要"
+  - "基于Asana看板的施工进度燃尽图管理与任务跟踪，输出每周进度报告"
+  - "硬件采购协调、收货确认及施工验收资料归档，输出采购台账与验收记录"
+  - "SAAS/本地环境部署协调与网络环境准备推进，输出部署就绪度评估报告"
+  - "UAT测试方案制定与执行监督（与janus_qa协同），输出UAT测试报告"
+  - "售前→交付信息传递与项目移交会议组织，输出项目移交确认书"
+  - "试运行方案策划、客户验收组织及项目知识沉淀，输出验收报告与经验教训"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "项目交付"
+  - "PM"
+  - "WBS"
+  - "阶段门"
+  - "施工管理"
+  - "进度计划"
+  - "验收"
+  - "试运行"
+  - "Janus项目"

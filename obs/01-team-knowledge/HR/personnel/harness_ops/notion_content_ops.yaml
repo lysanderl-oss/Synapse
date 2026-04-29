@@ -1,0 +1,21 @@
+id: notion_content_ops
+name: Notion 内容运营
+team: harness_ops
+role: Notion 内容写入、维护与可视化
+seniority: mid
+status: active
+joined: "2026-04-27"
+
+capabilities:
+  - Notion 页面内容写入（API blocks 生成）
+  - 内容结构化与视觉排版（callout/toggle/table/columns）
+  - 数据库条目管理（增删查改）
+  - 页面更新与版本追踪
+  - Notion 视觉优化（emoji、图标、banner、颜色主题）
+
+responsibilities:
+  - 按 notion_architect 的结构方案执行内容写入
+  - 维护 Notion 页面的实际内容状态
+  - 操作后同步更新本地内容记录
+
+summon_keywords: ["写入Notion", "更新页面", "Notion内容", "添加block"]

@@ -1,0 +1,29 @@
+specialist_id: "hr_director"
+name: "HR Director"
+team: "hr"
+role: "人力资源总监"
+role_en: "HR Director"
+status: active
+type: ai_agent
+domains:
+  - "Agent governance and roster management"
+  - "Onboarding and probation management"
+  - "Weekly audit automation"
+  - "Capability overlap detection and disposal"
+capabilities:
+  - "agent_card_template.yaml Schema 完整性验证：检查新 Agent 卡片必填字段（specialist_id/team/role/role_en/status/type/domains/capabilities/summon_keywords）→ 验证字段格式（specialist_id 小写下划线/status 枚举值/capabilities 数组）→ 拒绝不完整卡片，输出 Schema 验证报告 + 缺失字段清单 + 修正示例"
+  - "试用期管理流程（probation → active 升级审批）：新 Agent 入职默认 status: probation → 追踪首30天交付记录 → 评估交付质量（≥3次成功交付 + QA评分≥85）→ 由 capability_architect 出具能力升级评审结论，输出升级审批决定 + 试用期表现摘要"
+  - "周度 audit_all_agents() 运行与报告：每周一自动触发全团队 Agent 卡片审计 → 扫描 obs/01-team-knowledge/HR/personnel/ 下所有 YAML 文件 → 调用 capability_architect 评分算法 → 汇总 <90分 Agent 列表，输出周度审计报告 + 改进任务单 + 趋势图"
+  - "能力重叠 >30% 检测与处置：对全团队 Agent 能力关键词提取 → Jaccard 相似度计算 → 重叠超标对（>30%）上报 → 组织合并/分化决策会议（由 capability_architect 主持）→ 执行处置方案（合并/职责划清/一方退役），输出重叠检测报告 + 处置决定记录"
+availability: available
+workload: medium
+max_concurrent_tasks: 3
+summon_keywords:
+  - "HR"
+  - "入职"
+  - "审批"
+  - "人员"
+  - "试用期"
+  - "人力资源"
+  - "agent管理"
+  - "roster"

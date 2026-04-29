@@ -1,0 +1,92 @@
+name: Pipeline Daily Sync
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # UTC 22:00 = Dubai 02:00 AM
+  workflow_dispatch:
+
+jobs:
+  pipeline-daily-sync:
+    name: pipeline-daily-sync
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Synapse-Mini
+      - name: Checkout Synapse-Mini
+        uses: actions/checkout@v4
+        with:
+          path: synapse-mini
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 1b: Checkout lysander-bond (M1 fix — must be before script runs)
+      - name: Checkout lysander-bond
+        uses: actions/checkout@v4
+        with:
+          repository: lysanderl-glitch/lysander-bond
+          token: ${{ secrets.BOND_WRITE_TOKEN }}
+          path: lysander-bond
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      # Step 3: Run pipeline-metrics-refresh.py
+      - name: Refresh pipeline metrics
+        run: |
+          python synapse-mini/scripts/pipeline-metrics-refresh.py ./lysander-bond
+
+      # Step 4: Update PIPELINE.md Section 7 Active Pipeline State
+      - name: Update PIPELINE.md active version
+        run: |
+          VERSION=$(cat lysander-bond/VERSION)
+          DATE=$(date -u +"%Y-%m-%d")
+          sed -i "s/| Current Baseline.*|/| Current Baseline | \`${VERSION}\` | ${DATE} | Auto-updated by pipeline-daily-sync |/" lysander-bond/PIPELINE.md || true
+          echo "[INFO] PIPELINE.md updated with version: $VERSION"
+
+      # Step 5: Commit and push lysander-bond changes
+      - name: Commit and push lysander-bond
+        run: |
+          cd lysander-bond
+          git config user.name "Lysander Pipeline Bot"
+          git config user.email "pipeline@synapse-pj.ai"
+          git add pipeline-metrics/latest.yaml PIPELINE.md
+          if git diff --staged --quiet; then
+            echo "[INFO] No changes to commit in lysander-bond"
+          else
+            git commit -m "chore(pipeline): daily metrics refresh $(date -u +%Y-%m-%d) no-decision"
+            git push origin main
+          fi
+
+      # Step 6: Notify success via Slack
+      - name: Notify success via Slack
+        if: success()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping"
+            exit 0
+          fi
+          TOTAL=$(python -c "import yaml; d=yaml.safe_load(open('lysander-bond/pipeline-metrics/latest.yaml')); print(d.get('total_content_files',0))")
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d "{\"text\":\"✅ 每日管线同步完成 — 总内容文件: ${TOTAL} 篇 | $(date -u +%Y-%m-%d) Dubai 02:00\"}"
+
+      # Step 7: Notify failure via Slack
+      - name: Notify failure via Slack
+        if: failure()
+        env:
+          SLACK_WEBHOOK_N8N: ${{ secrets.SLACK_WEBHOOK_N8N }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_N8N" ]; then
+            echo "[Slack] SLACK_WEBHOOK_N8N not set, skipping"
+            exit 0
+          fi
+          curl -sS -X POST "$SLACK_WEBHOOK_N8N" \
+            -H "Content-Type: application/json" \
+            -d "{\"text\":\"⚠️ 每日管线同步失败 — pipeline-daily-sync 执行异常，请检查 GHA 日志\",\"run_url\":\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
